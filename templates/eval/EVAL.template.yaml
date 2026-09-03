@@ -1,0 +1,14 @@
+schema_version: "1"
+target: "{name}"
+cases:
+  - id: expected-success
+    scenario: Describe a representative successful case.
+    expected_status: PASS
+    must_include:
+      - Describe required evidence.
+
+  - id: expected-failure
+    scenario: Describe a representative failure or incomplete case.
+    expected_status: FIX
+    must_include:
+      - Describe required failure evidence.

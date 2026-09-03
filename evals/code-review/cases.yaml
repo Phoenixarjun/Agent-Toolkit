@@ -1,0 +1,38 @@
+schema_version: "1"
+skill: code-review
+cases:
+  - id: complete-intent
+    scenario: The user requested five observable changes. All five are implemented, every changed path is required or supporting, focused tests pass, and no blocking issue is found.
+    expected_status: PASS
+    must_include:
+      - all five intent items mapped to PASS
+      - commit decision says the candidate is safe to commit
+
+  - id: incomplete-intent
+    scenario: The user requested five observable changes. Three are implemented correctly and two are absent from the candidate.
+    expected_status: FIX
+    must_include:
+      - missing requirements identified as FAIL or PARTIAL
+      - a bounded correction prompt
+      - commit decision says not to commit
+
+  - id: extra-unrequested-refactor
+    scenario: The requested feature is complete and tests pass, but the candidate also contains a material unrelated refactor that was not requested and is not required by the feature.
+    expected_status: NEEDS_CONFIRMATION
+    must_include:
+      - unrelated paths classified as extra
+      - explicit user confirmation or separation required before committing the whole candidate
+
+  - id: insufficient-validation
+    scenario: The implementation appears complete from static inspection, but a required integration check cannot run because a necessary service or dependency is unavailable.
+    expected_status: BLOCKED
+    must_include:
+      - exact missing evidence
+      - no false claim that validation passed
+
+  - id: security-regression
+    scenario: All requested UI behavior is present, but the implementation bypasses an existing authorization check on the changed backend path.
+    expected_status: FIX
+    must_include:
+      - security finding with concrete evidence
+      - bounded correction prompt preserving the completed UI work

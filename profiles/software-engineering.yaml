@@ -1,0 +1,15 @@
+schema_version: "1"
+name: software-engineering
+description: Default software-engineering bundle for implementation, architecture, and pre-commit quality.
+rules:
+  - global-engineering
+skills:
+  - code-review
+workflows:
+  - implementation-review-loop
+agents:
+  - architect
+prompts:
+  - architecture-grill
+knowledge:
+  - solution-design-principles

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Sol Luna XI"
+  short_description: "Sol-I orchestrates; Luna-XI executes and validates"
+  default_prompt: "$sol-luna-xi Implement the requested change. Keep Sol-I orchestration-only and use Luna-XI workers for every repository read, write, test, validation, and review."
+
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,9 @@
+schema_version: "1"
+name: "{name}"
+description: "Describe the working mode this profile enables."
+rules: []
+skills: []
+workflows: []
+agents: []
+prompts: []
+knowledge: []
