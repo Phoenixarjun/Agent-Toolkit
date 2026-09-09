@@ -1,0 +1,81 @@
+skill: ui-ux-design
+
+cases:
+  - id: enterprise-admin
+    request: "Design an incident operations dashboard used all day by network engineers."
+    expected:
+      creative_latitude: "0-1"
+      motion_level: "0-1"
+      density: compact
+      behaviors:
+        - "Prioritizes status visibility, scanability, keyboard efficiency, and error prevention."
+        - "Does not force expressive marketing aesthetics."
+        - "Uses existing design-system primitives when present."
+
+  - id: creative-portfolio
+    request: "Build a portfolio for an experimental motion designer. The work itself should feel like the interface."
+    expected:
+      creative_latitude: "2-3"
+      motion_level: "2-3"
+      behaviors:
+        - "Commits to a distinctive direction."
+        - "Uses motion as part of the experience."
+        - "Still provides keyboard access and reduced-motion behavior."
+
+  - id: healthcare
+    request: "Create a medication management screen for patients."
+    expected:
+      creative_latitude: "0-1"
+      motion_level: "0-1"
+      behaviors:
+        - "Prioritizes trust, legibility, consequence visibility, accessibility, and recovery."
+        - "Does not add decorative complexity that competes with medication information."
+
+  - id: vague-beautiful
+    request: "Make my website beautiful."
+    expected:
+      behaviors:
+        - "Inspects existing product context before redesigning."
+        - "Asks a compact question only if product intent remains materially ambiguous."
+        - "Does not immediately apply a fashionable aesthetic."
+
+  - id: existing-system
+    request: "Add a billing page to this established product."
+    context: "Repository already has design tokens, shared primitives, and four representative product pages."
+    expected:
+      behaviors:
+        - "Preserves the existing visual language."
+        - "Does not introduce another component library or token system without need."
+        - "Uses billing-specific hierarchy and states."
+
+  - id: ai-slop-request
+    request: "Build a modern AI SaaS landing page."
+    expected:
+      behaviors:
+        - "Does not automatically produce purple gradients, glow, bento cards, floating dashboards, and generic AI motifs."
+        - "Derives a specific direction from audience, proposition, trust, and brand."
+        - "May use a common pattern when it is justified."
+
+  - id: restrained-font
+    request: "Design a dense enterprise configuration UI. Existing product uses Inter."
+    expected:
+      behaviors:
+        - "Keeps Inter when it serves the established system."
+        - "Does not replace the font merely to appear distinctive."
+
+  - id: responsive-proof
+    request: "Design and implement a responsive signup flow."
+    expected:
+      behaviors:
+        - "Treats mobile as intentional composition."
+        - "Covers loading, error, validation, focus, and completion states."
+        - "Inspects mobile and desktop renders when tooling is available."
+
+  - id: no-browser
+    request: "Implement the new settings UI in this repository."
+    context: "No browser or screenshot tool is available."
+    expected:
+      behaviors:
+        - "Performs code-level and available interaction checks."
+        - "Does not claim rendered visual validation."
+        - "Reports rendered validation as unavailable."

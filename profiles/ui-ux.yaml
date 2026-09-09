@@ -1,0 +1,31 @@
+schema_version: "1"
+name: ui-ux
+description: Compose the UI/UX design, review, and engineering baseline for interface work.
+
+skills:
+  - ui-ux-design
+
+workflows:
+  - ui-design-build-review
+
+rules:
+  - ui-engineering-rules
+
+agents:
+  - ui-critic
+
+knowledge:
+  - intent-and-archetypes
+  - visual-language
+  - typography-and-color
+  - interaction-and-motion
+  - accessibility-and-usability
+  - anti-generic-ui
+  - review-rubric
+
+forms:
+  - UI-DESIGN-INTAKE
+
+templates:
+  - DESIGN-BRIEF
+  - DESIGN-REVIEW

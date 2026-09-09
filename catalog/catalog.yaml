@@ -9,6 +9,14 @@ skills:
       - git
     maturity: stable
     version: "1.0.0"
+  - id: ui-ux-design
+    path: skills/ui-ux-design
+    category: design
+    domains:
+      - ui-ux
+      - frontend
+    maturity: stable
+    version: "1.0.0"
 
 workflows:
   - id: implementation-review-loop
@@ -18,6 +26,14 @@ workflows:
       - software-engineering
     maturity: stable
     version: "1.0.0"
+  - id: ui-design-build-review
+    path: workflows/ui-design-build-review/WORKFLOW.md
+    category: delivery
+    domains:
+      - ui-ux
+      - frontend
+    maturity: stable
+    version: "1.0.0"
 
 rules:
   - id: global-engineering
@@ -25,11 +41,21 @@ rules:
     scope: global
     maturity: stable
     version: "1.0.0"
+  - id: ui-engineering-rules
+    path: rules/ui-engineering-rules.md
+    scope: domain
+    maturity: stable
+    version: "1.0.0"
 
 agents:
   - id: architect
     path: agents/architect/AGENT.md
     category: architecture
+    maturity: stable
+    version: "1.0.0"
+  - id: ui-critic
+    path: agents/ui-critic/AGENT.md
+    category: review
     maturity: stable
     version: "1.0.0"
 
@@ -46,6 +72,41 @@ knowledge:
     category: engineering
     maturity: stable
     version: "1.0.0"
+  - id: accessibility-and-usability
+    path: knowledge/ui-ux/accessibility-and-usability.md
+    category: ui-ux
+    maturity: stable
+    version: "1.0.0"
+  - id: anti-generic-ui
+    path: knowledge/ui-ux/anti-generic-ui.md
+    category: ui-ux
+    maturity: stable
+    version: "1.0.0"
+  - id: intent-and-archetypes
+    path: knowledge/ui-ux/intent-and-archetypes.md
+    category: ui-ux
+    maturity: stable
+    version: "1.0.0"
+  - id: interaction-and-motion
+    path: knowledge/ui-ux/interaction-and-motion.md
+    category: ui-ux
+    maturity: stable
+    version: "1.0.0"
+  - id: review-rubric
+    path: knowledge/ui-ux/review-rubric.md
+    category: ui-ux
+    maturity: stable
+    version: "1.0.0"
+  - id: typography-and-color
+    path: knowledge/ui-ux/typography-and-color.md
+    category: ui-ux
+    maturity: stable
+    version: "1.0.0"
+  - id: visual-language
+    path: knowledge/ui-ux/visual-language.md
+    category: ui-ux
+    maturity: stable
+    version: "1.0.0"
 
 evals:
   - id: code-review
@@ -53,10 +114,19 @@ evals:
     target: code-review
     maturity: stable
     version: "1.0.0"
+  - id: ui-ux-design
+    path: evals/ui-ux-design/cases.yaml
+    target: ui-ux-design
+    maturity: stable
+    version: "1.0.0"
 
 profiles:
   - id: software-engineering
     path: profiles/software-engineering.yaml
+    maturity: stable
+    version: "1.0.0"
+  - id: ui-ux
+    path: profiles/ui-ux.yaml
     maturity: stable
     version: "1.0.0"
 

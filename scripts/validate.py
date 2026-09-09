@@ -118,14 +118,14 @@ def validate_catalog():
                 fail(f"catalog/catalog.yaml: missing path for {artifact_id}: {artifact_path}")
         ids[group] = group_ids
     expected = {
-        "skills": {str(path.parent.relative_to(ROOT)) for path in (ROOT / "skills").glob("*/SKILL.md")},
-        "workflows": {str(path.relative_to(ROOT)) for path in (ROOT / "workflows").glob("*/WORKFLOW.md")},
-        "rules": {str(path.relative_to(ROOT)) for path in (ROOT / "rules").rglob("*.md")},
-        "agents": {str(path.relative_to(ROOT)) for path in (ROOT / "agents").glob("*/AGENT.md")},
-        "prompts": {str(path.relative_to(ROOT)) for path in (ROOT / "prompts").glob("*.md")},
-        "knowledge": {str(path.relative_to(ROOT)) for path in (ROOT / "knowledge").rglob("*.md")},
-        "evals": {str(path.relative_to(ROOT)) for path in (ROOT / "evals").glob("*/cases.yaml")},
-        "profiles": {str(path.relative_to(ROOT)) for path in (ROOT / "profiles").glob("*.yaml")},
+        "skills": {path.parent.relative_to(ROOT).as_posix() for path in (ROOT / "skills").glob("*/SKILL.md")},
+        "workflows": {path.relative_to(ROOT).as_posix() for path in (ROOT / "workflows").glob("*/WORKFLOW.md")},
+        "rules": {path.relative_to(ROOT).as_posix() for path in (ROOT / "rules").rglob("*.md")},
+        "agents": {path.relative_to(ROOT).as_posix() for path in (ROOT / "agents").glob("*/AGENT.md")},
+        "prompts": {path.relative_to(ROOT).as_posix() for path in (ROOT / "prompts").glob("*.md")},
+        "knowledge": {path.relative_to(ROOT).as_posix() for path in (ROOT / "knowledge").rglob("*.md")},
+        "evals": {path.relative_to(ROOT).as_posix() for path in (ROOT / "evals").glob("*/cases.yaml")},
+        "profiles": {path.relative_to(ROOT).as_posix() for path in (ROOT / "profiles").glob("*.yaml")},
     }
     for group, expected_paths in expected.items():
         registered_paths = {entry.get("path") for entry in data.get(group, []) if isinstance(entry, dict)}
