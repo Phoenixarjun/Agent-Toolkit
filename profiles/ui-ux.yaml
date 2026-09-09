@@ -1,3 +1,4 @@
+schema_version: "1"
 name: ui-ux
 description: Compose the UI/UX design, review, and engineering baseline for interface work.
 
@@ -14,13 +15,13 @@ agents:
   - ui-critic
 
 knowledge:
-  - ui-ux/intent-and-archetypes
-  - ui-ux/visual-language
-  - ui-ux/typography-and-color
-  - ui-ux/interaction-and-motion
-  - ui-ux/accessibility-and-usability
-  - ui-ux/anti-generic-ui
-  - ui-ux/review-rubric
+  - intent-and-archetypes
+  - visual-language
+  - typography-and-color
+  - interaction-and-motion
+  - accessibility-and-usability
+  - anti-generic-ui
+  - review-rubric
 
 forms:
   - UI-DESIGN-INTAKE
