@@ -1,6 +1,6 @@
-# Agent Base
+# Agent Toolkit
 
-Agent Base is a personal source-of-truth repository for reusable coding-agent skills, workflows, rules, agents, prompts, knowledge, evaluations, profiles, and vendor-specific adapters.
+Agent Toolkit is a personal source-of-truth repository for reusable coding-agent skills, workflows, rules, agents, prompts, knowledge, evaluations, profiles, and vendor-specific adapters.
 
 The repository is intentionally not an agent platform. It stores the engineering playbooks you want to own, improve, version, evaluate, and reuse across coding assistants.
 
@@ -18,7 +18,7 @@ The repository is intentionally not an agent platform. It stores the engineering
 ## Repository model
 
 ```text
-agent-base/
+agent-toolkit/
 ├── skills/          reusable task capabilities
 ├── workflows/       ordered multi-step execution patterns
 ├── rules/           persistent engineering constraints
@@ -51,12 +51,14 @@ agent-base/
 
 ## Included seed artifacts
 
-- `skills/code-review`: intent-aligned pre-commit code review and commit gate
-- `workflows/implementation-review-loop`: portable implementation -> validation -> review loop
+- `skills/intent-capture`: durable Change Intent Contract synthesis before implementation
+- `skills/code-review`: intent-aligned pre-commit review and commit gate using the active Change Intent Contract when available
+- `workflows/implementation-review-loop`: intent-locked implementation -> validation -> review loop
 - `rules/global/engineering-rules.md`: core engineering rules
 - `agents/architect`: architecture specialist with anti-overengineering discipline
 - `prompts/architecture-grill.md`: requirements pressure-test prompt
 - `knowledge/engineering/solution-design-principles.md`: compact design principles
+- `knowledge/engineering/change-intent-contract.md`: intent authority, scope, amendment, and review semantics
 - `profiles/software-engineering.yaml`: initial bundle
 - `evals/code-review/cases.yaml`: regression scenarios for the code-review skill
 - `adapters/codex/sol-luna-xi`: Codex-specific Sol-I/Luna-XI orchestration package

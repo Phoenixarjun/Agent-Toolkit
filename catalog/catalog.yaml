@@ -8,6 +8,14 @@ skills:
       - software-engineering
       - git
     maturity: stable
+    version: "1.1.0"
+  - id: intent-capture
+    path: skills/intent-capture
+    category: intent
+    domains:
+      - software-engineering
+      - agent-engineering
+    maturity: stable
     version: "1.0.0"
   - id: ui-ux-design
     path: skills/ui-ux-design
@@ -25,7 +33,7 @@ workflows:
     domains:
       - software-engineering
     maturity: stable
-    version: "1.0.0"
+    version: "1.1.0"
   - id: ui-design-build-review
     path: workflows/ui-design-build-review/WORKFLOW.md
     category: delivery
@@ -72,6 +80,11 @@ knowledge:
     category: engineering
     maturity: stable
     version: "1.0.0"
+  - id: change-intent-contract
+    path: knowledge/engineering/change-intent-contract.md
+    category: engineering
+    maturity: stable
+    version: "1.0.0"
   - id: accessibility-and-usability
     path: knowledge/ui-ux/accessibility-and-usability.md
     category: ui-ux
@@ -112,6 +125,11 @@ evals:
   - id: code-review
     path: evals/code-review/cases.yaml
     target: code-review
+    maturity: stable
+    version: "1.1.0"
+  - id: intent-capture
+    path: evals/intent-capture/cases.yaml
+    target: intent-capture
     maturity: stable
     version: "1.0.0"
   - id: ui-ux-design
