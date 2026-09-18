@@ -17,6 +17,16 @@ skills:
       - agent-engineering
     maturity: stable
     version: "1.0.0"
+  - id: grill-me
+    path: skills/grill-me
+    category: reasoning
+    domains:
+      - cross-domain
+      - discovery
+      - decision-making
+      - clarification
+    maturity: experimental
+    version: "1.0.0"
   - id: ui-ux-design
     path: skills/ui-ux-design
     category: design
@@ -131,6 +141,11 @@ evals:
     path: evals/intent-capture/cases.yaml
     target: intent-capture
     maturity: stable
+    version: "1.0.0"
+  - id: grill-me
+    path: evals/grill-me/cases.yaml
+    target: grill-me
+    maturity: experimental
     version: "1.0.0"
   - id: ui-ux-design
     path: evals/ui-ux-design/cases.yaml
