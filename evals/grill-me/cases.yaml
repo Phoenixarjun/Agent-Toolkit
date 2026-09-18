@@ -1,0 +1,230 @@
+skill: grill-me
+version: 2
+cases:
+  - id: default-auto
+    input: "$grill-me I want to build an e-commerce platform."
+    expected:
+      budget_mode: AUTO
+      pressure: STANDARD
+      interview_mode: DISCOVER
+      behaviors:
+        - asks one question only
+        - begins from problem or motivation rather than architecture
+        - has no arbitrary question target
+
+  - id: fast-five-max
+    input: "$grill-me fast I need to decide the architecture for a new order system."
+    expected:
+      budget_mode: FAST
+      max_questions: 5
+      behaviors:
+        - selects high-impact architecture decisions
+        - asks at most five primary questions
+        - does not treat five as a quota
+        - does not spend scarce questions on cosmetic details
+
+  - id: bounded-three
+    input: "$grill-me 3 I want to launch a paid analytics product."
+    expected:
+      budget_mode: BOUNDED
+      max_questions: 3
+      behaviors:
+        - asks at most three primary questions
+        - prioritizes root business or adoption decisions
+        - may stop before three if ready
+
+  - id: deep-no-quota
+    input: "$grill-me deep Review my plan to migrate a monolith to microservices."
+    expected:
+      budget_mode: DEEP
+      behaviors:
+        - has no arbitrary question count
+        - explores consequential assumptions and reversibility when relevant
+        - still asks one primary question per turn
+        - still stops when materially ready
+
+  - id: fast-hard-composition
+    input: "$grill-me fast hard I want Kubernetes for the first version of my product."
+    expected:
+      budget_mode: FAST
+      max_questions: 5
+      pressure: HARD
+      interview_mode: CHALLENGE
+      behaviors:
+        - challenges workload and operational assumptions
+        - remains professional
+        - considers simpler evolutionary paths
+        - does not assert Kubernetes is always wrong
+
+  - id: numeric-hard-composition
+    input: "$grill-me 5 hard Pressure-test my event-driven payment design."
+    expected:
+      budget_mode: BOUNDED
+      max_questions: 5
+      pressure: HARD
+      behaviors:
+        - prioritizes correctness failure and recovery decisions
+        - asks no more than five primary questions
+        - exposes unresolved high-impact risk if budget expires
+
+  - id: fast-budget-exhausted-needs-clarification
+    context:
+      questions_used: 5
+      unresolved:
+        - payment consistency requirement
+    expected:
+      status: NEEDS_CLARIFICATION
+      behaviors:
+        - does not claim readiness because five questions were used
+        - identifies the highest-impact unresolved decision
+        - explains why it matters
+
+  - id: fast-budget-exhausted-deferred
+    context:
+      questions_used: 5
+      purpose: clear
+      outcome: clear
+      scope: clear
+      constraints: clear
+      deferred:
+        - disaster recovery target
+    expected:
+      status: READY_WITH_DEFERRED
+      behaviors:
+        - names the deferred item
+        - states which conclusions remain provisional
+
+  - id: early-stop-before-budget
+    input: "$grill-me 10 Add a read-only GET /health/version endpoint using the existing response convention, no auth change, no dependency change, with an integration test."
+    expected:
+      behaviors:
+        - does not ask ten questions merely because ten are available
+        - may return READY immediately when no material ambiguity remains
+
+  - id: vague-ecommerce-discovery
+    input: "$grill-me I want to build an e-commerce platform."
+    expected:
+      interview_mode: DISCOVER
+      behaviors:
+        - asks one question only
+        - starts from motivation or problem rather than technology
+        - does not propose an architecture yet
+
+  - id: premature-microservices
+    context:
+      expected_users: 1000
+      team_size: 2
+    input: "$grill-me hard I want microservices for the first version of my shop platform."
+    expected:
+      interview_mode: CHALLENGE
+      behaviors:
+        - challenges the requirement rather than the user
+        - asks which concrete requirement needs independent deployment or scaling
+        - considers a modular monolith or evolutionary path when relevant
+        - does not assert that microservices are always wrong
+
+  - id: feature-clarification
+    input: "$grill-me Help me clarify shipment tracking on an existing order page."
+    expected:
+      interview_mode: CLARIFY
+      behaviors:
+        - asks one material behavioral question
+        - explores boundaries and failure behavior before implementation details
+        - does not implement the feature
+
+  - id: discoverable-repository-fact
+    context:
+      repository_contains: "Spring Boot application configured with PostgreSQL"
+    input: "$grill-me Adding a persistence-backed feature."
+    expected:
+      behaviors:
+        - does not ask which framework or database the repository uses
+        - uses repository evidence when relevant
+        - asks a user-owned decision instead
+
+  - id: conflicting-requirements
+    conversation:
+      - user: "Updates do not need to be real-time."
+      - user: "Customers must see every status change immediately."
+    expected:
+      behaviors:
+        - surfaces the contradiction
+        - asks which requirement should govern
+        - does not silently choose the later statement
+
+  - id: user-defers
+    input: "I don't know peak traffic yet. Defer it and continue."
+    expected:
+      behaviors:
+        - records the deferral conceptually
+        - states the consequence when material
+        - does not repeatedly ask the same question
+
+  - id: business-lens
+    input: "$grill-me I want to launch a paid analytics product for small retailers."
+    expected:
+      behaviors:
+        - activates business or adoption lenses when material
+        - distinguishes user buyer and payer when relevant
+        - does not default immediately to technical architecture
+
+  - id: security-lens
+    input: "$grill-me hard Add delegated access to customer bank transaction data."
+    expected:
+      behaviors:
+        - activates security privacy authorization or compliance perspectives
+        - asks one primary question at a time
+        - prioritizes high-consequence ambiguity
+
+  - id: no-hostility
+    input: "$grill-me hard I picked Kubernetes because it seems scalable."
+    expected:
+      behaviors:
+        - uses direct but professional language
+        - challenges the assumption with workload or operational requirements
+        - does not ridicule insult or shame the user
+
+  - id: no-premature-recommendation
+    input: "$grill-me I have an idea for a tool but I'm not sure who it's for."
+    expected:
+      interview_mode: DISCOVER
+      behaviors:
+        - asks neutrally before recommending a market
+        - does not anchor the user with a premature solution
+
+  - id: switch-to-fast-midrun
+    conversation:
+      - user: "$grill-me Help me design this service."
+      - assistant: "<one question>"
+      - user: "Make it fast."
+    expected:
+      behaviors:
+        - switches to budget-aware questioning without restarting
+        - summarizes if too little budget remains for another useful question
+
+  - id: go-deeper-midrun
+    conversation:
+      - user: "$grill-me Clarify this architecture."
+      - assistant: "<several resolved questions>"
+      - user: "Go deeper."
+    expected:
+      behaviors:
+        - preserves the existing decision map
+        - expands into deeper relevant branches
+        - does not restart the interview
+
+  - id: completion-gate
+    context:
+      purpose: clear
+      outcome: clear
+      stakeholders: clear
+      scope: clear
+      constraints: clear
+      assumptions: surfaced
+      risks: surfaced
+      contradictions: none
+      deferred: minor
+    expected:
+      behaviors:
+        - stops rather than continuing for theoretical completeness
+        - returns READY or READY_WITH_DEFERRED
