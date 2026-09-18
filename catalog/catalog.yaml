@@ -35,6 +35,15 @@ skills:
       - frontend
     maturity: stable
     version: "1.1.0"
+  - id: problem-to-solution
+    path: skills/problem-to-solution
+    category: product-discovery
+    domains:
+      - product-discovery
+      - problem-framing
+      - decision-making
+    maturity: experimental
+    version: "1.0.0"
 
 workflows:
   - id: implementation-review-loop
@@ -51,6 +60,14 @@ workflows:
       - ui-ux
       - frontend
     maturity: stable
+    version: "1.0.0"
+  - id: problem-to-solution
+    path: workflows/problem-to-solution/WORKFLOW.md
+    category: delivery
+    domains:
+      - product-discovery
+      - problem-framing
+    maturity: experimental
     version: "1.0.0"
 
 rules:
@@ -130,6 +147,16 @@ knowledge:
     category: ui-ux
     maturity: stable
     version: "1.0.0"
+  - id: problem-framing
+    path: knowledge/product-discovery/problem-framing.md
+    category: product-discovery
+    maturity: experimental
+    version: "1.0.0"
+  - id: option-evaluation
+    path: knowledge/product-discovery/option-evaluation.md
+    category: product-discovery
+    maturity: experimental
+    version: "1.0.0"
 
 evals:
   - id: code-review
@@ -152,6 +179,11 @@ evals:
     target: ui-ux-design
     maturity: stable
     version: "1.0.0"
+  - id: problem-to-solution
+    path: evals/problem-to-solution/cases.yaml
+    target: problem-to-solution
+    maturity: experimental
+    version: "1.0.0"
 
 profiles:
   - id: software-engineering
@@ -161,6 +193,10 @@ profiles:
   - id: ui-ux
     path: profiles/ui-ux.yaml
     maturity: stable
+    version: "1.0.0"
+  - id: product-discovery
+    path: profiles/product-discovery.yaml
+    maturity: experimental
     version: "1.0.0"
 
 adapters:

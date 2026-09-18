@@ -1,0 +1,19 @@
+schema_version: "1"
+name: product-discovery
+description: Compose problem clarification, solution exploration, and decision-ready product discovery.
+
+skills:
+  - grill-me
+  - problem-to-solution
+
+workflows:
+  - problem-to-solution
+
+knowledge:
+  - problem-framing
+  - option-evaluation
+
+templates:
+  - PROBLEM-BRIEF
+  - SOLUTION-OPTION
+  - DECISION-BRIEF
