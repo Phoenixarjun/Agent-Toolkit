@@ -3,7 +3,7 @@ name: intent-capture
 description: Converts a sufficiently understood coding request into a durable project-local Change Intent Contract with stable acceptance criteria, scope boundaries, constraints, approval boundaries, and unresolved decisions. Use before implementation when the requested change must survive session resets or be reviewed later against exact user intent.
 compatibility: Requires permission to inspect the current request and, when persisting the contract, write to the target project's .agent-toolkit/intents directory.
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   category: "intent"
   stage: "pre-implementation"
 ---
@@ -26,12 +26,10 @@ Do not:
 - silently resolve material product decisions
 - start implementation
 - rewrite an accepted contract to match code that already exists
-- store temporary worker, session, or model state in the contract
-- store credentials, secrets, tokens, or unnecessary sensitive data in the contract
+- store temporary session or model state in the contract
+- store credentials, secrets, or tokens in the contract
 
 ## 1. Classify request readiness
-
-Classify the request before creating a ready contract.
 
 ### DIRECT
 
@@ -51,11 +49,11 @@ Return `NEEDS_CLARIFICATION` until those decisions are resolved.
 
 ### DISCOVERY
 
-The desired outcome itself is not sufficiently defined. Examples include requests that name only a broad product or category without a clear user, job, or result.
+The desired outcome itself is not sufficiently defined.
 
 Do not fabricate a specification.
 
-Return `NEEDS_DISCOVERY` and identify the minimum topics a future discovery/interview capability must resolve.
+Return `NEEDS_DISCOVERY` and identify the minimum topics a future discovery session must resolve.
 
 ## 2. Recover the actual intent
 
@@ -83,11 +81,7 @@ If repository inspection can answer a technical question without changing the pr
 
 Acceptance criteria describe observable truth, not implementation activity.
 
-Good criteria answer:
-
-```text
-What must a user, caller, test, operator, or reviewer be able to observe when this change is correct?
-```
+Each criterion must answer: *What must a user, caller, test, operator, or reviewer be able to observe when this change is correct?*
 
 Assign stable IDs:
 
@@ -99,43 +93,23 @@ AC-003
 
 For each criterion include the evidence expected to prove it.
 
-Do not use criteria such as:
-
-```text
-write clean code
-follow best practices
-update files
-implement feature
-make it production ready
-```
-
-unless the request defines an observable meaning for them.
-
 Once assigned, do not renumber existing acceptance IDs during later amendments.
+
+Do not write criteria that describe code activity rather than observable outcome.
 
 ## 4. Establish scope boundaries
 
-### In Scope
+**In Scope** — requested behavior and directly authorized outcomes.
 
-List requested behavior and directly authorized outcomes.
+**Must Preserve** — behavior, contracts, data, APIs, compatibility, or user flows that must not regress.
 
-### Must Preserve
-
-List behavior, contracts, data, APIs, compatibility, or user flows that must not regress.
-
-### Out of Scope
-
-Record tempting adjacent work that should not be pulled into this change.
-
-Do not turn `Out of Scope` into an exhaustive list of the entire system.
+**Out of Scope** — tempting adjacent work that must not be pulled into this change. Do not make this an exhaustive list of the entire system.
 
 ## 5. Record constraints and approval boundaries
 
-Constraints are requirements that limit valid solutions.
+Constraints are requirements that limit valid solutions — compatibility, technology, performance, accessibility, security, or deployment.
 
-Examples include compatibility, technology, performance, accessibility, security, deployment, or dependency constraints when the user or project makes them material.
-
-Approval boundaries identify side effects that must not be introduced implicitly. Capture them when relevant, including:
+Approval boundaries identify side effects that must not be introduced implicitly:
 
 ```text
 destructive operations
@@ -154,7 +128,7 @@ cost-bearing infrastructure changes
 
 A low-risk reversible assumption may be recorded explicitly.
 
-A material assumption that could change the product outcome, scope, data behavior, security posture, external contract, or acceptance criteria is not an assumption the agent may silently make. It is an open decision.
+A material assumption that could change the product outcome, scope, data behavior, security posture, external contract, or acceptance criteria is not an assumption the agent may silently make — it is an open decision.
 
 A contract cannot become `ready` while a material open decision remains unresolved.
 
@@ -172,23 +146,15 @@ When the user changes the request:
 - add new acceptance IDs instead of renumbering old ones
 - explicitly mark requirements withdrawn by the user
 
-Create a new intent and use `supersedes` when the desired outcome has become a materially different task rather than an amendment of the same change.
+Create a new intent using `supersedes` when the desired outcome has become a materially different task rather than an amendment.
 
 Only explicit user direction or an authoritative upstream specification may change accepted intent.
 
 ## 8. Persist the contract
 
-Canonical target-project location:
+Canonical target-project location: `.agent-toolkit/intents/`
 
-```text
-.agent-toolkit/intents/
-```
-
-Canonical filename:
-
-```text
-INT-YYYYMMDD-NNN-short-slug.md
-```
+Canonical filename: `INT-YYYYMMDD-NNN-short-slug.md`
 
 Prefer the deterministic repository helper when available:
 
@@ -196,9 +162,7 @@ Prefer the deterministic repository helper when available:
 python scripts/new_intent.py --root <target-project> --title "<title>" --source <source>
 ```
 
-Do not place canonical intent under `.claude/`, `.codex/`, `.cursor/`, or another vendor directory.
-
-Temporary session state belongs elsewhere and must not be mixed into the durable intent contract.
+Do not place canonical intent under any vendor-specific directory (`.claude/`, `.codex/`, `.cursor/`, or similar).
 
 ## 9. Validate readiness
 
@@ -222,11 +186,7 @@ python scripts/validate_intent.py <intent-file> --strict
 
 ## Output contract
 
-Use exactly one status.
-
 ### READY
-
-The contract is executable without a material product guess.
 
 ```text
 Status: READY
@@ -240,8 +200,6 @@ Path: <persisted path or Not persisted>
 
 ### NEEDS_CLARIFICATION
 
-The outcome is understood but one or more material decisions must be answered.
-
 ```text
 Status: NEEDS_CLARIFICATION
 Known outcome: <one sentence>
@@ -251,8 +209,6 @@ Reason: <what decision the answer changes>
 ```
 
 ### NEEDS_DISCOVERY
-
-The request is too broad to form an honest executable contract.
 
 ```text
 Status: NEEDS_DISCOVERY

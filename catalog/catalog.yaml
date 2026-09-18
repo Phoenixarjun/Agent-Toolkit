@@ -8,7 +8,7 @@ skills:
       - software-engineering
       - git
     maturity: stable
-    version: "1.1.0"
+    version: "1.2.0"
   - id: intent-capture
     path: skills/intent-capture
     category: intent
@@ -16,7 +16,7 @@ skills:
       - software-engineering
       - agent-engineering
     maturity: stable
-    version: "1.0.0"
+    version: "1.1.0"
   - id: grill-me
     path: skills/grill-me
     category: reasoning
@@ -26,7 +26,7 @@ skills:
       - decision-making
       - clarification
     maturity: experimental
-    version: "1.0.0"
+    version: "1.1.0"
   - id: ui-ux-design
     path: skills/ui-ux-design
     category: design
@@ -34,7 +34,7 @@ skills:
       - ui-ux
       - frontend
     maturity: stable
-    version: "1.0.0"
+    version: "1.1.0"
 
 workflows:
   - id: implementation-review-loop
@@ -43,7 +43,7 @@ workflows:
     domains:
       - software-engineering
     maturity: stable
-    version: "1.1.0"
+    version: "1.2.0"
   - id: ui-design-build-review
     path: workflows/ui-design-build-review/WORKFLOW.md
     category: delivery
@@ -136,7 +136,7 @@ evals:
     path: evals/code-review/cases.yaml
     target: code-review
     maturity: stable
-    version: "1.1.0"
+    version: "1.2.0"
   - id: intent-capture
     path: evals/intent-capture/cases.yaml
     target: intent-capture
