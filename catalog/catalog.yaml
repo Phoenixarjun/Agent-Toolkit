@@ -8,7 +8,25 @@ skills:
       - software-engineering
       - git
     maturity: stable
-    version: "1.0.0"
+    version: "1.2.0"
+  - id: intent-capture
+    path: skills/intent-capture
+    category: intent
+    domains:
+      - software-engineering
+      - agent-engineering
+    maturity: stable
+    version: "1.1.0"
+  - id: grill-me
+    path: skills/grill-me
+    category: reasoning
+    domains:
+      - cross-domain
+      - discovery
+      - decision-making
+      - clarification
+    maturity: experimental
+    version: "1.1.0"
   - id: ui-ux-design
     path: skills/ui-ux-design
     category: design
@@ -16,6 +34,15 @@ skills:
       - ui-ux
       - frontend
     maturity: stable
+    version: "1.1.0"
+  - id: problem-to-solution
+    path: skills/problem-to-solution
+    category: product-discovery
+    domains:
+      - product-discovery
+      - problem-framing
+      - decision-making
+    maturity: experimental
     version: "1.0.0"
 
 workflows:
@@ -25,7 +52,7 @@ workflows:
     domains:
       - software-engineering
     maturity: stable
-    version: "1.0.0"
+    version: "1.2.0"
   - id: ui-design-build-review
     path: workflows/ui-design-build-review/WORKFLOW.md
     category: delivery
@@ -33,6 +60,14 @@ workflows:
       - ui-ux
       - frontend
     maturity: stable
+    version: "1.0.0"
+  - id: problem-to-solution
+    path: workflows/problem-to-solution/WORKFLOW.md
+    category: delivery
+    domains:
+      - product-discovery
+      - problem-framing
+    maturity: experimental
     version: "1.0.0"
 
 rules:
@@ -72,6 +107,11 @@ knowledge:
     category: engineering
     maturity: stable
     version: "1.0.0"
+  - id: change-intent-contract
+    path: knowledge/engineering/change-intent-contract.md
+    category: engineering
+    maturity: stable
+    version: "1.0.0"
   - id: accessibility-and-usability
     path: knowledge/ui-ux/accessibility-and-usability.md
     category: ui-ux
@@ -107,17 +147,42 @@ knowledge:
     category: ui-ux
     maturity: stable
     version: "1.0.0"
+  - id: problem-framing
+    path: knowledge/product-discovery/problem-framing.md
+    category: product-discovery
+    maturity: experimental
+    version: "1.0.0"
+  - id: option-evaluation
+    path: knowledge/product-discovery/option-evaluation.md
+    category: product-discovery
+    maturity: experimental
+    version: "1.0.0"
 
 evals:
   - id: code-review
     path: evals/code-review/cases.yaml
     target: code-review
     maturity: stable
+    version: "1.2.0"
+  - id: intent-capture
+    path: evals/intent-capture/cases.yaml
+    target: intent-capture
+    maturity: stable
+    version: "1.0.0"
+  - id: grill-me
+    path: evals/grill-me/cases.yaml
+    target: grill-me
+    maturity: experimental
     version: "1.0.0"
   - id: ui-ux-design
     path: evals/ui-ux-design/cases.yaml
     target: ui-ux-design
     maturity: stable
+    version: "1.0.0"
+  - id: problem-to-solution
+    path: evals/problem-to-solution/cases.yaml
+    target: problem-to-solution
+    maturity: experimental
     version: "1.0.0"
 
 profiles:
@@ -128,6 +193,10 @@ profiles:
   - id: ui-ux
     path: profiles/ui-ux.yaml
     maturity: stable
+    version: "1.0.0"
+  - id: product-discovery
+    path: profiles/product-discovery.yaml
+    maturity: experimental
     version: "1.0.0"
 
 adapters:

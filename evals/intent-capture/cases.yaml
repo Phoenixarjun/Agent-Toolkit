@@ -1,0 +1,54 @@
+schema_version: "1"
+skill: intent-capture
+cases:
+  - id: direct-ready-request
+    scenario: The user gives a precise feature outcome, four observable requirements, an explicit compatibility constraint, and no unresolved material decisions.
+    expected_status: READY
+    must_include:
+      - stable AC IDs
+      - must-preserve behavior
+      - explicit out-of-scope boundary
+      - no invented implementation plan
+
+  - id: clear-goal-missing-material-choice
+    scenario: The user wants account deletion but has not decided whether deletion is reversible, which materially changes data behavior and acceptance.
+    expected_status: NEEDS_CLARIFICATION
+    must_include:
+      - only the material deletion-policy question
+      - explanation of what the answer changes
+    must_not_include:
+      - implementation
+      - silently selected deletion policy
+
+  - id: broad-product-request
+    scenario: The user says only "build me an e-commerce platform" with no target user, business model, or initial outcome.
+    expected_status: NEEDS_DISCOVERY
+    must_include:
+      - minimum discovery topics
+      - explicit instruction not to implement yet
+    must_not_include:
+      - fabricated feature list
+
+  - id: repository-answerable-detail
+    scenario: The desired behavior is clear, but the user did not name the existing API path or file that owns it. Repository inspection can establish those details.
+    expected_status: READY
+    must_include:
+      - no unnecessary user question about file paths
+      - implementation details excluded from the intent contract
+
+  - id: material-assumption
+    scenario: The feature could either send external notifications or remain in-app only, and the user has not authorized external messaging.
+    expected_status: NEEDS_CLARIFICATION
+    must_include:
+      - external side effect treated as a material decision or approval boundary
+    must_not_include:
+      - external messaging silently assumed
+
+  - id: amendment-preserves-ids
+    scenario: A ready intent has AC-001 through AC-003. The user adds one new requirement without changing the original goal.
+    expected_status: READY
+    must_include:
+      - existing AC IDs preserved
+      - new criterion receives a new ID
+      - revision incremented
+      - amendment recorded

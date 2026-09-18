@@ -84,20 +84,7 @@ If browser tools are unavailable, mark rendered validation as unavailable instea
 
 When subagents are supported, dispatch `ui-critic` read-only against the rendered candidate and relevant intent.
 
-The critic evaluates:
-
-```text
-intent fit
-task clarity
-hierarchy
-responsive behavior
-interaction states
-accessibility signals
-visual coherence
-product specificity
-generic-agent patterns
-unnecessary complexity
-```
+The critic evaluates against the `ui-ux-design` skill's review priority order (task completion → usability → accessibility → hierarchy → responsive behavior → consistency → product specificity → visual refinement → motion → decorative detail).
 
 The critic must separate blocking findings from preference.
 

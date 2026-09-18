@@ -4,6 +4,7 @@ description: Default software-engineering bundle for implementation, architectur
 rules:
   - global-engineering
 skills:
+  - intent-capture
   - code-review
 workflows:
   - implementation-review-loop
@@ -13,3 +14,4 @@ prompts:
   - architecture-grill
 knowledge:
   - solution-design-principles
+  - change-intent-contract
