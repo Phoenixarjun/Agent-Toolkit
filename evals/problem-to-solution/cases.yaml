@@ -1,0 +1,126 @@
+schema_version: "1"
+skill: problem-to-solution
+workflow: problem-to-solution
+
+cases:
+  # Skill behavioral cases
+  - id: uses-grill-me-only-when-needed
+    target: skill
+    input: "Our local delivery failure rate is 18%, mostly because customers are unavailable at arrival. We need options."
+    expected:
+      - does not invoke grill-me unnecessarily
+      - begins solution-space exploration from the stated problem
+
+  - id: vague-problem-uses-grill-me
+    target: skill
+    input: "I want to build an e-commerce platform."
+    expected:
+      - recognizes that the underlying problem is not established
+      - routes material ambiguity to grill-me before solution exploration
+
+  - id: time-constrained-uses-fast
+    target: skill
+    input: "I have ten minutes. Help me figure out how to solve our checkout abandonment problem."
+    expected:
+      - uses or recommends grill-me fast if material clarification is required
+      - focuses clarification on high-impact unknowns
+
+  - id: preferred-solution-can-trigger-hard
+    target: skill
+    input: "Our app has 1,000 users. I want microservices because that is the scalable architecture."
+    expected:
+      - treats microservices as a candidate rather than ground truth
+      - uses hard challenge when clarification of the assumption materially affects exploration
+
+  - id: does-not-privilege-user-solution
+    target: skill
+    input: "Support is slow. I think we should build an AI chatbot."
+    expected:
+      - treats the chatbot as one candidate
+      - explores materially different mechanisms
+
+  - id: includes-status-quo
+    target: skill
+    input: "Our approval process is slow and mostly manual."
+    expected:
+      - considers simplifying the current process
+      - does not force a new software product
+
+  - id: avoids-cosmetic-variants
+    target: skill
+    input: "Explore ways to reduce failed local deliveries."
+    expected:
+      - candidates differ by mechanism
+      - does not satisfy divergence with superficial feature variations
+
+  - id: no-fake-precision
+    target: skill
+    input: "Compare the approaches even though we have almost no cost data."
+    expected:
+      - exposes uncertainty
+      - avoids unsupported precise numerical scoring
+
+  - id: technology-after-requirements
+    target: skill
+    input: "Tell me whether each option should use MongoDB or Postgres."
+    expected:
+      - establishes workload and feasibility requirements first
+      - avoids premature stack selection
+
+  - id: hybrid-is-re-evaluated
+    target: skill
+    input: "Combine the strongest parts of the finalists."
+    expected:
+      - evaluates candidates independently first
+      - treats the hybrid as a new candidate
+
+  # Workflow orchestration cases
+  - id: breadth-before-depth
+    target: workflow
+    input: "Explore this problem fully and tell me what to build."
+    expected:
+      - performs cheap divergent exploration before expensive research
+      - narrows candidates before deep research
+
+  - id: selective-grill-me
+    target: workflow
+    input: "The problem is clear, but I am not sure whether customers will tolerate an extra onboarding step."
+    expected:
+      - uses grill-me only if the unresolved adoption decision materially affects candidate evaluation
+      - does not restart discovery from zero
+
+  - id: research-is-decision-relevant
+    target: workflow
+    input: "Research every possible angle for all ten ideas."
+    expected:
+      - resists exhaustive low-value research
+      - researches questions capable of changing finalist decisions
+
+  - id: architecture-is-feasibility-only
+    target: workflow
+    input: "Give architecture for each finalist."
+    expected:
+      - produces lightweight feasibility sketches
+      - avoids premature final architecture and stack choices
+
+  - id: premortem-attacks-finalists
+    target: workflow
+    input: "The finalists all look good."
+    expected:
+      - performs a failure-oriented pass
+      - surfaces assumptions and risks before synthesis
+
+  - id: user-preference-is-not-truth
+    target: workflow
+    input: "I prefer option B, so make it the winner."
+    expected:
+      - preserves the preference as input
+      - does not erase conflicting evidence or tradeoffs
+      - may use grill-me hard when the preference rests on an unsupported assumption
+
+  - id: stops-before-implementation
+    target: workflow
+    input: "Finish the exploration."
+    expected:
+      - produces a decision-ready handoff
+      - does not proceed into implementation without a new decision
