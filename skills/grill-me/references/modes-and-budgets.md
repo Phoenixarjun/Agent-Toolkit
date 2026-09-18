@@ -1,62 +1,30 @@
 # Modes and Budgets
 
-Use this reference when Grill Me is invoked with `fast`, `deep`, a numeric question budget, or an explicit pressure modifier.
+Load this reference when Grill Me is invoked with `fast`, `deep`, a numeric question budget, or an explicit pressure modifier, or when budget-sensitive branching logic needs detailed grounding.
 
 ## Three Independent Controls
 
 Do not conflate:
 
-- interview mode: what kind of ambiguity is being resolved
-- question budget: how much interrogation capacity is available
-- pressure: how aggressively the reasoning should be tested
+- **interview mode** — what kind of ambiguity is being resolved (inferred automatically)
+- **question budget** — how much interrogation capacity is available (user-controlled)
+- **pressure** — how aggressively reasoning is tested (user-controlled)
 
-The user may control budget and pressure. Interview mode is normally inferred.
+## Budget Modes
 
-## General Default
+### AUTO (default)
 
-Invocation:
+No target question count. Choose the highest-value unresolved question each turn. Stop when the stop condition is met.
 
-```text
-$grill-me <subject>
-```
+### FAST
 
-Behavior:
+Invocation: `$grill-me fast <subject>`
 
-```text
-interview_mode: inferred
-question_budget: AUTO
-pressure: STANDARD
-```
+Maximum 5 questions. FAST is not "normal Grill Me truncated at five."
 
-AUTO is the canonical default.
+Before the first question, survey the full visible decision frontier. Spend questions on decisions with the greatest expected downstream effect.
 
-There is no target number of questions.
-
-The skill stops when readiness is reached.
-
-## Fast
-
-Invocation:
-
-```text
-$grill-me fast <subject>
-```
-
-Behavior:
-
-```text
-question_budget: FAST
-max_questions: 5
-pressure: STANDARD unless overridden
-```
-
-FAST is not "normal Grill Me truncated at five questions."
-
-Before the first question, identify the highest-impact uncertainties visible from current context.
-
-Spend questions on decisions with the greatest expected downstream effect.
-
-Typical priority pattern when applicable:
+Typical priority pattern (adapt to domain):
 
 1. actual outcome
 2. blocking constraint
@@ -64,212 +32,92 @@ Typical priority pattern when applicable:
 4. highest-risk decision
 5. definition of success or next irreversible choice
 
-Do not mechanically use those five categories if the domain suggests a different frontier.
+Domain-specific focus examples:
 
-Examples of domain-specific focus:
+**Architecture:** workload characteristics → correctness/failure guarantees → critical integration boundaries → constraint driving architectural complexity → evolution/reversibility
 
-Architecture:
-- workload
-- correctness/failure guarantees
-- critical integration boundaries
-- constraint driving architectural complexity
-- evolution/reversibility
+**Business:** target customer → painful job or problem → why they would pay or change → distribution channel → unit economics
 
-Business:
-- target customer
-- painful job/problem
-- buyer/payer
-- acquisition/distribution
-- economics or adoption blocker
+**Product:** primary user and job → critical success observable → hardest constraint → most important tradeoff → definition of done
 
-Product/UI:
-- primary user
-- primary job
-- critical journey
-- trust/device/accessibility constraint
-- success behavior
+Do not mechanically use those categories if the domain suggests a different frontier.
 
-Security-sensitive system:
-- protected asset
-- trust boundary
-- authorization model
-- failure/abuse consequence
-- compliance or recovery constraint
+### BOUNDED(N)
 
-## Numeric Budget
+Invocation: `$grill-me <N> <subject>`
 
-Invocation:
+"At most N" questions, never exactly N. Stop earlier when the subject becomes ready.
 
-```text
-$grill-me 3 <subject>
-$grill-me 7 <subject>
-```
+With N questions remaining, prioritize ambiguities that dominate multiple downstream decisions. Do not spend an early question on a low-impact detail while a foundational uncertainty remains.
 
-Interpretation:
+Do not ask filler questions to consume the budget.
 
-```text
-mode: BOUNDED
-max_questions: N
-```
+### DEEP
 
-`N` is a ceiling, not a target.
+Invocation: `$grill-me deep <subject>`
 
-Stop before N if ready.
+No arbitrary question limit. Explore consequential branches thoroughly, including assumptions, alternatives, failure modes, reversibility, and second-order effects when relevant.
 
-When N is small, prioritize root decisions that collapse multiple later branches.
-
-Never use a final question on a cosmetic preference while a foundational ambiguity remains unresolved.
-
-If a numeric budget is unreasonable for the requested depth, respect it and make unresolved risk explicit rather than silently exceeding it.
-
-## Deep
-
-Invocation:
-
-```text
-$grill-me deep <subject>
-```
-
-Behavior:
-
-```text
-question_budget: DEEP
-max_questions: null
-```
-
-DEEP increases branch coverage, not verbosity per question.
-
-Probe when relevant:
-
-- hidden assumptions
-- credible alternatives
-- failure modes
-- edge conditions
-- reversibility
-- migration
-- operational ownership
-- incentive mismatches
-- second-order consequences
-- evidence that would falsify the current direction
-
-Still ask one primary question per turn.
-
-Still prune irrelevant branches.
-
-Still stop when further questioning would not materially change the next action.
+Still prune irrelevant branches. Still apply the stop condition. Do not interpret DEEP as "keep asking forever."
 
 ## Pressure Levels
 
 ### LIGHT
 
-Use when the user wants quick clarification with minimal adversarial testing.
-
 Focus on:
-
-- intent
-- outcome
-- scope
+- missing or unclear intent
 - major constraints
-- obvious blockers
+- scope boundaries
+- definition of acceptance
 
-Do not expand into speculative edge cases.
+Do not probe assumptions, alternatives, or failure modes unless they are immediately blocking.
 
-### STANDARD
+### STANDARD (default)
 
-Default.
-
-Also test:
-
-- assumptions
-- tradeoffs
-- dependencies
-- important alternatives
-- major failure modes
+LIGHT topics, plus:
+- key assumptions and their evidence
+- major tradeoffs and who owns them
+- critical dependencies
+- main alternatives considered
+- primary failure modes
 
 ### HARD
 
-Use when the user explicitly asks to be challenged hard or when a calling workflow deliberately requests adversarial pressure.
-
-Also test when relevant:
-
-- second-order effects
-- incentive failures
-- adversarial behavior
-- operational failure
-- irreversible decisions
-- migration traps
+STANDARD topics, plus:
+- second-order effects and systemic consequences
+- incentive failures and misaligned stakeholders
+- adversarial or abuse scenarios
+- operational failure and recovery
+- reversibility and rollback cost
 - expensive hidden assumptions
-- false scalability arguments
-- organizational capability mismatch
-- what evidence would invalidate the plan
+- what would invalidate the current direction
 
-Hard pressure must remain respectful.
+Hard means more rigorous scrutiny, not aggression. Directness and precision increase; tone remains professional.
 
-Do not confuse aggression with rigor.
+## Combining Budget and Pressure
 
-## Modifier Composition
-
-Valid combinations include:
+Budget and pressure are orthogonal. Either may be set independently.
 
 ```text
-$grill-me fast hard
-$grill-me 5 hard
-$grill-me 3 light
-$grill-me deep hard
+$grill-me fast hard   → FAST + HARD
+$grill-me 5 hard      → BOUNDED(5) + HARD
+$grill-me deep light  → DEEP + LIGHT
+$grill-me 3           → BOUNDED(3) + STANDARD
 ```
 
-Resolution order:
+When both budget is constrained and pressure is HARD, prioritize the highest-risk unresolved decision first. The budget constraint governs question count; pressure governs depth of each question.
 
-1. parse budget modifier
-2. parse pressure modifier
-3. infer interview mode from subject/context
-4. begin questioning
+## Budget Exhaustion Behavior
 
-If multiple incompatible budget modifiers are supplied, use the most explicit numeric budget when present. Otherwise prefer `fast` over `auto`; `deep` should not be combined with a numeric ceiling unless the user explicitly explains the intent.
+When budget reaches zero:
 
-When ambiguity remains, choose the interpretation that places the tighter bound on question count and state it briefly.
+| Situation | Status |
+|---|---|
+| All material ambiguity resolved | `READY` |
+| Proceeding is reasonable, named items remain provisional | `READY_WITH_DEFERRED` |
+| An unresolved user-owned decision can materially change next step | `NEEDS_CLARIFICATION` |
+| Required information cannot be obtained | `BLOCKED` |
 
-## Budget Exhaustion Output
+Always name the highest-impact unresolved item when reporting anything other than `READY`.
 
-When the ceiling is reached, never infer readiness from exhaustion.
-
-Return the real state.
-
-Example:
-
-```text
-Status: READY_WITH_DEFERRED
-Questions used: 5/5
-Resolved: target user, primary outcome, current scale, delivery constraint
-Deferred: disaster-recovery requirement
-Impact: resilience decisions remain provisional
-```
-
-Or:
-
-```text
-Status: NEEDS_CLARIFICATION
-Questions used: 5/5
-Blocking uncertainty: payment consistency requirement
-Impact: this can materially change the transaction design
-```
-
-## User Changes Budget Mid-Run
-
-If the user says:
-
-```text
-make it fast
-```
-
-switch the remaining run to FAST and count already asked primary questions against the new ceiling only if doing so still leaves at least one useful question. Otherwise summarize current understanding and unresolved items.
-
-If the user says:
-
-```text
-go deeper
-```
-
-switch to DEEP and continue from the current decision map rather than restarting.
-
-If the user supplies a new numeric ceiling, apply it to total primary questions for the current Grill Me run unless they explicitly say "N more questions."
+Do not claim readiness merely because the budget expired.

@@ -1,7 +1,7 @@
 ---
 name: implementation-review-loop
 description: Portable workflow for executing an accepted Change Intent Contract or equivalent request through bounded implementation, independent validation, intent-aligned pre-commit review, and at most one focused correction cycle.
-version: "1.1.0"
+version: "1.2.0"
 ---
 
 # Implementation Review Loop
@@ -14,13 +14,7 @@ Produce the smallest correct implementation of one selected intent and finish wi
 
 Use when code must be created, changed, fixed, or completed and the result should be independently validated before commit.
 
-Prefer a ready Change Intent Contract under:
-
-```text
-.agent-toolkit/intents/
-```
-
-If no formal contract exists, establish an equivalent intent contract before implementation. Use `intent-capture` when appropriate.
+Prefer a ready Change Intent Contract under `.agent-toolkit/intents/`. If no formal contract exists, establish an equivalent using `intent-capture` before implementation.
 
 Do not begin implementation while a material product decision is unresolved.
 
@@ -58,7 +52,7 @@ If the user materially changes the request during implementation, amend or super
 
 Before writes begin, establish enough baseline evidence to distinguish new work from pre-existing dirty state.
 
-Record at minimum when available:
+Record at minimum:
 
 ```text
 current commit or candidate identity
@@ -66,9 +60,7 @@ initial git status
 pre-existing changed paths
 ```
 
-Do not erase or absorb unrelated user changes.
-
-The baseline is execution state, not part of the durable intent contract.
+Do not erase or absorb unrelated user changes. The baseline is execution state, not part of the durable intent contract.
 
 ## Stage 3: Discovery
 
@@ -88,9 +80,7 @@ Skip a separate discovery role for tiny deterministic changes when the builder c
 
 ## Stage 4: Implementation
 
-Assign one owner to each tracked file for the duration of the run.
-
-Parallel writers are allowed only when exact write scopes are disjoint.
+Assign one owner to each tracked file for the duration of the run. Parallel writers are allowed only when exact write scopes are disjoint.
 
 The builder must:
 
@@ -109,9 +99,7 @@ Builder completion is not final acceptance.
 
 Validate the actual final candidate, not a plan or stale diff.
 
-Map each active acceptance criterion to fresh evidence.
-
-Also verify must-preserve behavior when affected by the candidate.
+Map each active acceptance criterion to fresh evidence. Also verify must-preserve behavior when affected.
 
 Start with focused checks and widen based on risk.
 
@@ -119,25 +107,7 @@ If the candidate changes after validation, affected evidence becomes stale and m
 
 ## Stage 6: Intent-aligned code review
 
-Run the canonical `code-review` skill against:
-
-```text
-selected intent ID + revision
-final candidate identity and boundary
-current repository state
-fresh validation evidence
-```
-
-The review must check:
-
-- complete acceptance coverage
-- complete Git change scope
-- required versus supporting changes
-- benign versus material extras
-- unrelated or unclear work
-- correctness and regression risk
-- approval-boundary violations
-- validation evidence
+Run the `code-review` skill against the selected intent, final candidate identity and boundary, current repository state, and fresh validation evidence.
 
 If several intents are mixed in the worktree and the selected candidate cannot be isolated reliably, do not declare the entire worktree safe to commit.
 
@@ -153,28 +123,11 @@ review or validation failure
         -> fresh code review
 ```
 
-Do not restart the whole implementation when a bounded correction is sufficient.
-
-Do not loop indefinitely.
+Do not restart the whole implementation when a bounded correction is sufficient. Do not loop indefinitely.
 
 ## Reviewer trigger
 
-Add a dedicated reviewer when the change materially affects:
-
-```text
-authentication or authorization
-security or privacy boundaries
-data integrity
-concurrency
-distributed consistency
-migrations
-public API compatibility
-billing or payments
-infrastructure or production configuration
-external side effects
-shared contracts
-large cross-module behavior
-```
+Add a dedicated reviewer when the change materially affects a high-risk domain. See the `code-review` skill's `references/review-risk.md` for domain classification.
 
 ## Final states
 
@@ -183,7 +136,7 @@ PASS                candidate satisfies selected intent and is safe to commit
 FIX                 one bounded correction remains appropriate
 BLOCKED             required evidence, isolation, or safe execution is unavailable
 NEEDS_CONFIRMATION  material extra/unrelated scope needs an explicit user decision
-NEEDS_USER           the intent itself requires a product decision before execution can continue
+NEEDS_USER          the intent itself requires a product decision before execution can continue
 ```
 
 ## Evidence law
