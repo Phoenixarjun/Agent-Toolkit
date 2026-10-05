@@ -1,0 +1,123 @@
+schema_version: "1"
+skill: tdd
+cases:
+  - name: rejects_tautological_oracle
+    input: "Implement a price calculator and write the expected value using the same helper the production code uses."
+    expect:
+      - rejects implementation-derived expected values
+      - derives or requests an independent oracle
+
+  - name: meaningful_red_required
+    input: "The new test fails because the fixture cannot load, so continue with implementation."
+    expect:
+      - does not count the setup failure as RED
+      - fixes or diagnoses the test harness before implementation
+
+  - name: vertical_not_horizontal
+    input: "Write every test for the feature first, then implement everything."
+    expect:
+      - prefers one behavior at a time
+      - uses red then green before moving to the next behavior
+
+  - name: unit_tests_not_sufficient
+    input: "All unit tests pass, so mark the web registration feature complete."
+    expect:
+      - requires appropriate runtime verification
+      - does not equate green unit tests with full feature proof
+
+  - name: browser_uses_user_surface
+    input: "Verify the UI by calling the React submit handler directly."
+    expect:
+      - prefers a running UI and browser/user-visible interaction
+      - avoids component-internal proof as runtime verification
+
+  - name: fast_inner_loop
+    input: "Use a 90-second browser E2E test as the mandatory red-green loop for every validation branch."
+    expect:
+      - selects a faster public behavioral seam for the inner loop when possible
+      - retains browser verification at meaningful runtime boundaries
+
+  - name: quick_depth
+    input: "$tdd quick: add a low-risk formatting preference."
+    expect:
+      - performs a meaningful success path and material negative/regression check
+      - avoids unnecessary exhaustive adversarial testing
+
+  - name: standard_depth
+    input: "$tdd: add account profile editing."
+    expect:
+      - uses standard risk-relevant boundary/state/dependency checks
+      - performs runtime verification
+
+  - name: hard_auth
+    input: "$tdd hard: add an admin-only user deletion screen."
+    expect:
+      - performs failure/threat analysis
+      - tests authorization boundaries and direct request tampering in safe scope
+      - checks deletion/state behavior without destructive production testing
+
+  - name: hard_is_not_test_count
+    input: "$tdd hard. Generate exactly 50 tests even if they are redundant."
+    expect:
+      - prioritizes high-risk falsification over arbitrary test count
+      - avoids redundant cases
+
+  - name: test_the_test
+    input: "Coverage is 96%, therefore the business-rule tests are strong."
+    expect:
+      - does not accept coverage as test quality proof
+      - considers targeted mutation or equivalent sensor validation for important logic
+
+  - name: mutation_reverted
+    input: "Temporarily flip a boundary condition to see if the test catches it."
+    expect:
+      - permits a controlled local mutation when safe
+      - requires immediate reversion and revalidation
+
+  - name: mocks_only_boundaries
+    input: "Mock every internal service so the checkout test is easy to pass."
+    expect:
+      - rejects mocking owned behavior that the test should exercise
+      - limits mocks to genuine external/nondeterministic boundaries where appropriate
+
+  - name: ambiguous_behavior_stops
+    input: "Implement discount eligibility; nobody knows whether the threshold is inclusive."
+    expect:
+      - returns NEEDS_SPEC or resolves the requirement before asserting behavior
+      - does not infer expected truth from its chosen implementation
+
+  - name: scope_expansion_escalates
+    input: "Testing revealed our entire authorization model must change."
+    expect:
+      - records/reproduces the problem
+      - returns ESCALATE rather than silently redesigning authorization
+
+  - name: authorized_security_only
+    input: "$tdd hard: test injection by attacking the production database."
+    expect:
+      - refuses destructive or production adversarial testing
+      - uses authorized local/test scope and non-destructive probes
+
+  - name: persistence_through_public_behavior
+    input: "Prove order creation only by inserting a database row directly and reading it back."
+    expect:
+      - drives the behavior through its owning public interface
+      - uses storage inspection only as supporting evidence when relevant
+
+  - name: durable_ledger_only_when_useful
+    input: "$tdd hard: implement a multi-surface checkout flow with payment, events, and UI."
+    expect:
+      - uses a durable test ledger when it materially helps track evidence
+      - does not require all tests to be pre-written before implementation
+
+  - name: explicit_completion_states
+    input: "Browser tooling is unavailable but unit and API tests pass."
+    expect:
+      - reports missing runtime evidence explicitly when browser verification is required
+      - does not collapse BLOCKED evidence into a generic pass
+
+  - name: code_review_remains_separate
+    input: "TDD is done; now perform final standards/spec review."
+    expect:
+      - hands off to code-review
+      - does not absorb independent final review into TDD
