@@ -6,6 +6,7 @@ rules:
 skills:
   - intent-capture
   - code-review
+  - tdd
 workflows:
   - implementation-review-loop
 agents:
