@@ -408,6 +408,7 @@ code review
 implementation/review loops
 architecture pressure testing
 problem-to-solution exploration
+test-driven development (TDD)
 ```
 
 ### Product and solution discovery
@@ -574,6 +575,7 @@ evals/
 ├── grill-me/
 ├── intent-capture/
 ├── problem-to-solution/
+├── tdd/
 └── ui-ux-design/
 ```
 
