@@ -409,6 +409,7 @@ implementation/review loops
 architecture pressure testing
 problem-to-solution exploration
 test-driven development (TDD)
+security audit
 ```
 
 ### Product and solution discovery
@@ -436,6 +437,7 @@ anti-generic interface design
 ```text
 architect
 UI critic
+security auditor
 ```
 
 ### Runtime integration
@@ -555,6 +557,7 @@ Current examples include:
 ```text
 profiles/
 ├── product-discovery.yaml
+├── security-audit.yaml
 ├── software-engineering.yaml
 └── ui-ux.yaml
 ```
@@ -575,6 +578,7 @@ evals/
 ├── grill-me/
 ├── intent-capture/
 ├── problem-to-solution/
+├── security-audit/
 ├── tdd/
 └── ui-ux-design/
 ```
