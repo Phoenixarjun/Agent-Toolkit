@@ -1,0 +1,16 @@
+schema_version: "1"
+name: security-audit
+description: Risk-calibrated, evidence-backed security assurance and read-only audit capabilities.
+
+skills:
+  - security-audit
+
+agents:
+  - security-auditor
+
+knowledge:
+  - security-assurance-principles
+  - security-regulatory-applicability
+
+templates:
+  - SECURITY-AUDIT-REPORT

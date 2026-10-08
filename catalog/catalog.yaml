@@ -52,6 +52,14 @@ skills:
       - testing
     maturity: stable
     version: "1.0.0"
+  - id: security-audit
+    path: skills/security-audit
+    category: security
+    domains:
+      - software-engineering
+      - security
+    maturity: experimental
+    version: "1.0.0"
 
 workflows:
   - id: implementation-review-loop
@@ -100,6 +108,11 @@ agents:
     path: agents/ui-critic/AGENT.md
     category: review
     maturity: stable
+    version: "1.0.0"
+  - id: security-auditor
+    path: agents/security-auditor/AGENT.md
+    category: security
+    maturity: experimental
     version: "1.0.0"
 
 prompts:
@@ -165,6 +178,16 @@ knowledge:
     category: product-discovery
     maturity: experimental
     version: "1.0.0"
+  - id: security-assurance-principles
+    path: knowledge/security/assurance-principles.md
+    category: security
+    maturity: experimental
+    version: "1.0.0"
+  - id: security-regulatory-applicability
+    path: knowledge/security/regulatory-applicability.md
+    category: security
+    maturity: experimental
+    version: "1.0.0"
 
 evals:
   - id: code-review
@@ -197,6 +220,11 @@ evals:
     target: tdd
     maturity: stable
     version: "1.0.0"
+  - id: security-audit
+    path: evals/security-audit/cases.yaml
+    target: security-audit
+    maturity: experimental
+    version: "1.0.0"
 
 profiles:
   - id: software-engineering
@@ -209,6 +237,10 @@ profiles:
     version: "1.0.0"
   - id: product-discovery
     path: profiles/product-discovery.yaml
+    maturity: experimental
+    version: "1.0.0"
+  - id: security-audit
+    path: profiles/security-audit.yaml
     maturity: experimental
     version: "1.0.0"
 
