@@ -3,6 +3,7 @@ name: software-engineering
 description: Default software-engineering bundle for implementation, architecture, and pre-commit quality.
 rules:
   - global-engineering
+  - global-workspace-safety
 skills:
   - intent-capture
   - code-review

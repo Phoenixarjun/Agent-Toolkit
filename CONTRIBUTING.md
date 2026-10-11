@@ -6,6 +6,36 @@ Every new artifact must earn its existence by owning a distinct responsibility.
 
 Do not add a new artifact when an existing one can be extended without becoming ambiguous or bloated.
 
+## Instruction ownership and admission
+
+Before introducing or changing an instruction, inspect the current `AGENTS.md`, applicable `rules/`, `skills/`, `workflows/`, `knowledge/`, profiles, and installed adapter entrypoints.
+
+Every behavioral requirement must have **one canonical owner**. Other artifacts may point to it or specialize its procedure only when they add a necessary, testable behavior. Do not paraphrase the same rule across files.
+
+Classify the proposed change:
+
+- **REUSE** — an existing owner already covers the behavior; reference it, do not add another instruction.
+- **REFINE** — the existing owner is incomplete; improve it in place.
+- **SPECIALIZE** — the behavior applies only to a named skill/workflow/domain; add the conditional detail there without copying the general rule.
+- **REJECT** — no distinct behavior, evidence, or applicability justifies the addition.
+
+Use these ownership boundaries:
+
+- `AGENTS.md`: instructions for agents maintaining the Agent Toolkit repository.
+- `rules/global/engineering-rules.md`: portable engineering requirements.
+- `rules/global/workspace-safety.md`: mandatory filesystem/data/external-effect safety floor.
+- `knowledge/engineering/solution-design-principles.md`: explanatory trade-offs, not new obligations.
+- `skills/` and `workflows/`: conditional procedures and orchestration.
+- `profiles/`: compose capability IDs, do not duplicate instructions.
+- `templates/documents/ENGINEERING-PREFERENCES.md`: optional user/project choices when more than one correct approach exists.
+- `adapters/`: runtime-specific routing and transformations, never the canonical home for portable rules.
+
+Before accepting a change, establish its owner, trigger, non-goal, interaction with existing instructions, conflict precedence, and behavioral verification method. Resolve contradictory instructions rather than silently choosing one; never permit preferences to weaken safety or capability invariants.
+
+### Scope of Agent Toolkit
+
+Admit reusable artifacts that demonstrably improve a coding agent's decisions, execution, verification, or maintenance. Reject duplicated knowledge dumps, speculative category hierarchies, generic personas, vendor-specific logic in canonical files, and one-off user preferences embedded in shared skills. Record the rationale for consequential rejections in the change discussion or an existing decision log; do not create a permanent `SCOPE.md` or rejection directory without demonstrated retrieval value.
+
 ## Naming
 
 Use lowercase kebab-case for artifact identifiers.
