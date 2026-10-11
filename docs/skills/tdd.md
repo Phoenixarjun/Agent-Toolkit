@@ -303,7 +303,7 @@ Only relevant lenses are selected.
 
 Normal sessions can track active cases in context.
 
-For HARD or a large multi-surface feature, use `templates/TEST-PLAN.md`.
+For HARD or a large multi-surface feature, use `templates/documents/TEST-PLAN.md`.
 
 The ledger prevents the agent from forgetting what has been tested after multiple failures/fixes.
 

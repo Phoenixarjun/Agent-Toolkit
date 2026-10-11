@@ -11,7 +11,7 @@ def slugify(value):
 
 
 def template_path():
-    return Path(__file__).resolve().parents[1] / "templates" / "CHANGE-INTENT.md"
+    return Path(__file__).resolve().parents[1] / "templates" / "documents" / "CHANGE-INTENT.md"
 
 
 def render(template, intent_id, title, source, created):

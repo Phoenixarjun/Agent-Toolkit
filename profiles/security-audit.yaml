@@ -5,8 +5,14 @@ description: Risk-calibrated, evidence-backed security assurance and read-only a
 skills:
   - security-audit
 
+workflows:
+  - security-audit
+
 agents:
   - security-auditor
+  - security-authority-investigator
+  - security-trust-path-investigator
+  - security-coverage-critic
 
 knowledge:
   - security-assurance-principles

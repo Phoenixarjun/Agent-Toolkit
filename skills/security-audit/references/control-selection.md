@@ -39,6 +39,9 @@ Default `STANDARD`. High or critical impact suggests `DEEP` or specialist engage
    - cloud/Kubernetes/IaC -> IAM, network exposure, CI credentials, supply chain
    - AI/LLM/tools/MCP -> tool authorization, prompt-injection boundaries, data exfiltration, excessive agency, provenance
    - mobile/device -> platform storage, permissions, API binding, integrity as applicable
+   - native/unsafe memory/FFI -> length/lifetime/ownership, parser and sandbox boundaries, configured sanitizers/fuzzing
+   - proxy/CDN/cache/protocol translation -> request-framing, canonicalization, authenticated cache separation and trusted forwarded context
+   - browser messaging/service workers -> origin validation, DOM/client storage, message-routing trust
 3. **Obligation triggers**: jurisdiction, customer/contract, regulated entity relationship, payment-data handling, sector rules. Verify applicability; do not equate technical security with legal compliance.
 4. **Threat-driven delta**: prioritize critical assets, attack paths, state-changing boundaries and high-recovery-cost failures.
 

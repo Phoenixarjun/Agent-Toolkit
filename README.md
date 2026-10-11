@@ -329,7 +329,7 @@ agent-toolkit/
 ├── rules/                persistent engineering constraints
 ├── scripts/              deterministic repository utilities
 ├── skills/               reusable agent capabilities
-├── templates/            scaffolds for new artifacts
+├── templates/            scaffolds for new artifacts and operational documents
 ├── workflows/            multi-step execution patterns
 │
 ├── AGENTS.md              instructions for agents editing this repository
@@ -358,7 +358,7 @@ Discovery belongs primarily in metadata, the catalog, and profiles rather than i
 | **Eval** | Behavioral regression scenarios | Production implementation |
 | **Adapter** | Vendor-specific installation, runtime, or configuration mapping | Canonical engineering behavior |
 | **Script** | Deterministic repository mechanics | Judgment-heavy agent behavior |
-| **Template** | Minimal scaffolding for new artifacts | Canonical implementation guidance |
+| **Template** | Minimal scaffolding for new artifacts and operational document templates | Canonical implementation guidance |
 
 ---
 
