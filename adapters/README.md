@@ -14,3 +14,8 @@ Examples include:
 Do not create an adapter merely to copy a canonical skill into another folder.
 
 Add an adapter only when the target assistant needs behavior or configuration that cannot live portably in the canonical artifact.
+
+## Available Adapters
+
+- [`claude/`](claude/README.md) — User-level global entrypoint template (`CLAUDE.template.md`) for Claude Code.
+- [`codex/`](codex/README.md) — User-level global entrypoint template (`AGENTS.template.md`) and `sol-luna-xi` multi-agent runtime definitions for OpenAI Codex.
