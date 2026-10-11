@@ -55,7 +55,7 @@ must_avoid:
 distinctive_hook:
 ```
 
-Use `templates/DESIGN-BRIEF.md` when the task warrants a persistent brief.
+Use `templates/documents/DESIGN-BRIEF.md` when the task warrants a persistent brief.
 
 Do not interrogate the user by default. Ask a compact grouped question only when an unanswered choice would materially change the design and cannot be inferred from context.
 

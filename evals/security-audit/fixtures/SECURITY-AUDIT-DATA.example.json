@@ -1,0 +1,150 @@
+{
+  "schema_version": "2",
+  "target": {
+    "repository": "SYNTHETIC-example-app",
+    "revision": "EXAMPLE_REVISION_NOT_A_REAL_COMMIT",
+    "scope": "Synthetic private-profile API assessment only",
+    "impact_tier": "MODERATE",
+    "depth": "STANDARD"
+  },
+  "orchestration": {
+    "mode": "multi_agent",
+    "coordinator_context": "example-parent-context",
+    "participants": [
+      {
+        "role": "authority",
+        "context_id": "example-authority-context",
+        "revision": "EXAMPLE_REVISION_NOT_A_REAL_COMMIT"
+      },
+      {
+        "role": "trust_path",
+        "context_id": "example-path-context",
+        "revision": "EXAMPLE_REVISION_NOT_A_REAL_COMMIT"
+      },
+      {
+        "role": "coverage_critic",
+        "context_id": "example-critic-context",
+        "revision": "EXAMPLE_REVISION_NOT_A_REAL_COMMIT"
+      },
+      {
+        "role": "finding_verifier",
+        "context_id": "example-verifier-context",
+        "revision": "EXAMPLE_REVISION_NOT_A_REAL_COMMIT"
+      }
+    ],
+    "coverage_critique_evidence_refs": [
+      "E-003"
+    ],
+    "record_review_evidence_refs": [
+      "E-004"
+    ]
+  },
+  "invariants": [
+    {
+      "id": "I-001",
+      "property": "A user cannot read another user's private profile",
+      "boundary": "authenticated user to private profile",
+      "oracle": "SYNTHETIC application access policy",
+      "coverage_ids": [
+        "C-001"
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "C-001",
+      "surface": "GET /api/profile/{id}",
+      "boundary": "user to another user's private profile",
+      "class": "object-authorization",
+      "status": "covered",
+      "investigated_by": [
+        "example-authority-context",
+        "example-path-context"
+      ],
+      "evidence_refs": [
+        "E-001"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E-001",
+      "kind": "dynamic",
+      "method": "synthetic local HTTP request",
+      "source": "SYNTHETIC local test fixture, GET /api/profile/{id}",
+      "revision": "EXAMPLE_REVISION_NOT_A_REAL_COMMIT",
+      "context_id": "example-authority-context",
+      "observation": "SYNTHETIC expected demo observation: user A receives denial for user B private profile",
+      "runtime_identity": "SYNTHETIC local test fixture build: EXAMPLE_REVISION_NOT_A_REAL_COMMIT"
+    },
+    {
+      "id": "E-002",
+      "kind": "static",
+      "method": "synthetic independent source reconstruction",
+      "source": "SYNTHETIC access-policy handler",
+      "revision": "EXAMPLE_REVISION_NOT_A_REAL_COMMIT",
+      "context_id": "example-verifier-context",
+      "observation": "SYNTHETIC independent assessment reviewed the private-profile boundary"
+    },
+    {
+      "id": "E-003",
+      "kind": "static",
+      "method": "synthetic fresh-context coverage challenge",
+      "source": "SYNTHETIC operation and API route inventory",
+      "revision": "EXAMPLE_REVISION_NOT_A_REAL_COMMIT",
+      "context_id": "example-critic-context",
+      "observation": "SYNTHETIC coverage critic inspected private-profile routes for omitted read and write surfaces"
+    },
+    {
+      "id": "E-004",
+      "kind": "static",
+      "method": "synthetic independent final-record review",
+      "source": "SYNTHETIC source and evidence ledger",
+      "revision": "EXAMPLE_REVISION_NOT_A_REAL_COMMIT",
+      "context_id": "example-verifier-context",
+      "observation": "SYNTHETIC verifier evaluated the source-to-claim correspondence and missing-coverage claims"
+    }
+  ],
+  "operations": [
+    {
+      "id": "O-001",
+      "invariant_id": "I-001",
+      "surface": "GET /api/profile/{id}",
+      "principal": "synthetic-user-A",
+      "resource": "synthetic-user-B-private-profile",
+      "action": "READ",
+      "context": "cross-user",
+      "expected": "DENY",
+      "observed": "DENY",
+      "status": "VERIFIED",
+      "coverage_ids": [
+        "C-001"
+      ],
+      "evidence_refs": [
+        "E-001"
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "CTRL-001",
+      "property": "Deny cross-user private-profile read",
+      "basis": "SYNTHETIC app privacy requirement",
+      "applicability": "REQUIRED",
+      "implementation": "COMPLETE",
+      "verification": "VERIFIED",
+      "invariant_refs": [
+        "I-001"
+      ],
+      "coverage_ids": [
+        "C-001"
+      ],
+      "evidence_refs": [
+        "E-001"
+      ]
+    }
+  ],
+  "findings": [],
+  "run_status": "complete",
+  "report_outcome": "ACCEPTABLE_WITHIN_ASSESSED_SCOPE"
+}
