@@ -37,7 +37,7 @@ Otherwise infer reversible details.
 
 Apply `ui-ux-design`.
 
-Produce an internal normalized brief using `templates/DESIGN-BRIEF.md`.
+Produce an internal normalized brief using `templates/documents/DESIGN-BRIEF.md`.
 
 Set:
 

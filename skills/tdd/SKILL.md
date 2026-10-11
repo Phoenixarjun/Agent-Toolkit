@@ -289,7 +289,7 @@ Do not use coverage percentage as the primary completion criterion.
 
 For normal work, track the active behavior and evidence in context.
 
-For `HARD`, long-running, or multi-surface features, maintain a durable test ledger when it will prevent lost state. Use `templates/TEST-PLAN.md` when available.
+For `HARD`, long-running, or multi-surface features, maintain a durable test ledger when it will prevent lost state. Use `templates/documents/TEST-PLAN.md` when available.
 
 Allowed case states:
 
