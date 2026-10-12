@@ -60,6 +60,14 @@ skills:
       - security
     maturity: experimental
     version: "2.0.0"
+  - id: tune
+    path: skills/tune
+    category: agent-engineering
+    domains:
+      - agent-engineering
+      - developer-experience
+    maturity: experimental
+    version: "1.0.0"
 
 workflows:
   - id: implementation-review-loop
@@ -256,6 +264,11 @@ evals:
   - id: operating-foundation
     path: evals/operating-foundation/cases.yaml
     target: global-workspace-safety
+    maturity: experimental
+    version: "1.0.0"
+  - id: tune
+    path: evals/tune/cases.yaml
+    target: tune
     maturity: experimental
     version: "1.0.0"
 

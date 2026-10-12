@@ -1,0 +1,4 @@
+# Codex-specific metadata; install into the installed tune skill at agents/openai.yaml.
+# Do not place this file inside the canonical skill's own source tree.
+policy:
+  allow_implicit_invocation: false
