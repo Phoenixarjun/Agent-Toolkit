@@ -125,6 +125,24 @@ skills:
     optional_dependencies:
       skills:
         - research
+  - id: research
+    path: skills/research
+    category: research
+    domains:
+      - research
+      - analysis
+      - investigation
+    maturity: experimental
+    version: "1.0.0"
+    optional_dependencies:
+      workflows:
+        - research
+      agents:
+        - research-scout
+        - research-coverage-critic
+        - research-evidence-verifier
+      templates:
+        - research-report
 
 workflows:
   - id: implementation-review-loop
@@ -158,6 +176,21 @@ workflows:
       - security
     maturity: experimental
     version: "2.0.0"
+  - id: research
+    path: workflows/research/WORKFLOW.md
+    category: delivery
+    domains:
+      - research
+      - analysis
+    maturity: experimental
+    version: "1.0.0"
+    dependencies:
+      agents:
+        - research-scout
+        - research-coverage-critic
+        - research-evidence-verifier
+      templates:
+        - research-report
 
 rules:
   - id: global-engineering
@@ -207,6 +240,21 @@ agents:
     category: security
     maturity: experimental
     version: "2.0.0"
+  - id: research-scout
+    path: agents/research-scout/AGENT.md
+    category: research
+    maturity: experimental
+    version: "1.0.0"
+  - id: research-coverage-critic
+    path: agents/research-coverage-critic/AGENT.md
+    category: research
+    maturity: experimental
+    version: "1.0.0"
+  - id: research-evidence-verifier
+    path: agents/research-evidence-verifier/AGENT.md
+    category: research
+    maturity: experimental
+    version: "1.0.0"
 
 prompts:
   - id: architecture-grill
@@ -333,6 +381,11 @@ evals:
     target: teach
     maturity: experimental
     version: "1.0.0"
+  - id: research
+    path: evals/research/cases.yaml
+    target: research
+    maturity: experimental
+    version: "1.0.0"
 
 profiles:
   - id: software-engineering
@@ -349,6 +402,18 @@ profiles:
     version: "1.0.0"
   - id: security-audit
     path: profiles/security-audit.yaml
+    maturity: experimental
+    version: "1.0.0"
+  - id: research
+    path: profiles/research.yaml
+    maturity: experimental
+    version: "1.0.0"
+  - id: learning
+    path: profiles/learning.yaml
+    maturity: experimental
+    version: "1.0.0"
+  - id: agent-engineering
+    path: profiles/agent-engineering.yaml
     maturity: experimental
     version: "1.0.0"
 
@@ -411,4 +476,9 @@ templates:
     path: templates/documents/TEST-PLAN.md
     category: quality
     maturity: stable
+    version: "1.0.0"
+  - id: research-report
+    path: templates/documents/RESEARCH-REPORT.md
+    category: research
+    maturity: experimental
     version: "1.0.0"
