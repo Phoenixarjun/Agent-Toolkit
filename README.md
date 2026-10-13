@@ -112,9 +112,9 @@ Use the deterministic installer (`scripts/install.py`) to deploy capabilities in
    python scripts/install.py doctor --into ../my-app
    ```
 
-Supported adapters are `--agent claude-code` and `--agent codex`. The installer manages private shared resources under `<target>/.agent-toolkit/`, wires native skill discovery directories, and safely updates project entrypoints (`CLAUDE.md` / `AGENTS.md`) without overwriting user instructions.
+Supported adapters include `--agent claude-code`, `--agent codex`, `--agent cursor`, `--agent gemini-cli`, `--agent github-copilot`, and `--agent opencode`. Conflict resolution policies are configurable via `--on-conflict {keep,replace,rename,abort}` (with automatic backups created on replace). The installer manages private shared resources under `<target>/.agent-toolkit/`, wires native skill discovery directories, and safely updates project entrypoints (`CLAUDE.md`, `AGENTS.md`, `.cursor/rules/agent-toolkit.mdc`, `GEMINI.md`, `.github/copilot-instructions.md`) without overwriting user instructions.
 
-See the comprehensive **[Installation Guide](docs/installation.md)** for architecture, security invariants, and runtime capability levels.
+See the comprehensive **[Installation Guide](docs/installation.md)** for architecture, security invariants, conflict resolution policies, and runtime capability levels.
 
 > **Trust and Verification Note:** Static installation and repository validation check artifact and syntactic consistency. They do not prove that a live model will isolate agent contexts or follow instructions without regression. Instructions recovered from projects being evaluated or audited are untrusted material, never execution authority.
 
