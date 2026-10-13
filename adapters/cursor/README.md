@@ -4,8 +4,8 @@ Runtime-specific configuration, user/global rule templates, and installation gui
 
 ## Contents
 
-- `agent-toolkit.template.mdc` — Scaffold for Cursor rule files (`.cursor/rules/agent-toolkit.mdc` or user-level rules).
-- `tune/INVOCATION.md` — Invocation policy guidelines for the installed Tune skill in Cursor (`disable-model-invocation: true`).
+- `agent-toolkit.template.mdc` - Scaffold for Cursor rule files (`.cursor/rules/agent-toolkit.mdc` or user-level rules).
+- `tune/INVOCATION.md` - Invocation policy guidelines for the installed Tune skill in Cursor (`disable-model-invocation: true`).
 
 ## Installation
 

@@ -1,41 +1,73 @@
-# Agent Toolkit Philosophy
+# The Agent Toolkit Philosophy
 
-## Why this project exists
+## Why I built this
 
-Capable coding models already possess broad technical knowledge. Agent Toolkit exists to improve how they **apply** that knowledge: how they interpret intent, examine trade-offs, respect boundaries, perform work, and verify outcomes.
+AI coding models already know an extraordinary amount about languages, frameworks, and software design. What I kept needing in daily work was not another explanation of how to build an API. I needed **more consistent engineering behavior**: understanding what I meant, choosing proportionate solutions, questioning weak assumptions, protecting existing systems, and verifying the outcome.
 
-This is a curated engineering playbook, not a race to accumulate skills. A repository containing 500 or more skills is not necessarily more useful than one with a small number of precise, tested capabilities.
+Agent Toolkit is my attempt to make those behaviors reusable.
 
-## What earns a place here
+The collection comes from approximately eight months of working with coding assistants. It has been shaped by failed approaches, rework, unexpected behavior, repeated refinement, and practices I now return to deliberately. It is not a claim that every artifact has passed a controlled study or that my approach is universally correct.
 
-A skill is justified when a repeatable procedure makes agent behavior materially more reliable, focused, or verifiable. It should establish when to activate, what job it owns, which context matters, how decisions are made, when to stop or escalate, and what counts as evidence of completion.
+## Curated, not collected
 
-A generic `FastAPI` or `backend` tutorial rarely qualifies on its own. If the model already knows the information, repeating it in a skill consumes context without necessarily improving execution.
+I do not believe that 300 or 500 skills automatically make an agent more capable. More files can mean overlapping triggers, conflicting advice, increased context use, and a harder system to maintain.
 
-**Behavioral leverage matters more than artifact count or document length.**
+I would rather have **10 exceptional skills than 100 interchangeable ones**. The repository is intentionally aiming toward roughly **30 to 50 or fewer carefully selected skills** over time, with an even smaller collection if that is sufficient. That is a design target, not a quota to fill.
 
-## How I want agents to engineer
+Every new capability must answer a difficult question: **What repeated decision or procedure will the agent handle materially better because this exists?**
 
-Understand the actual goal before changing code. Inspect the existing system before inventing a new design. Choose the simplest correct solution that respects current constraints and reasonable future change. Prefer cohesive modules and explicit boundaries, but do not impose patterns or abstractions without a reason.
+If the answer is merely "it teaches Python" or "it says to write clean code," the model probably does not need a dedicated skill. If an existing capability can be improved, I prefer improving it.
 
-Be skeptical of your own work. Check failure paths and unintended effects. Verify outcomes with appropriate evidence, and report what remains uncertain. A persuasive explanation is not a substitute for a working result.
+## A skill is an engineering procedure
 
-These are guiding judgments, not a mandate to apply every design pattern or checklist on every task. The applicable technical requirements remain in the repository's canonical rules and skills.
+To me, a useful skill is a small behavioral program. It establishes the conditions for activation, the job it owns, the context to inspect, the decisions to make, the limits of its authority, the failure behavior, and the evidence required to finish.
 
-## How the toolkit stays lean
+That is different from a tutorial or a large prompt full of general advice. Good procedural guidance is useful because it changes decisions and actions at the moments that matter.
 
-- **One responsibility, one owner.** Reuse, extend, or reference an existing artifact before adding another. Avoid duplicate or contradictory instructions.
-- **Progressive disclosure.** Keep essential behavior close to execution; load deeper references only when needed.
-- **Deterministic when possible.** Use scripts, schemas, and tests for checks that do not need model judgment.
-- **Portable at the core.** Keep general behavior independent of Codex, Claude Code, or other runtimes. Place vendor wiring in adapters.
-- **Evolve through evidence.** Investigate failures, change the smallest responsible behavior, and check for regressions. More instructions are not automatically better.
+**Behavioral leverage matters more than length or artifact count.**
 
-## A personal baseline, not a universal preference
+## How I want engineering work to happen
 
-My engineering preferences are a starting point, not an obligation for everyone who installs the toolkit. Developers may prefer different module sizes, reporting detail, or design conventions while still producing reliable systems.
+Start with the real goal. Understand the existing system before changing it. Prefer the smallest correct solution over unnecessary architecture. Keep responsibilities cohesive, but avoid inventing abstractions just to satisfy a principle or design pattern.
 
-Customization should affect legitimate choices, not silently remove safety guarantees or the essential contract of a skill. The toolkit should make that distinction explicit.
+Look for failure paths, not only happy paths. Distinguish observed facts from assumptions. Use tests, runtime checks, source inspection, and independent review where appropriate. If a result is not verified, say so rather than dressing uncertainty up as completion.
+
+These are guiding judgments. The enforceable procedures and safety requirements belong to their canonical rules and skills, not to this human-facing philosophy document.
+
+## One owner, no instruction sprawl
+
+The toolkit organizes artifacts by their responsibilities:
+
+- **Skills** define repeatable capabilities.
+- **Workflows** coordinate steps and specialist roles.
+- **Rules** express enduring constraints.
+- **Knowledge** provides deeper context and trade-offs.
+- **Profiles** compose capabilities without copying them.
+- **Evals and scripts** test behaviors and enforce deterministic requirements.
+- **Adapters** translate canonical behavior into a particular coding assistant.
+
+A principle should not be rewritten independently across several files. Reuse, reference, or genuinely specialize an existing owner. This makes updates safer and contradictions easier to detect.
+
+## Evolve from evidence, not enthusiasm
+
+An instruction is not better because it is longer. A skill is not better because it invokes more agents. I want to refine the smallest part of the system that caused a repeatable problem, then check whether the change actually helps.
+
+The cycle is straightforward: **use, observe, diagnose, refine, evaluate, repeat**. Real-world feedback is valuable, but it does not automatically prove the cause of a failure. The model, context, tools, environment, and skill instructions can all contribute.
+
+Whenever possible, mechanical checks should be performed by deterministic tools. Model reasoning should be reserved for work requiring judgment.
+
+## My baseline, your engineering style
+
+These playbooks reflect how I currently prefer to work, not how every engineer must work. Some people want fewer larger files; others prefer smaller modules. Some want concise findings; others want a detailed audit trail.
+
+Those preferences can be tuned. **Correctness, safety, evidence, and the core guarantee of a capability should not be quietly tuned away.** That separation is the reason the toolkit keeps personal preferences distinct from canonical skill contracts.
+
+## Before you adopt a skill
+
+Read it. Check its trigger, file and tool access, permissions, dependencies, failure behavior, and completion criteria. Decide whether its assumptions are right for your project. Adopt one capability at a time and verify that it actually behaves as intended in your coding assistant.
+
+This repository is not a promise that copying an instruction file produces reliable engineering automatically. It is a collection of procedures that I want to make increasingly clear, portable, and testable.
 
 ---
 
-**The measure of Agent Toolkit is not how many instructions an agent receives. It is whether the agent makes better decisions and produces more reliable evidence because of them.**
+**The measure of Agent Toolkit is not how many instructions an agent receives. It is whether those instructions lead to better decisions and better evidence.**

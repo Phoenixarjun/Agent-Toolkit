@@ -4,8 +4,8 @@ Runtime-specific configuration, instruction templates, and installation guidelin
 
 ## Contents
 
-- `copilot-instructions.template.md` — Scaffold for project or repository instruction file (`.github/copilot-instructions.md`).
-- `tune/INVOCATION.md` — Invocation policy guidelines for the installed Tune skill in GitHub Copilot (`disable-model-invocation: true`).
+- `copilot-instructions.template.md` - Scaffold for project or repository instruction file (`.github/copilot-instructions.md`).
+- `tune/INVOCATION.md` - Invocation policy guidelines for the installed Tune skill in GitHub Copilot (`disable-model-invocation: true`).
 
 ## Installation
 

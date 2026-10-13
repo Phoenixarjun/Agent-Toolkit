@@ -4,8 +4,8 @@ Runtime-specific configuration, user-level entrypoint templates, and installatio
 
 ## Contents
 
-- `AGENTS.template.md` — Scaffold for user-level global or project-level instruction file (`AGENTS.md` or `~/.config/opencode/AGENTS.md`).
-- `tune/INVOCATION.md` — Invocation policy guidelines for the installed Tune skill in OpenCode (`disable-model-invocation: true`).
+- `AGENTS.template.md` - Scaffold for user-level global or project-level instruction file (`AGENTS.md` or `~/.config/opencode/AGENTS.md`).
+- `tune/INVOCATION.md` - Invocation policy guidelines for the installed Tune skill in OpenCode (`disable-model-invocation: true`).
 
 ## Installation
 

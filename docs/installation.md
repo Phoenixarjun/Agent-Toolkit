@@ -1,4 +1,4 @@
-# Agent Toolkit — Six-Runtime Installation & Deployment Guide
+# Agent Toolkit - Six-Runtime Installation & Deployment Guide
 
 This guide describes how to install Agent Toolkit capabilities into consumer projects reliably, safely, and portably across six AI coding assistants:
 1. **Claude Code** (`claude-code`, `claude`)
@@ -15,7 +15,7 @@ This guide describes how to install Agent Toolkit capabilities into consumer pro
 Agent Toolkit provides two deployment models:
 
 1. **Self-Contained Skill Installation**: Installs a single skill directory and its local references when no external orchestration is required.
-2. **Composed Profile Installation**: Resolves and deploys multi-artifact capabilities—including workflows, specialist agents, rules, knowledge, intake forms, and document templates.
+2. **Composed Profile Installation**: Resolves and deploys multi-artifact capabilities, including workflows, specialist agents, rules, knowledge, intake forms, and document templates.
 
 All shared resources are deployed into a private, installer-managed `.agent-toolkit/` directory in the target project, with assistant-native skill discovery roots and non-destructive managed blocks in project entrypoints (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `.cursor/rules/agent-toolkit.mdc`, `.github/copilot-instructions.md`).
 

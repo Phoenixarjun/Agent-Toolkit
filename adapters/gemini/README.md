@@ -4,8 +4,8 @@ Runtime-specific configuration, user-level entrypoint templates, and installatio
 
 ## Contents
 
-- `GEMINI.template.md` — Scaffold for the user-level global instruction file (`~/.gemini/GEMINI.md` or `%USERPROFILE%\.gemini\GEMINI.md`).
-- `tune/INVOCATION.md` — Invocation policy guidelines for the installed Tune skill in Gemini CLI (`disable-model-invocation: true`).
+- `GEMINI.template.md` - Scaffold for the user-level global instruction file (`~/.gemini/GEMINI.md` or `%USERPROFILE%\.gemini\GEMINI.md`).
+- `tune/INVOCATION.md` - Invocation policy guidelines for the installed Tune skill in Gemini CLI (`disable-model-invocation: true`).
 
 ## Installation
 

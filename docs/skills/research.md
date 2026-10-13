@@ -1,48 +1,49 @@
-# Research | User guide
+# Research
 
-**Purpose:** Turn a consequential question into an evidence-led answer with explicit scope, traceable sources, and honest limits. Research is not a general search replacement. Teach owns pedagogical progression; Research returns grounded knowledge and evidence.
+**Answer consequential questions with traceable evidence and clear uncertainty.**
 
-## Choose depth
+| | |
+| --- | --- |
+| **Capability** | [Canonical skill](../../skills/research/SKILL.md) |
+| **Best for** | Source-heavy investigation, comparisons, decision-grade analysis |
+| **Execution cost** | Moderate for Focused; high to very high for Deep |
+| **Output** | Evidence-linked Markdown; optional Deep Evidence Audit HTML |
 
-| Mode | Good for | Typical deliverable | Subagents |
-| --- | --- | --- | --- |
-| Focused | One bounded question | Short Markdown | None required |
-| Standard | A comparison or several angles | Evidence-linked Markdown | Bounded, when independent |
-| Deep | Decision-grade and broad investigation | Markdown; optional Evidence Audit HTML | Orchestrated with coverage and verification roles when available |
+## The problem
 
-If the source space is small, do not increase agent count merely because the user selected Deep. Explicit user budget always caps work; agent concurrency and total tasks are different limits.
+Search results can look comprehensive while recycling the same source, mixing time periods, or introducing unsupported conclusions. Adding more agents or a polished dashboard does not solve those problems on its own.
 
-## Example invocation
+## When to use it
 
-> Research how Redis Streams and Kafka handle consumer recovery. Mode: standard. Compare durability, replay, failure behavior and operational trade-offs. Restrict to official docs plus independent incident reports. Max 2 concurrent Scouts, 4 Scout tasks. Output: Markdown.
+Use Research when the question merits substantial source discovery, reconciliation, or independent verification. Ordinary source lookup is sufficient for a small factual question, and [Teach](teach.md) is the owner of pedagogical progression.
 
-> Deep research the last three years of this public fund's returns relative to specified comparable benchmarks. Define as-of date, units, fees, source provenance and the relevant jurisdictions. Output: HTML Evidence Audit with dated data tables and citations. Max 4 Scouts, 8 total tasks.
+## How it works
 
-These examples are **requests**, not prefilled research findings or claims of tool access.
+1. Define the question, time window, scope, and research budget.
+2. Break material questions into bounded research tasks and gather source-attributed evidence.
+3. Check coverage gaps, source dependence, time differences, and conflicting claims.
+4. Independently challenge material findings where supported and deterministically validate structured records and calculations.
+5. Synthesize once from the reconciled claim-and-evidence ledger.
+6. Produce an accessible report that preserves source traceability and limitations.
 
-## HTML design contract
+## Modes
 
-Evidence Audit is the one canonical deep-report style: editorial serif headings, readable sans-serif metadata, warm neutral cards, restrained bronze accents, clear claims, dates, source lineage, accessible numeric charts/tables, print-friendly behavior and working evidence links. Style is fixed, **contents are read from the validated record**.
+| Mode | Investigation | Deliverable |
+| --- | --- | --- |
+| Focused | Narrow, minimal delegation | Markdown |
+| Standard | Multi-angle, bounded research | Markdown |
+| Deep | Coverage critique and independent verification where available | Markdown; optional Evidence Audit HTML |
 
-A typical runtime flow:
+## Example request
 
-```bash
-python scripts/validate_research.py path/to/research.json
-python scripts/render_research.py path/to/research.json --format markdown --output path/to/report.md
-# Deep optional HTML
-python scripts/render_research.py path/to/research.json --format html --output path/to/report.html
-```
+> Deep research how two databases handle recovery after partial failures. Use primary technical documentation and independent evidence, note version and date differences, cap total Scout tasks, and generate an Evidence Audit report.
 
-`render_research.py` checks the record again before writing HTML. Both utilities require only Python 3 standard library. They do not fetch sources or prove original-source truth.
+## What you get
 
-To preview without internet, render `evals/research/fixtures/research-example.json`. It is deliberately synthetic and labeled with limited assurance. Browser navigation, source expansion, filtering, mobile layout and print/PDF are available without remote libraries.
+An evidence-led conclusion with source links, publication and observation dates, uncertainty, and, where appropriate, reproducible charts or data tables. The human report and HTML derive from the **same canonical claim-and-evidence ledger**.
 
-## Actual dependency boundary
+## Boundaries and dependencies
 
-For self-contained Focused or Standard execution, the installed `skills/research/` directory contains the procedure and references. True multi-agent Deep assurance additionally needs the research workflow, agent role definitions and host support for distinct execution contexts. Deterministic ledger validation/HTML needs the scripts and template. Copying only `SKILL.md` **does not** install an independent research team or renderer.
+True Deep multi-agent assurance needs compatible isolated subagent contexts; HTML and deterministic validation require the companion workflow, scripts, and template. A valid JSON record is not proof that a citation supports a claim. The research task never authorizes trading, publishing, or unrelated file changes.
 
-No external trade, publication, downloads to unknown paths, or unrelated file edits are authorized by researching a topic.
-
-## Quality and stopping
-
-A professional report may say that evidence is insufficient. Research is done when the declared question is answered to the permitted assurance level or its unresolved gaps are explicitly marked, not when the agent has exhausted every possible source. A source link proves only that a source was referenced, not that its content is true. Independent source review, where supported, remains a semantic reasoning task.
+**Cost guidance:** Agent budgets depend on question breadth, source access, and runtime. No fixed token or currency estimate is implied. See the [canonical skill](../../skills/research/SKILL.md).

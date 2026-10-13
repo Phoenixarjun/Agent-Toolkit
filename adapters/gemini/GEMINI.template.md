@@ -1,4 +1,4 @@
-# Coding Agent — User-Level Entry Point (Gemini CLI)
+# Coding Agent - User-Level Entry Point (Gemini CLI)
 
 <!-- Install as ~/.gemini/GEMINI.md (Windows: %USERPROFILE%\.gemini\GEMINI.md).
 Replace {{TOOLKIT_ROOT_ABSOLUTE_PATH}} with the real absolute path to a fully installed Agent Toolkit. Do not install this unchanged. -->
