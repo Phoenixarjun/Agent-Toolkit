@@ -1,12 +1,14 @@
 <div align="center">
 
+<img src="https://res.cloudinary.com/dfni6xp4u/image/upload/v1791920503/Agent_Toolkit_Logo_d6kir2.png" alt="Agent Toolkit Logo" width="180" />
+
 # Agent Toolkit
 
 ### Engineering playbooks for coding agents.
 
 **Better decisions. Safer changes. Verifiable outcomes.**
 
-A curated collection of reusable engineering procedures, drawn from real AI-assisted coding work and refined through repeated use, setbacks, and iteration.
+A curated collection of reusable engineering procedures, built directly from my daily coding workflow and refined through real AI-assisted work, setbacks, and iteration.
 
 <p>
   <img alt="Focus: Agent Engineering" src="https://img.shields.io/badge/Focus-Agent%20Engineering-2563eb?style=flat-square" />
