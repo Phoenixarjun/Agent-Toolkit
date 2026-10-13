@@ -3,7 +3,7 @@ description: Agent Toolkit routing and engineering rules for Cursor
 globs: *
 alwaysApply: true
 ---
-# Coding Agent — User / Global Rule (Cursor)
+# Coding Agent - User / Global Rule (Cursor)
 
 <!-- Install as ~/.cursor/rules/agent-toolkit.mdc or .cursor/rules/agent-toolkit.mdc.
 Replace {{TOOLKIT_ROOT_ABSOLUTE_PATH}} with the real absolute path to a fully installed Agent Toolkit. Do not install this unchanged. -->

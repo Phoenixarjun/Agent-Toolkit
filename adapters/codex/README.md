@@ -4,9 +4,9 @@ Runtime-specific configuration, user-level entrypoint templates, and installatio
 
 ## Contents
 
-- `AGENTS.template.md` — Scaffold for the user-level global instruction file (`~/.codex/AGENTS.md` or `%USERPROFILE%\.codex\AGENTS.md`).
-- `sol-luna-xi/` — Codex custom-agent bundle pinning OpenAI model IDs, reasoning levels, sandbox modes, and Windows installation scripts.
-- `tune/openai.yaml` — Invocation policy metadata (`allow_implicit_invocation: false`) for the installed Tune skill in OpenAI Codex.
+- `AGENTS.template.md` - Scaffold for the user-level global instruction file (`~/.codex/AGENTS.md` or `%USERPROFILE%\.codex\AGENTS.md`).
+- `sol-luna-xi/` - Codex custom-agent bundle pinning OpenAI model IDs, reasoning levels, sandbox modes, and Windows installation scripts.
+- `tune/openai.yaml` - Invocation policy metadata (`allow_implicit_invocation: false`) for the installed Tune skill in OpenAI Codex.
 
 ## Components & Installation
 

@@ -1,52 +1,50 @@
-# Teach | Adaptive learning and mastery
+# Teach
 
-**Status:** Experimental v1.0.0  
-**Canonical skill:** [`skills/teach/SKILL.md`](../../skills/teach/SKILL.md)
+**Turn an explanation into understanding the learner can demonstrate.**
 
-Teach helps an agent explain, coach, and develop **demonstrable understanding** instead of merely generating information. It serves both technical domains and human skills through one adaptive procedure.
+| | |
+| --- | --- |
+| **Capability** | [Canonical skill](../../skills/teach/SKILL.md) |
+| **Best for** | Concepts, first-principles explanations, guided practice, long-term learning |
+| **Interaction cost** | Low for Explain; moderate to high for sustained Mastery |
+| **Output** | Explanations, practice, feedback, optional learning map and checkpoints |
 
-## Use Teach when
+## The problem
 
-- "Teach me what makes a database transaction serializable."
-- "Explain concurrency deeply, then check whether I can reason about interleavings."
-- "Practice giving critical feedback at work. Don't write the answer before I try."
-- "I want to master machine learning systems over multiple sessions. Build a learning map."
-- "Wait, I don't understand why the token is still valid." (Inside an active teaching session.)
+An explanation can sound clear while leaving the learner unable to predict, apply, or remember the idea. Rigid tutorials also assume the wrong starting point and may continue even after the learner gets lost.
 
-For short standalone fact retrieval, normal assistance is enough. For adversarial critique of a user's existing plan, use `grill-me`. For a source-backed briefing without instructional practice, use Research once it exists, or ordinary source investigation in the meantime.
+## When to use it
 
-## Operating modes
+Use Teach for deliberate learning, including technical topics and soft skills. For a quick factual lookup, ordinary assistance may be enough. For evidence gathering without instruction or practice, use [Research](research.md).
 
-| Mode | Designed for | Common interaction |
-| --- | --- | --- |
-| Explain | One clear concept | Brief explanation and example |
-| Deep Dive | First principles and internal mechanisms | Trace, derived mechanism, boundary, optional check |
-| Practice | Independent reasoning or performance | User attempts, receives specific feedback, tries again |
-| Mastery | Long-term subject development | Learning map, compact lessons, progress evidence |
+## How it works
 
-The user can change modes mid-session. Socratic questioning is a method available across modes, not a required interrogation. Avoid forcing questions after every paragraph.
+1. Identify the learning objective, available background, and appropriate depth.
+2. Begin with the problem and intuition, then explain the mechanism with relevant examples.
+3. Choose the right representation: a trace, diagram, code, derivation, scenario, or roleplay.
+4. Check understanding with meaningful prediction or application rather than asking only whether it makes sense.
+5. When an explanation misses, diagnose and change teaching strategy.
+6. For long-term goals, maintain a learning path and checkpoint only when authorized.
 
-## Grounding
+## Modes
 
-For established concepts, use a truthful, well-calibrated explanation and verify through simple experiments where appropriate. For changing or consequential material, verify current primary sources. A future `research` skill can provide evidence, but is **not required to install or operate Teach**.
+| Mode | Purpose |
+| --- | --- |
+| Explain | One idea clearly and efficiently |
+| Deep Dive | First principles, mechanics, and limits |
+| Practice | Learner attempts, receives feedback, and retries |
+| Mastery | Multi-session progression and demonstrated learning |
 
-## Continuity
+## Example request
 
-Teach does not automatically access previous conversations or create a project directory. It can summarize a short checkpoint in chat. For persistent records, the user must designate an authorized learning workspace. The default is no file writes.
+> Teach me why race conditions happen in concurrent Java code. Start from the problem, trace one interleaving, and ask me to predict a new case before revealing the answer.
 
-## What is verified?
+## What you get
 
-`EXPLAINED` means the lesson was delivered; `ATTEMPTED` means a learner tried; `DEMONSTRATED` means the learner independently met a named criterion; `RETAINED` requires later retrieval/application with an actual time gap. None is a certification.
+Appropriately paced learning with honest evidence of what was **explained**, **attempted**, or **demonstrated**. Retention requires a later retrieval check; one good response is not proof of long-term mastery.
 
-## Installation notes
+## Boundaries and dependencies
 
-The canonical `SKILL.md` and referenced files must remain available to the target agent. Register Teach using the live repository's `catalog/catalog.yaml` schema and validate via `python scripts/validate.py`. No new agent, workflow, permanent learning workspace, or Research stub is required. Availability and invocation methods vary by coding assistant; confirm the installed path through the applicable harness.
+Teach does not automatically create files or read past sessions. It can use primary sources when needed and optionally receive grounded material from [Research](research.md); Research is not required for every lesson. No invented expert credentials or forced diagrams.
 
-## Sources informing method (not hard dependencies)
-
-- [Carnegie Mellon University, Learning Principles](https://www.cmu.edu/teaching/principles/learning.html)
-- [Carnegie Mellon University, Retrieval Practice](https://www.cmu.edu/teaching/resources/instructionalstrategies/activelearningstrategies/retrievalpractice/index.html)
-- [Carnegie Mellon University, Spaced Practice](https://www.cmu.edu/teaching/resources/instructionalstrategies/activelearningstrategies/spacedopractice/index.html)
-- [Agent Skills specification](https://agentskills.io/specification)
-
-These references motivate teaching strategies. They do not guarantee a live agent's instruction quality. Evaluate with the cases in `evals/teach/cases.yaml`.
+**Cost guidance:** This is a relative learning-effort description, not pricing. See the [canonical skill](../../skills/teach/SKILL.md).

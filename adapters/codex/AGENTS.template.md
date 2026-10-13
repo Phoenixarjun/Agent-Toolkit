@@ -1,4 +1,4 @@
-# Coding Agent — User-Level Entry Point (Codex)
+# Coding Agent - User-Level Entry Point (Codex)
 
 <!-- Install as ~/.codex/AGENTS.md (Windows: %USERPROFILE%\.codex\AGENTS.md).
 Replace {{TOOLKIT_ROOT_ABSOLUTE_PATH}} with the real absolute path to a fully installed Agent Toolkit. Do not install this unchanged. -->
