@@ -1,8 +1,6 @@
 <div align="center">
 
-<img src="https://res.cloudinary.com/dfni6xp4u/image/upload/v1791920503/Agent_Toolkit_Logo_d6kir2.png" alt="Agent Toolkit Logo" width="180" />
-
-# Agent Toolkit
+<img src="https://res.cloudinary.com/dfni6xp4u/image/upload/v1791920503/Agent_Toolkit_Logo_d6kir2.png" alt="Agent Toolkit" width="400" />
 
 ### Engineering playbooks for coding agents.
 
