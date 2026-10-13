@@ -17,8 +17,12 @@ Add an adapter only when the target assistant needs behavior or configuration th
 
 ## Available Adapters
 
-- [`claude/`](claude/README.md) — User-level global entrypoint template (`CLAUDE.template.md`) and project wiring for Claude Code.
-- [`codex/`](codex/README.md) — User-level global entrypoint template (`AGENTS.template.md`), project wiring, and `sol-luna-xi` multi-agent runtime definitions for OpenAI Codex.
+- [`claude/`](claude/README.md) — User-level global entrypoint template (`CLAUDE.template.md`) and project wiring for Claude Code (`.claude/skills/`, `.claude/agents/`, `CLAUDE.md`).
+- [`codex/`](codex/README.md) — User-level global entrypoint template (`AGENTS.template.md`), project wiring, and `sol-luna-xi` multi-agent runtime definitions for OpenAI Codex (`.agents/skills/`, `.codex/agents/`, `AGENTS.md`).
+- **Cursor** — Native skill directory (`.cursor/skills/`), entrypoint rule (`.cursor/rules/agent-toolkit.mdc`), and agent rules (`.cursor/rules/<agent>.mdc`).
+- **Gemini CLI** — Native skill directory (`.gemini/skills/`), entrypoint instructions (`GEMINI.md`), and subagents (`.gemini/agents/`).
+- **GitHub Copilot** — Native skill directory (`.github/skills/`), instructions (`.github/copilot-instructions.md`), and agent configurations (`.github/agents/`).
+- **OpenCode** — Native skill directory (`.opencode/skills/`), entrypoint instructions (`AGENTS.md`), and agent configurations (`.opencode/agents/`).
 
 ## Instruction Integrity and Trust Boundaries
 
