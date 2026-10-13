@@ -4,7 +4,7 @@ Read this reference when work involves multiple workers, shared files, runtime i
 
 ## Cost discipline
 
-Luna-XI always uses `xhigh` reasoning.
+Luna-6 Max always uses `xhigh` reasoning.
 
 Control cost by reducing unnecessary work:
 

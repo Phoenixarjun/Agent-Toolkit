@@ -3,14 +3,14 @@
 ## Runtime mapping
 
 ```text
-Sol-I
-model: gpt-5.6-sol
+Sol-6.1
+model: sol-6.1
 reasoning: high
 role: orchestrator only
 
-Luna-XI
-model: gpt-5.6-luna
-reasoning: xhigh
+Luna-6 Max
+model: luna-6-max
+reasoning: max
 role: repository execution
 ```
 
@@ -62,15 +62,15 @@ It does not overwrite the main Codex `config.toml`.
 Start the Codex session with:
 
 ```text
-Model: GPT-5.6 Sol
+Model: Sol-6.1
 Reasoning: High
 ```
 
-The custom worker definitions pin Luna-XI to:
+The custom worker definitions pin Luna-6 Max to:
 
 ```text
-Model: GPT-5.6 Luna
-Reasoning: xhigh
+Model: Luna-6 Max (luna-6-max)
+Reasoning: Max
 ```
 
 If desired, merge `config-snippet.toml` into the existing Codex config instead of selecting the parent runtime manually.
