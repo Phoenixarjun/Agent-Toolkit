@@ -1,25 +1,40 @@
 # Tune
 
-**Purpose:** Adapt one installed Agent Toolkit capability to a developer's working preferences while preserving its engineering guarantees.
+**Personalize a skill to the engineer without importing bad habits.**
 
-## Invocation
+| | |
+| --- | --- |
+| **Capability** | [Canonical skill](../../skills/tune/SKILL.md) |
+| **Best for** | Adapting one installed capability to an individual's preferences |
+| **Interaction cost** | Moderate; higher for evidence-rich histories or forks |
+| **Output** | Evidence-led customization proposal, approved preferences diff, or no change |
 
-Request the `tune` skill explicitly with a target, such as `tune code-review` or `tune ui-ux-design`. The exact UI command differs by coding assistant; see the installed adapter. Tune does not automatically run after ordinary task feedback.
+## The problem
 
-## What Tune examines
+A good general-purpose skill may not match every engineer's preferred working style. But blindly learning from a user's past chats can encode historical mistakes, agent-generated behavior, or unsafe shortcuts as permanent instructions.
 
-The target skill, its references and evals, active repository instructions, an existing engineering-preferences record, and only the history/feedback the user authorizes and the harness actually exposes. A developer with no history can still tune by explicitly stating preferences. Tune never assumes its history access is complete.
+## When to use it
 
-Tune separates **personal preferences** from **context-specific conventions**, **questionable engineering habits**, **conflicts with mandatory contracts**, and **possible defects in the canonical skill**. It keeps questionable habits in a separate advisory section rather than turning them into new instructions.
+Invoke Tune explicitly for **one installed skill** when you want it adapted to available, authorized evidence of how you work. It works for developers with no history as well as those with many accessible sessions. It does not automatically run after negative feedback.
 
-## What Tune changes
+## How it works
 
-The default is a proposed, narrowly scoped change to the existing `.agent-toolkit/ENGINEERING-PREFERENCES.md` in the consuming project, provided the installed capability actually loads it. The source skill remains unchanged. An isolated personal fork is an exceptional, explicitly requested route requiring actual behavior and activation verification.
+1. Inspect the target skill, rules, known preferences, and actually accessible history or feedback.
+2. Distinguish explicit user choices from agent behavior and one-off context.
+3. Classify compatible preferences, questionable habits, missing evidence, and invariant conflicts.
+4. Propose the smallest non-duplicating change, usually to the existing preferences owner.
+5. Show the exact diff and request approval before writing; test activation and behavior where possible.
 
-The default invocation does not write. Approval must cover the precise diff and location. Tune can correctly conclude `NO_CHANGE`, and it reports honestly when testing or activation could not be verified.
+## Example request
 
-## What Tune does not do
+> Tune my installed code-review skill using my explicit preferences and authorized work history. Keep evidence requirements and safety rules intact. Propose changes before applying them.
 
-It does not improve the shared canonical toolkit, fix application code, rewrite safety rules, convert every habit into a rule, scan inaccessible private conversations, or automatically invoke itself or other skills. Evidence is summarized, not copied as raw private history.
+## What you get
 
-See `skills/tune/SKILL.md` for the operational procedure. The canonical preference owner is `templates/documents/ENGINEERING-PREFERENCES.md` in the Operating Foundation, copied deliberately into a consuming project's configured location.
+A transparent recommendation, not a magic rewrite. Tune may legitimately return **no change**, request a clarification, or report that the installed harness does not actually consume the target preference file.
+
+## Boundaries and dependencies
+
+Tune v1 personalizes a **consuming developer's copy**, not Agent Toolkit's shared canonical skill. It cannot assume access to private conversations, weaken mandatory safeguards, or rewrite its own procedure. A procedural fork is exceptional and needs stronger evaluation.
+
+**Cost guidance:** Depends on evidence access and evaluation tools; estimates are qualitative. See the [canonical skill](../../skills/tune/SKILL.md) for approval and fallback states.

@@ -1,4 +1,4 @@
-# Coding Agent — User-Level Entry Point (OpenCode)
+# Coding Agent - User-Level Entry Point (OpenCode)
 
 <!-- Install as ~/.config/opencode/AGENTS.md or project-level AGENTS.md.
 Replace {{TOOLKIT_ROOT_ABSOLUTE_PATH}} with the real absolute path to a fully installed Agent Toolkit. Do not install this unchanged. -->

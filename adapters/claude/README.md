@@ -4,8 +4,8 @@ Runtime-specific wiring and user-level entrypoint templates for [Claude Code](ht
 
 ## Contents
 
-- `CLAUDE.template.md` — Scaffold for the user-level global instruction file (`~/.claude/CLAUDE.md` or `%USERPROFILE%\.claude\CLAUDE.md`).
-- `tune/INVOCATION.md` — Invocation policy guidelines for the installed Tune skill in Claude Code (`disable-model-invocation: true`).
+- `CLAUDE.template.md` - Scaffold for the user-level global instruction file (`~/.claude/CLAUDE.md` or `%USERPROFILE%\.claude\CLAUDE.md`).
+- `tune/INVOCATION.md` - Invocation policy guidelines for the installed Tune skill in Claude Code (`disable-model-invocation: true`).
 
 ## Installation
 

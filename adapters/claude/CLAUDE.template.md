@@ -1,4 +1,4 @@
-# Coding Agent — User-Level Entry Point (Claude Code)
+# Coding Agent - User-Level Entry Point (Claude Code)
 
 <!-- Install as ~/.claude/CLAUDE.md (Windows: %USERPROFILE%\.claude\CLAUDE.md).
 Replace {{TOOLKIT_ROOT_ABSOLUTE_PATH}} with the real absolute path to a fully installed Agent Toolkit. Do not install this unchanged. -->
