@@ -96,7 +96,7 @@ def validate_catalog():
     if not isinstance(data, dict):
         return {}
     ids = {}
-    for group in ["skills", "workflows", "rules", "agents", "prompts", "knowledge", "evals", "profiles", "adapters"]:
+    for group in ["skills", "workflows", "rules", "agents", "prompts", "knowledge", "evals", "profiles", "adapters", "forms", "templates"]:
         entries = data.get(group, [])
         if not isinstance(entries, list):
             fail(f"catalog/catalog.yaml: {group} must be a list")
@@ -126,13 +126,46 @@ def validate_catalog():
         "knowledge": {path.relative_to(ROOT).as_posix() for path in (ROOT / "knowledge").rglob("*.md")},
         "evals": {path.relative_to(ROOT).as_posix() for path in (ROOT / "evals").glob("*/cases.yaml")},
         "profiles": {path.relative_to(ROOT).as_posix() for path in (ROOT / "profiles").glob("*.yaml")},
+        "forms": {path.relative_to(ROOT).as_posix() for path in (ROOT / "forms").glob("*.md")},
+        "templates": {path.relative_to(ROOT).as_posix() for path in (ROOT / "templates" / "documents").glob("*.md")},
     }
     for group, expected_paths in expected.items():
         registered_paths = {entry.get("path") for entry in data.get(group, []) if isinstance(entry, dict)}
         missing = sorted(expected_paths - registered_paths)
         for artifact_path in missing:
             fail(f"catalog/catalog.yaml: unregistered {group} artifact {artifact_path}")
+    validate_dependencies(ids, data)
     return ids
+
+
+def validate_dependencies(ids, catalog_data):
+    for group, entries in catalog_data.items():
+        if not isinstance(entries, list):
+            continue
+        for entry in entries:
+            if not isinstance(entry, dict):
+                continue
+            entry_id = entry.get("id", "?")
+            for dep_field in ["dependencies", "optional_dependencies"]:
+                deps = entry.get(dep_field)
+                if deps is None:
+                    continue
+                if not isinstance(deps, dict):
+                    fail(f"catalog/catalog.yaml: {entry_id} {dep_field} must be a mapping")
+                    continue
+                for target_group, dep_ids in deps.items():
+                    if not isinstance(dep_ids, list):
+                        fail(f"catalog/catalog.yaml: {entry_id} {dep_field}.{target_group} must be a list")
+                        continue
+                    if dep_field == "dependencies":
+                        valid_ids = ids.get(target_group, set())
+                        valid_ids_lower = {x.lower() for x in valid_ids}
+                        for dep_id in dep_ids:
+                            if not isinstance(dep_id, str):
+                                fail(f"catalog/catalog.yaml: {entry_id} {dep_field}.{target_group} contains non-string item")
+                                continue
+                            if dep_id not in valid_ids and dep_id.lower() not in valid_ids_lower:
+                                fail(f"catalog/catalog.yaml: {entry_id} required dependency not found: {target_group}.{dep_id}")
 
 
 def validate_profiles(ids):
@@ -143,6 +176,8 @@ def validate_profiles(ids):
         "agents": "agents",
         "prompts": "prompts",
         "knowledge": "knowledge",
+        "forms": "forms",
+        "templates": "templates",
     }
     for path in (ROOT / "profiles").glob("*.yaml"):
         data = load_yaml(path)
@@ -153,8 +188,13 @@ def validate_profiles(ids):
             if not isinstance(values, list):
                 fail(f"{path.relative_to(ROOT)}: {field} must be a list")
                 continue
+            group_ids = ids.get(group, set())
+            group_ids_lower = {x.lower() for x in group_ids}
             for value in values:
-                if value not in ids.get(group, set()):
+                if not isinstance(value, str):
+                    fail(f"{path.relative_to(ROOT)}: {field} items must be strings")
+                    continue
+                if value not in group_ids and value.lower() not in group_ids_lower:
                     fail(f"{path.relative_to(ROOT)}: unknown {field} reference {value}")
 
 

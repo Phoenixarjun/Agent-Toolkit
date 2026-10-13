@@ -9,6 +9,9 @@ skills:
       - git
     maturity: stable
     version: "1.2.0"
+    optional_dependencies:
+      workflows:
+        - implementation-review-loop
   - id: intent-capture
     path: skills/intent-capture
     category: intent
@@ -35,6 +38,26 @@ skills:
       - frontend
     maturity: stable
     version: "1.1.0"
+    optional_dependencies:
+      workflows:
+        - ui-design-build-review
+      rules:
+        - ui-engineering-rules
+      agents:
+        - ui-critic
+      knowledge:
+        - intent-and-archetypes
+        - visual-language
+        - typography-and-color
+        - interaction-and-motion
+        - accessibility-and-usability
+        - anti-generic-ui
+        - review-rubric
+      forms:
+        - ui-design-intake
+      templates:
+        - design-brief
+        - design-review
   - id: problem-to-solution
     path: skills/problem-to-solution
     category: product-discovery
@@ -44,6 +67,16 @@ skills:
       - decision-making
     maturity: experimental
     version: "1.0.0"
+    optional_dependencies:
+      workflows:
+        - problem-to-solution
+      knowledge:
+        - problem-framing
+        - option-evaluation
+      templates:
+        - problem-brief
+        - solution-option
+        - decision-brief
   - id: tdd
     path: skills/tdd
     category: quality
@@ -60,6 +93,19 @@ skills:
       - security
     maturity: experimental
     version: "2.0.0"
+    dependencies:
+      workflows:
+        - security-audit
+      agents:
+        - security-auditor
+        - security-authority-investigator
+        - security-trust-path-investigator
+        - security-coverage-critic
+      knowledge:
+        - security-assurance-principles
+        - security-regulatory-applicability
+      templates:
+        - security-audit-report
   - id: tune
     path: skills/tune
     category: agent-engineering
@@ -76,6 +122,9 @@ skills:
       - developer-experience
     maturity: experimental
     version: "1.0.0"
+    optional_dependencies:
+      skills:
+        - research
 
 workflows:
   - id: implementation-review-loop
@@ -307,5 +356,59 @@ adapters:
   - id: codex-sol-luna-xi
     path: adapters/codex/sol-luna-xi
     target: codex
+    maturity: stable
+    version: "1.0.0"
+
+forms:
+  - id: ui-design-intake
+    path: forms/UI-DESIGN-INTAKE.md
+    category: design
+    maturity: stable
+    version: "1.0.0"
+
+templates:
+  - id: change-intent
+    path: templates/documents/CHANGE-INTENT.md
+    category: engineering
+    maturity: stable
+    version: "1.0.0"
+  - id: decision-brief
+    path: templates/documents/DECISION-BRIEF.md
+    category: product-discovery
+    maturity: experimental
+    version: "1.0.0"
+  - id: design-brief
+    path: templates/documents/DESIGN-BRIEF.md
+    category: design
+    maturity: stable
+    version: "1.0.0"
+  - id: design-review
+    path: templates/documents/DESIGN-REVIEW.md
+    category: design
+    maturity: stable
+    version: "1.0.0"
+  - id: engineering-preferences
+    path: templates/documents/ENGINEERING-PREFERENCES.md
+    category: engineering
+    maturity: stable
+    version: "1.0.0"
+  - id: problem-brief
+    path: templates/documents/PROBLEM-BRIEF.md
+    category: product-discovery
+    maturity: experimental
+    version: "1.0.0"
+  - id: security-audit-report
+    path: templates/documents/SECURITY-AUDIT-REPORT.md
+    category: security
+    maturity: experimental
+    version: "2.0.0"
+  - id: solution-option
+    path: templates/documents/SOLUTION-OPTION.md
+    category: product-discovery
+    maturity: experimental
+    version: "1.0.0"
+  - id: test-plan
+    path: templates/documents/TEST-PLAN.md
+    category: quality
     maturity: stable
     version: "1.0.0"

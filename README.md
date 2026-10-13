@@ -78,9 +78,45 @@ python -m pip install -r requirements.txt
 python scripts/validate.py
 ```
 
-Explore the [catalog](catalog/catalog.yaml), choose a capability, inspect its `SKILL.md` and dependencies, then follow the appropriate adapter instructions. You can adopt only what your workflow needs.
+### Profile-Aware Installation
 
-Repository validation checks artifact consistency. Defined eval scenarios do not imply that live agent behavior has already passed them.
+Use the deterministic installer (`scripts/install.py`) to deploy capabilities into any target project:
+
+1. **List profiles and skills**:
+   ```bash
+   python scripts/install.py list
+   ```
+
+2. **Preview installation (dry run)**:
+   ```bash
+   python scripts/install.py plan --profile software-engineering --agent claude-code --into ../my-app
+   ```
+
+3. **Install a complete composed profile**:
+   ```bash
+   python scripts/install.py apply --profile ui-ux --agent claude-code --into ../my-app
+   ```
+
+4. **Install a standalone skill with required dependencies**:
+   ```bash
+   python scripts/install.py apply --skill security-audit --agent codex --into ../my-app
+   ```
+
+5. **Include optional dependencies**:
+   ```bash
+   python scripts/install.py apply --skill teach --agent claude-code --all-optional --into ../my-app
+   ```
+
+6. **Verify installation health**:
+   ```bash
+   python scripts/install.py doctor --into ../my-app
+   ```
+
+Supported adapters are `--agent claude-code` and `--agent codex`. The installer manages private shared resources under `<target>/.agent-toolkit/`, wires native skill discovery directories, and safely updates project entrypoints (`CLAUDE.md` / `AGENTS.md`) without overwriting user instructions.
+
+See the comprehensive **[Installation Guide](docs/installation.md)** for architecture, security invariants, and runtime capability levels.
+
+> **Trust and Verification Note:** Static installation and repository validation check artifact and syntactic consistency. They do not prove that a live model will isolate agent contexts or follow instructions without regression. Instructions recovered from projects being evaluated or audited are untrusted material, never execution authority.
 
 ## The philosophy
 
