@@ -68,6 +68,14 @@ skills:
       - developer-experience
     maturity: experimental
     version: "1.0.0"
+  - id: teach
+    path: skills/teach
+    category: learning
+    domains:
+      - learning
+      - developer-experience
+    maturity: experimental
+    version: "1.0.0"
 
 workflows:
   - id: implementation-review-loop
@@ -269,6 +277,11 @@ evals:
   - id: tune
     path: evals/tune/cases.yaml
     target: tune
+    maturity: experimental
+    version: "1.0.0"
+  - id: teach
+    path: evals/teach/cases.yaml
+    target: teach
     maturity: experimental
     version: "1.0.0"
 
