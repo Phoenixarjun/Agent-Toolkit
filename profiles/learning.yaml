@@ -1,0 +1,6 @@
+schema_version: "1"
+name: learning
+description: Guided learning, conceptual explanation, Socratic tutoring, and deliberate practice.
+
+skills:
+  - teach

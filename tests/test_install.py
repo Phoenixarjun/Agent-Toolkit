@@ -116,15 +116,34 @@ class TestDependencyResolution(unittest.TestCase):
         self.assertIn("design-brief", ids)
 
     def test_optional_dependency_unavailable_does_not_fail(self):
-        # teach declares optional dependency skills:research which is not in catalog
+        # An unavailable optional dependency records in unavail without raising error
+        mock_catalog = {
+            "skills": [
+                {
+                    "id": "sample-skill",
+                    "path": "skills/teach",
+                    "optional_dependencies": {"skills": ["nonexistent-skill"]},
+                }
+            ]
+        }
         artifacts, inc, skip, unavail = resolve_dependencies(
+            catalog=mock_catalog,
+            skill_id="sample-skill",
+            all_optional=True,
+        )
+        skill_ids = [a.id for a in artifacts if a.group == "skills"]
+        self.assertIn("sample-skill", skill_ids)
+        self.assertIn("skills:nonexistent-skill", unavail)
+
+        # In live catalog, teach now successfully resolves optional dependency research
+        t_artifacts, t_inc, _, _ = resolve_dependencies(
             catalog=self.catalog,
             skill_id="teach",
             all_optional=True,
         )
-        skill_ids = [a.id for a in artifacts if a.group == "skills"]
-        self.assertIn("teach", skill_ids)
-        self.assertIn("skills:research", unavail)
+        t_ids = [a.id for a in t_artifacts if a.group == "skills"]
+        self.assertIn("teach", t_ids)
+        self.assertIn("research", t_ids)
 
     def test_circular_dependency_detection(self):
         # Synthetic mock catalog with cycle

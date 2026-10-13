@@ -1,0 +1,227 @@
+{
+  "schema_version": "1.0.0",
+  "research": {
+    "id": "DEMO-01",
+    "title": "Harbor Mobility | Evidence review",
+    "question": "How did two fictional service metrics change over the observed period?",
+    "as_of": "2026-10-13",
+    "outcome": "partial",
+    "scope": {
+      "included": [
+        "Fictional monthly on-time deliveries",
+        "Fictional monthly resolved complaints"
+      ],
+      "excluded": [
+        "Real companies",
+        "Financial advice",
+        "External benchmarking"
+      ]
+    },
+    "summary": "In the synthetic observations, on-time deliveries increased across the three months while resolved complaints also increased. These demo values illustrate report structure only.",
+    "synthetic": true
+  },
+  "execution": {
+    "mode": "deep",
+    "independence": "unavailable",
+    "scout_contexts": [],
+    "critic_context": null,
+    "verifier_context": null,
+    "coverage_reviewed": false,
+    "budget": {
+      "max_concurrent_scouts": 2,
+      "max_scout_tasks": 4,
+      "scout_tasks_used": 0,
+      "max_tool_calls": 20,
+      "tool_calls_used": 0
+    },
+    "limitations": [
+      "Synthetic fixture. No independent agents actually ran and no external source was consulted. Context IDs are test records, not execution evidence."
+    ]
+  },
+  "questions": [
+    {
+      "id": "Q-001",
+      "text": "Did the synthetic on-time rate change?",
+      "status": "partial",
+      "claim_ids": [
+        "C-001"
+      ],
+      "gap": "No real-world evidence, fixture only."
+    },
+    {
+      "id": "Q-002",
+      "text": "Did resolved complaints change?",
+      "status": "partial",
+      "claim_ids": [
+        "C-002"
+      ],
+      "gap": "No real-world evidence, fixture only."
+    }
+  ],
+  "sources": [
+    {
+      "id": "S-001",
+      "title": "Fictional delivery dashboard",
+      "url": "https://example.org/demo/deliveries",
+      "publisher": "Synthetic Test Lab",
+      "kind": "primary",
+      "published_at": "2026-10-10",
+      "accessed_at": "2026-10-13",
+      "measurement_period": "2026-07 to 2026-09",
+      "lineage_id": "origin-deliveries",
+      "locator": "Table A, rows July to September",
+      "excerpt": "On-time delivery rates: 88%, 90%, 93%.",
+      "limitations": "Entirely fabricated for renderer and validation tests."
+    },
+    {
+      "id": "S-002",
+      "title": "Fictional support dashboard",
+      "url": "https://example.org/demo/support",
+      "publisher": "Synthetic Test Lab",
+      "kind": "primary",
+      "published_at": "2026-10-10",
+      "accessed_at": "2026-10-13",
+      "measurement_period": "2026-07 to 2026-09",
+      "lineage_id": "origin-support",
+      "locator": "Table B, rows July to September",
+      "excerpt": "Resolved complaints: 120, 135, 160.",
+      "limitations": "Entirely fabricated for renderer and validation tests."
+    }
+  ],
+  "claims": [
+    {
+      "id": "C-001",
+      "question_id": "Q-001",
+      "text": "Fictional on-time deliveries rose from 88% to 93% over the observed three months.",
+      "source_ids": [
+        "S-001"
+      ],
+      "status": "qualified",
+      "observed_period": "2026-07 to 2026-09",
+      "material": true,
+      "scout_context": null,
+      "verification": {
+        "reviewer_context": null,
+        "method": "Synthetic example values checked for internal consistency only",
+        "note": "Sample data are synthetic."
+      },
+      "limitations": [
+        "Synthetic values only; no external source or independent agent verification."
+      ],
+      "numeric_assertion": {
+        "chart_id": "CH-001",
+        "series_name": "On-time deliveries",
+        "first": 88,
+        "last": 93,
+        "delta": 5
+      }
+    },
+    {
+      "id": "C-002",
+      "question_id": "Q-002",
+      "text": "Fictional complaint resolutions rose from 120 to 160 in the same period.",
+      "source_ids": [
+        "S-002"
+      ],
+      "status": "qualified",
+      "observed_period": "2026-07 to 2026-09",
+      "material": true,
+      "scout_context": null,
+      "verification": {
+        "reviewer_context": null,
+        "method": "Synthetic example values checked for internal consistency only",
+        "note": "Sample data are synthetic."
+      },
+      "limitations": [
+        "Synthetic values only; no external source or independent agent verification."
+      ],
+      "numeric_assertion": {
+        "chart_id": "CH-002",
+        "series_name": "Resolved cases",
+        "first": 120,
+        "last": 160,
+        "delta": 40
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-001",
+      "title": "Delivery reliability improved in the sample",
+      "body": "The synthetic series shows a five percentage-point increase between July and September.",
+      "claim_ids": [
+        "C-001"
+      ],
+      "category": "Observation"
+    },
+    {
+      "id": "F-002",
+      "title": "Complaint throughput increased in the sample",
+      "body": "The synthetic total rose by 40 cases; it does not establish whether customer experience improved.",
+      "claim_ids": [
+        "C-002"
+      ],
+      "category": "Interpretation"
+    }
+  ],
+  "charts": [
+    {
+      "id": "CH-001",
+      "title": "On-time deliveries by month",
+      "unit": "%",
+      "note": "Synthetic observations; not a real performance series.",
+      "method": "Original fixture observations, no interpolation",
+      "series": [
+        {
+          "name": "On-time deliveries",
+          "source_ids": [
+            "S-001"
+          ],
+          "points": [
+            {
+              "x": "2026-07-01",
+              "y": 88
+            },
+            {
+              "x": "2026-08-01",
+              "y": 90
+            },
+            {
+              "x": "2026-09-01",
+              "y": 93
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CH-002",
+      "title": "Resolved complaints by month",
+      "unit": "cases",
+      "note": "Higher resolution count does not measure the number of incoming complaints.",
+      "method": "Original fixture observations, no interpolation",
+      "series": [
+        {
+          "name": "Resolved cases",
+          "source_ids": [
+            "S-002"
+          ],
+          "points": [
+            {
+              "x": "2026-07-01",
+              "y": 120
+            },
+            {
+              "x": "2026-08-01",
+              "y": 135
+            },
+            {
+              "x": "2026-09-01",
+              "y": 160
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
