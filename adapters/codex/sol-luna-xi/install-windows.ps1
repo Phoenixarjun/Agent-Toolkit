@@ -23,7 +23,7 @@ Write-Host ""
 Write-Host "Luna-XI agents:"
 Write-Host $AgentTarget
 Write-Host ""
-Write-Host "Start a fresh Codex task with GPT-5.6 Sol and High reasoning."
+Write-Host "Start a fresh Codex task with Sol-6.1 and High reasoning."
 Write-Host "Invoke with:"
 Write-Host '$sol-luna-xi Implement <task>.'
 Write-Host ""

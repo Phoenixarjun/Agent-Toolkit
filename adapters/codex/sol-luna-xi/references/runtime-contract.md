@@ -5,13 +5,13 @@
 The parent controller must be:
 
 ```text
-model: gpt-5.6-sol
+model: sol-6.1
 reasoning: high
 ```
 
 Prefer a read-only parent sandbox.
 
-Read-only sandboxing does not replace the behavioral rule that Sol-I must not inspect repository content.
+Read-only sandboxing does not replace the behavioral rule that Sol-6.1 must not inspect repository content.
 
 If the host cannot establish the required parent runtime, fail closed with `BLOCKED`.
 
@@ -35,8 +35,8 @@ luna_reviewer_xi
 Every worker must pin:
 
 ```text
-model: gpt-5.6-luna
-reasoning: xhigh
+model: luna-6-max
+reasoning: Max
 ```
 
 Scout and reviewer use read-only sandboxes.

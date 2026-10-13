@@ -1,7 +1,7 @@
 ---
 name: sol-luna-xi
-description: Explicit Codex orchestration skill for coding work. GPT-5.6 Sol at high reasoning is the controller only; registered GPT-5.6 Luna workers at xhigh perform repository inspection, implementation, testing, validation, review, debugging, and fixes. Use only when explicitly invoked with $sol-luna-xi.
-compatibility: Requires Codex with custom agents, gpt-5.6-sol, gpt-5.6-luna, high and xhigh reasoning support, Git, and the repository toolchain required by the requested task.
+description: Explicit Codex orchestration skill for coding work. Sol-6.1 at high reasoning is the controller only; registered Luna-6 Max workers at max perform repository inspection, implementation, testing, validation, review, debugging, and fixes. Use only when explicitly invoked with $sol-luna-xi.
+compatibility: Requires Codex with custom agents, sol-6.1, luna-6-max, high and max reasoning support, Git, and the repository toolchain required by the requested task.
 metadata:
   version: "1.0.0"
   target: "codex"
@@ -13,18 +13,18 @@ metadata:
 ## Runtime
 
 ```text
-Sol-I
-model: gpt-5.6-sol
+Sol-6.1
+model: sol-6.1
 reasoning: high
 role: orchestrator only
 
-Luna-XI
-model: gpt-5.6-luna
-reasoning: xhigh
+Luna-6 Max
+model: luna-6-max
+reasoning: max
 role: repository execution
 ```
 
-`Sol-I` and `Luna-XI` are workflow labels, not model IDs.
+`Sol-6.1` and `Luna-6 Max` are workflow labels and model specifications.
 
 Do not silently change either model or reasoning level.
 
@@ -252,15 +252,15 @@ Evidence: <concise Luna-XI evidence>
 Next action: <one concrete action>
 ```
 
-Sol-I must never claim that it personally inspected repository evidence.
+Sol-6.1 must never claim that it personally inspected repository evidence.
 
 ## Fail closed
 
 If the runtime cannot preserve:
 
 ```text
-Sol-I   = gpt-5.6-sol + high + orchestration only
-Luna-XI = gpt-5.6-luna + xhigh + execution only
+Sol-6.1    = sol-6.1 + high + orchestration only
+Luna-6 Max = luna-6-max + Max + execution only
 ```
 
 return `BLOCKED` and name the unavailable requirement.
