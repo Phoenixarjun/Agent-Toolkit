@@ -14,11 +14,19 @@ def template_path():
     return Path(__file__).resolve().parents[1] / "templates" / "documents" / "CHANGE-INTENT.md"
 
 
+def escape_yaml_string(value):
+    # Strip newlines and control characters to prevent frontmatter injection
+    cleaned = re.sub(r"[\r\n\x00-\x1f]", " ", str(value)).strip()
+    return cleaned.replace("\\", "\\\\").replace('"', '\\"')
+
+
 def render(template, intent_id, title, source, created):
+    clean_title = escape_yaml_string(title)
+    clean_source = escape_yaml_string(source)
     return (
         template.replace("{{INTENT_ID}}", intent_id)
-        .replace("{{TITLE}}", title.replace('"', "'"))
-        .replace("{{SOURCE}}", source.replace('"', "'"))
+        .replace("{{TITLE}}", clean_title)
+        .replace("{{SOURCE}}", clean_source)
         .replace("{{CREATED_DATE}}", created)
     )
 
@@ -32,7 +40,13 @@ def main():
     args = parser.parse_args()
 
     root = Path(args.root).resolve()
-    target = root / ".agent-toolkit" / "intents"
+    if not root.exists() or not root.is_dir():
+        raise SystemExit(f"Target root directory does not exist or is not a directory: {args.root}")
+
+    target = (root / ".agent-toolkit" / "intents").resolve()
+    if not target.is_relative_to(root):
+        raise SystemExit(f"Refusing to write outside root directory: {target}")
+
     target.mkdir(parents=True, exist_ok=True)
 
     created = args.date or date.today().isoformat()
