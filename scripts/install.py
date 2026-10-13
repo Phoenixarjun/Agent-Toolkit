@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """
-Agent Toolkit — Profile-Aware Installer
+Agent Toolkit — Six-Runtime Profile-Aware Installer
 
-Deterministic deployment and verification utility for Agent Toolkit capabilities.
-Supports composed profiles, standalone skills, dependency resolution,
-safe non-destructive installation, manifest tracking, and vendor adapters.
+Deterministic deployment, dependency resolution, collision detection, and verification utility
+for Agent Toolkit capabilities across six AI coding assistants:
+1. Claude Code
+2. OpenAI Codex
+3. Cursor
+4. Gemini CLI
+5. GitHub Copilot
+6. OpenCode
 """
 
 from __future__ import annotations
@@ -37,6 +42,105 @@ MANAGED_END_MARKER = "<!-- END AGENT-TOOLKIT MANAGED BLOCK -->"
 # ============================================================================
 
 @dataclass
+class AdapterSpec:
+    name: str
+    aliases: List[str]
+    preferred_skill_root: str
+    secondary_skill_roots: List[str]
+    entrypoint_file: str
+    agent_root: Optional[str]
+    manual_invocation_strategy: str  # "frontmatter", "codex_yaml", "both"
+    display_name: str
+    description: str
+    supports_specialist_agents: bool = True
+
+
+ADAPTER_SPECS: Dict[str, AdapterSpec] = {
+    "claude-code": AdapterSpec(
+        name="claude-code",
+        aliases=["claude"],
+        preferred_skill_root=".claude/skills",
+        secondary_skill_roots=[".agents/skills"],
+        entrypoint_file="CLAUDE.md",
+        agent_root=".claude/agents",
+        manual_invocation_strategy="frontmatter",
+        display_name="Claude Code",
+        description="Anthropic Claude Code CLI (.claude/skills, CLAUDE.md)",
+        supports_specialist_agents=True,
+    ),
+    "codex": AdapterSpec(
+        name="codex",
+        aliases=["openai-codex"],
+        preferred_skill_root=".agents/skills",
+        secondary_skill_roots=[".codex/skills"],
+        entrypoint_file="AGENTS.md",
+        agent_root=".codex/agents",
+        manual_invocation_strategy="codex_yaml",
+        display_name="OpenAI Codex",
+        description="OpenAI Codex CLI (.agents/skills, AGENTS.md)",
+        supports_specialist_agents=True,
+    ),
+    "cursor": AdapterSpec(
+        name="cursor",
+        aliases=[],
+        preferred_skill_root=".cursor/skills",
+        secondary_skill_roots=[".agents/skills"],
+        entrypoint_file=".cursor/rules/agent-toolkit.mdc",
+        agent_root=".cursor/rules",
+        manual_invocation_strategy="frontmatter",
+        display_name="Cursor",
+        description="Cursor IDE (.cursor/skills, .cursor/rules/agent-toolkit.mdc)",
+        supports_specialist_agents=True,
+    ),
+    "gemini-cli": AdapterSpec(
+        name="gemini-cli",
+        aliases=["gemini"],
+        preferred_skill_root=".gemini/skills",
+        secondary_skill_roots=[".agents/skills"],
+        entrypoint_file="GEMINI.md",
+        agent_root=".gemini/agents",
+        manual_invocation_strategy="frontmatter",
+        display_name="Gemini CLI",
+        description="Google Gemini CLI / Antigravity (.gemini/skills, GEMINI.md)",
+        supports_specialist_agents=True,
+    ),
+    "github-copilot": AdapterSpec(
+        name="github-copilot",
+        aliases=["copilot"],
+        preferred_skill_root=".github/skills",
+        secondary_skill_roots=[".agents/skills"],
+        entrypoint_file=".github/copilot-instructions.md",
+        agent_root=".github/agents",
+        manual_invocation_strategy="frontmatter",
+        display_name="GitHub Copilot",
+        description="GitHub Copilot (.github/skills, .github/copilot-instructions.md)",
+        supports_specialist_agents=True,
+    ),
+    "opencode": AdapterSpec(
+        name="opencode",
+        aliases=[],
+        preferred_skill_root=".opencode/skills",
+        secondary_skill_roots=[".agents/skills"],
+        entrypoint_file="AGENTS.md",
+        agent_root=".opencode/agents",
+        manual_invocation_strategy="frontmatter",
+        display_name="OpenCode",
+        description="OpenCode CLI (.opencode/skills, AGENTS.md)",
+        supports_specialist_agents=True,
+    ),
+}
+
+
+def normalize_adapter(name_or_alias: str) -> AdapterSpec:
+    clean = name_or_alias.strip().lower()
+    for canonical, spec in ADAPTER_SPECS.items():
+        if clean == canonical or clean in spec.aliases:
+            return spec
+    supported = ", ".join(sorted(ADAPTER_SPECS.keys()))
+    raise ValueError(f"Unsupported adapter '{name_or_alias}'. Supported: {supported}")
+
+
+@dataclass
 class ResolvedArtifact:
     group: str
     id: str
@@ -51,7 +155,17 @@ class PlanFile:
     source_path: Optional[str]  # Path relative to ROOT (None if generated)
     content: Optional[str] = None  # In-memory content if generated
     is_adapter_specific: bool = False
-    action: str = "CREATE"  # CREATE, UPDATE_MANAGED_BLOCK, PRESERVE, CONFLICT
+    action: str = "CREATE"  # CREATE, UPDATE_MANAGED_BLOCK, PRESERVE, REPLACE, CONFLICT
+
+
+@dataclass
+class ConflictItem:
+    path: str
+    conflict_type: str  # "MODIFIED_MANAGED", "UNMANAGED_FILE", "UNMANAGED_SKILL", "CASE_COLLISION", "SECONDARY_PATH_COLLISION"
+    message: str
+    skill_id: Optional[str] = None
+    existing_hash: Optional[str] = None
+    source_hash: Optional[str] = None
 
 
 @dataclass
@@ -66,7 +180,10 @@ class InstallationPlan:
     optional_unavailable: List[str] = field(default_factory=list)
     files: List[PlanFile] = field(default_factory=list)
     conflicts: List[str] = field(default_factory=list)
+    conflict_items: List[ConflictItem] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
+    on_conflict: str = "abort"  # "keep", "replace", "rename", "abort"
+    aliases: Dict[str, str] = field(default_factory=dict)  # canonical_id -> alias_id
 
 
 # ============================================================================
@@ -144,7 +261,6 @@ def resolve_dependencies(
         node_key = (group, art_id.lower())
 
         if node_key in visiting_path:
-            # Cycle detected
             cycle_str = " -> ".join(f"{g}:{i}" for g, i in visiting_path + [node_key])
             raise ValueError(f"Circular dependency detected: {cycle_str}")
 
@@ -187,7 +303,6 @@ def resolve_dependencies(
                         should_include = all_optional or (o_id.lower() in selected_optionals_lower)
 
                         if not opt_entry:
-                            # Optional dependency does not exist in catalog
                             optional_unavailable.append(opt_key)
                         elif should_include:
                             optional_included.append(opt_key)
@@ -259,20 +374,30 @@ def ensure_safe_relative_path(target_dir: Path, rel_path: str) -> Path:
 
 
 # ============================================================================
-# Vendor Adapters (Claude Code & Codex)
+# Vendor Entrypoints & Managed Blocks
 # ============================================================================
 
-def generate_managed_entrypoint(adapter: str, target_dir: Path, artifacts: List[ResolvedArtifact]) -> str:
+def generate_managed_entrypoint(adapter_spec: AdapterSpec, target_dir: Path, artifacts: List[ResolvedArtifact], aliases: Optional[Dict[str, str]] = None) -> str:
+    if aliases is None:
+        aliases = {}
     skills = [a for a in artifacts if a.group == "skills"]
     rules = [a for a in artifacts if a.group == "rules"]
     workflows = [a for a in artifacts if a.group == "workflows"]
 
-    skills_summary = ", ".join(s.id for s in skills) if skills else "None"
+    skill_names = []
+    for s in skills:
+        alias = aliases.get(s.id)
+        if alias and alias != s.id:
+            skill_names.append(f"{s.id} (alias: {alias})")
+        else:
+            skill_names.append(s.id)
+
+    skills_summary = ", ".join(skill_names) if skill_names else "None"
     rules_summary = ", ".join(r.id for r in rules) if rules else "None"
     workflows_summary = ", ".join(w.id for w in workflows) if workflows else "None"
 
     return f"""{MANAGED_START_MARKER}
-# Agent Toolkit Integration ({adapter})
+# Agent Toolkit Integration ({adapter_spec.display_name})
 # Managed capability installation. Do not edit content within this block manually.
 
 1. **Safety Floor**: Apply `.agent-toolkit/rules/global/workspace-safety.md` for mandatory workspace safety.
@@ -286,18 +411,28 @@ def generate_managed_entrypoint(adapter: str, target_dir: Path, artifacts: List[
 {MANAGED_END_MARKER}"""
 
 
-def merge_managed_entrypoint_file(target_file: Path, managed_block: str) -> Tuple[str, str]:
+def merge_managed_entrypoint_file(target_file: Path, managed_block: str, is_cursor_mdc: bool = False) -> Tuple[str, str]:
     """
     Merges managed_block into target_file.
     Preserves all user-written content outside the managed block.
     Returns: (merged_content, action)
     """
     if not target_file.exists():
+        if is_cursor_mdc:
+            initial = (
+                "---\n"
+                "description: Agent Toolkit integration and active capabilities\n"
+                "globs: *\n"
+                "alwaysApply: true\n"
+                "---\n\n"
+                + managed_block
+                + "\n"
+            )
+            return initial, "CREATE"
         return managed_block + "\n", "CREATE"
 
     existing_text = target_file.read_text(encoding="utf-8")
     if MANAGED_START_MARKER in existing_text and MANAGED_END_MARKER in existing_text:
-        # Replace existing block
         pattern = re.compile(
             re.escape(MANAGED_START_MARKER) + r".*?" + re.escape(MANAGED_END_MARKER),
             re.DOTALL,
@@ -305,9 +440,72 @@ def merge_managed_entrypoint_file(target_file: Path, managed_block: str) -> Tupl
         new_text = pattern.sub(managed_block, existing_text)
         return new_text, "UPDATE_MANAGED_BLOCK"
     else:
-        # Prepend block to existing file
+        # Prepend block to existing file, preserving YAML frontmatter if present
+        if existing_text.startswith("---\n"):
+            end_fm = existing_text.find("\n---\n", 4)
+            if end_fm != -1:
+                frontmatter = existing_text[:end_fm + 5]
+                rest = existing_text[end_fm + 5:].lstrip()
+                new_text = frontmatter + "\n" + managed_block + "\n\n" + rest
+                return new_text, "UPDATE_MANAGED_BLOCK"
         new_text = managed_block + "\n\n" + existing_text.lstrip()
         return new_text, "UPDATE_MANAGED_BLOCK"
+
+
+# ============================================================================
+# Specialist Agents Serializer
+# ============================================================================
+
+def serialize_specialist_agent(adapter_spec: AdapterSpec, agent_artifact: ResolvedArtifact) -> Optional[PlanFile]:
+    """
+    Serializes a specialist agent into adapter-native format where supported.
+    """
+    if not adapter_spec.supports_specialist_agents or not adapter_spec.agent_root:
+        return None
+
+    src_path = ROOT / agent_artifact.canonical_path
+    if not src_path.exists():
+        return None
+
+    agent_content = src_path.read_text(encoding="utf-8")
+    ag_id = agent_artifact.id
+
+    if adapter_spec.name == "cursor":
+        # Cursor rule mdc format
+        mdc_content = (
+            "---\n"
+            f"description: Specialist Agent Role: {ag_id}\n"
+            "globs: *\n"
+            "alwaysApply: false\n"
+            "---\n\n"
+            + agent_content
+        )
+        dest_rel = f"{adapter_spec.agent_root}/{ag_id}.mdc"
+        return PlanFile(rel_destination=dest_rel, source_path=None, content=mdc_content, is_adapter_specific=True)
+
+    elif adapter_spec.name == "codex":
+        # Codex agent toml
+        toml_content = (
+            f'name = "{ag_id}"\n'
+            f'description = "Specialist agent {ag_id} from Agent Toolkit"\n'
+            f'instructions = ".agent-toolkit/agents/{ag_id}/AGENT.md"\n'
+        )
+        dest_rel = f"{adapter_spec.agent_root}/{ag_id}.toml"
+        return PlanFile(rel_destination=dest_rel, source_path=None, content=toml_content, is_adapter_specific=True)
+
+    else:
+        # Markdown agent definitions for Claude, Gemini CLI, Copilot, OpenCode
+        dest_rel = f"{adapter_spec.agent_root}/{ag_id}.md"
+        if not agent_content.startswith("---\n"):
+            wrapped = (
+                "---\n"
+                f"name: {ag_id}\n"
+                f"description: Specialist agent {ag_id} from Agent Toolkit\n"
+                "---\n\n"
+                + agent_content
+            )
+            return PlanFile(rel_destination=dest_rel, source_path=None, content=wrapped, is_adapter_specific=True)
+        return PlanFile(rel_destination=dest_rel, source_path=None, content=agent_content, is_adapter_specific=True)
 
 
 # ============================================================================
@@ -321,14 +519,16 @@ def build_installation_plan(
     skill_id: Optional[str] = None,
     selected_optionals: Optional[Set[str]] = None,
     all_optional: bool = False,
+    on_conflict: str = "abort",
+    custom_alias: Optional[str] = None,
 ) -> InstallationPlan:
+    spec = normalize_adapter(adapter)
     catalog = get_catalog()
     profile_data = None
     if profile_id:
         profiles = get_profiles()
         profile_data = profiles.get(profile_id)
         if not profile_data:
-            # Try case-insensitive lookup
             for p_name, p_data in profiles.items():
                 if p_name.lower() == profile_id.lower():
                     profile_data = p_data
@@ -347,13 +547,14 @@ def build_installation_plan(
 
     plan = InstallationPlan(
         target_dir=target_dir,
-        adapter=adapter,
+        adapter=spec.name,
         profile_id=profile_id,
         skill_id=skill_id,
         artifacts=artifacts,
         optional_included=opt_inc,
         optional_skipped=opt_skip,
         optional_unavailable=opt_unavail,
+        on_conflict=on_conflict,
     )
 
     # Read existing manifest if any
@@ -366,15 +567,16 @@ def build_installation_plan(
             plan.warnings.append("Existing .agent-toolkit/manifest.json is malformed.")
 
     existing_files = existing_manifest.get("files", {})
+    existing_aliases = existing_manifest.get("aliases", {})
+    plan.aliases = dict(existing_aliases)
 
-    # Plan canonical resource copies into .agent-toolkit/
+    # 1. Plan canonical resource copies into .agent-toolkit/
     for art in artifacts:
         src_path = ROOT / art.canonical_path
         if src_path.is_file():
             dest_rel = f".agent-toolkit/{art.canonical_path}"
             plan.files.append(PlanFile(rel_destination=dest_rel, source_path=art.canonical_path))
         elif src_path.is_dir():
-            # Copy all files inside skill folder (e.g. SKILL.md, references/*)
             for file_path in src_path.rglob("*"):
                 if file_path.is_file():
                     rel_to_root = file_path.relative_to(ROOT).as_posix()
@@ -388,47 +590,126 @@ def build_installation_plan(
     if not target_pref_file.exists():
         plan.files.append(PlanFile(rel_destination=pref_dest, source_path=pref_source))
 
-    # Plan Vendor Adapter Wiring
-    entrypoint_name = "CLAUDE.md" if adapter == "claude-code" else "AGENTS.md"
-    entrypoint_path = target_dir / entrypoint_name
-    managed_block = generate_managed_entrypoint(adapter, target_dir, artifacts)
-    merged_content, action = merge_managed_entrypoint_file(entrypoint_path, managed_block)
-    plan.files.append(
-        PlanFile(
-            rel_destination=entrypoint_name,
-            source_path=None,
-            content=merged_content,
-            is_adapter_specific=True,
-            action=action,
-        )
-    )
+    # 2. Specialist Agents Native Serialization
+    agents = [a for a in artifacts if a.group == "agents"]
+    for ag in agents:
+        agent_pf = serialize_specialist_agent(spec, ag)
+        if agent_pf:
+            plan.files.append(agent_pf)
 
-    # Adapter skill-discovery directory
-    # For Claude Code: .claude/skills/<skill>/
-    # For Codex: .agents/skills/<skill>/
+    # 3. Detect Skill-Level Collisions Across Primary & Secondary Roots
     skills = [a for a in artifacts if a.group == "skills"]
-    adapter_skill_root = ".claude/skills" if adapter == "claude-code" else ".agents/skills"
+    all_discovery_roots = [spec.preferred_skill_root] + spec.secondary_skill_roots
+
+    conflicting_skills: Set[str] = set()
     for sk in skills:
+        for root_dir in all_discovery_roots:
+            candidate_dir = target_dir / root_dir
+            if not candidate_dir.exists():
+                continue
+
+            for existing_item in candidate_dir.iterdir():
+                if existing_item.is_dir():
+                    is_exact_match = existing_item.name == sk.id
+                    is_case_match = existing_item.name.lower() == sk.id.lower()
+
+                    if is_exact_match or is_case_match:
+                        # Check if managed by manifest
+                        rel_item = f"{root_dir}/{existing_item.name}"
+                        is_managed = any(f.startswith(rel_item + "/") for f in existing_files)
+
+                        if not is_managed:
+                            conflicting_skills.add(sk.id)
+                            c_type = "CASE_COLLISION" if (not is_exact_match and is_case_match) else "UNMANAGED_SKILL"
+                            plan.conflict_items.append(
+                                ConflictItem(
+                                    path=rel_item,
+                                    conflict_type=c_type,
+                                    message=f"Pre-existing unmanaged skill collision in {rel_item} for '{sk.id}'",
+                                    skill_id=sk.id,
+                                )
+                            )
+                        else:
+                            # Managed skill: check for local modifications
+                            for rel_f, meta in existing_files.items():
+                                if rel_f.startswith(rel_item + "/"):
+                                    dest_f = target_dir / rel_f
+                                    if dest_f.exists():
+                                        rec_hash = meta.get("sha256")
+                                        cur_hash = sha256_file(dest_f)
+                                        if rec_hash and cur_hash != rec_hash:
+                                            conflicting_skills.add(sk.id)
+                                            plan.conflict_items.append(
+                                                ConflictItem(
+                                                    path=rel_f,
+                                                    conflict_type="MODIFIED_MANAGED",
+                                                    message=f"Locally modified managed file in skill: {rel_f}",
+                                                    skill_id=sk.id,
+                                                    existing_hash=cur_hash,
+                                                    source_hash=rec_hash,
+                                                )
+                                            )
+
+    # 4. Handle Conflict Policy for Conflicting Skills
+    skipped_skills: Set[str] = set()
+    if conflicting_skills:
+        if on_conflict == "rename":
+            for sk_id in conflicting_skills:
+                alias = custom_alias or f"agent-toolkit-{sk_id}"
+                plan.aliases[sk_id] = alias
+                plan.warnings.append(f"Skill '{sk_id}' will be installed alongside existing version as alias '{alias}'.")
+        elif on_conflict == "keep":
+            for sk_id in conflicting_skills:
+                skipped_skills.add(sk_id)
+                plan.warnings.append(
+                    f"Preserving existing version of skill '{sk_id}'. "
+                    "Note: If this skill is part of a required profile, capability assurance cannot be verified."
+                )
+        elif on_conflict == "replace":
+            plan.warnings.append(
+                f"Replacing conflicting skills ({', '.join(conflicting_skills)}) with automatic backup."
+            )
+
+    # 5. Plan Adapter Skill Directory Files
+    adapter_skill_root = spec.preferred_skill_root
+    for sk in skills:
+        if sk.id in skipped_skills:
+            continue
+
+        effective_id = plan.aliases.get(sk.id, sk.id)
         src_dir = ROOT / sk.canonical_path
         if src_dir.is_dir():
             for f in src_dir.rglob("*"):
                 if f.is_file():
                     rel_in_skill = f.relative_to(src_dir).as_posix()
-                    dest_rel = f"{adapter_skill_root}/{sk.id}/{rel_in_skill}"
+                    dest_rel = f"{adapter_skill_root}/{effective_id}/{rel_in_skill}"
 
-                    # Special vendor handling:
-                    if sk.id == "tune" and adapter == "claude-code" and rel_in_skill == "SKILL.md":
-                        # Add disable-model-invocation: true
-                        orig_text = f.read_text(encoding="utf-8")
-                        if "disable-model-invocation:" not in orig_text:
-                            tuned_text = orig_text.replace(
-                                "name: tune\n", "name: tune\ndisable-model-invocation: true\n"
-                            )
+                    # Frontmatter & Alias adjustments for SKILL.md
+                    if rel_in_skill == "SKILL.md":
+                        skill_content = f.read_text(encoding="utf-8")
+                        content_modified = False
+
+                        # If aliased, update name in frontmatter
+                        if effective_id != sk.id:
+                            skill_content = skill_content.replace(f"name: {sk.id}\n", f"name: {effective_id}\n")
+                            content_modified = True
+
+                        # Manual-only invocation policy enforcement (e.g. for tune)
+                        is_manual_only = (sk.id == "tune")
+                        if is_manual_only and spec.manual_invocation_strategy in ("frontmatter", "both"):
+                            if "disable-model-invocation:" not in skill_content:
+                                skill_content = skill_content.replace(
+                                    f"name: {effective_id}\n",
+                                    f"name: {effective_id}\ndisable-model-invocation: true\n",
+                                )
+                                content_modified = True
+
+                        if content_modified:
                             plan.files.append(
                                 PlanFile(
                                     rel_destination=dest_rel,
                                     source_path=None,
-                                    content=tuned_text,
+                                    content=skill_content,
                                     is_adapter_specific=True,
                                 )
                             )
@@ -442,10 +723,10 @@ def build_installation_plan(
                         )
                     )
 
-            if sk.id == "tune" and adapter == "codex":
-                # Install openai.yaml metadata into agents/openai.yaml
+            # Codex-specific tune metadata
+            if sk.id == "tune" and spec.name == "codex":
                 codex_meta = "adapters/codex/tune/openai.yaml"
-                dest_meta = f"{adapter_skill_root}/{sk.id}/agents/openai.yaml"
+                dest_meta = f"{adapter_skill_root}/{effective_id}/agents/openai.yaml"
                 if (ROOT / codex_meta).exists():
                     plan.files.append(
                         PlanFile(
@@ -455,23 +736,69 @@ def build_installation_plan(
                         )
                     )
 
-    # Check for file conflicts against existing target files
+    # 6. Plan Vendor Entrypoint Wiring
+    entrypoint_name = spec.entrypoint_file
+    # Check if Cursor project uses .cursorrules instead of .cursor/rules/
+    is_cursor_mdc = False
+    if spec.name == "cursor":
+        cursorrules_path = target_dir / ".cursorrules"
+        if cursorrules_path.exists() and not (target_dir / ".cursor" / "rules").exists():
+            entrypoint_name = ".cursorrules"
+        else:
+            is_cursor_mdc = True
+
+    entrypoint_path = target_dir / entrypoint_name
+    managed_block = generate_managed_entrypoint(spec, target_dir, artifacts, aliases=plan.aliases)
+    merged_content, action = merge_managed_entrypoint_file(entrypoint_path, managed_block, is_cursor_mdc=is_cursor_mdc)
+    plan.files.append(
+        PlanFile(
+            rel_destination=entrypoint_name,
+            source_path=None,
+            content=merged_content,
+            is_adapter_specific=True,
+            action=action,
+        )
+    )
+
+    # 7. File-Level Conflict Checks for Planned Files
     for pf in plan.files:
         dest_full = target_dir / pf.rel_destination
         if dest_full.exists():
             if pf.rel_destination == entrypoint_name:
-                # Managed entry point merges safely without conflict
                 continue
+
             if pf.rel_destination in existing_files:
                 recorded_hash = existing_files[pf.rel_destination].get("sha256")
                 current_hash = sha256_file(dest_full)
                 if recorded_hash and current_hash != recorded_hash:
-                    plan.conflicts.append(
-                        f"Locally modified managed file: {pf.rel_destination} (current hash: {current_hash[:8]} vs manifest: {recorded_hash[:8]})"
+                    plan.conflict_items.append(
+                        ConflictItem(
+                            path=pf.rel_destination,
+                            conflict_type="MODIFIED_MANAGED",
+                            message=f"Locally modified managed file: {pf.rel_destination} (current hash: {current_hash[:8]} vs manifest: {recorded_hash[:8]})",
+                            existing_hash=current_hash,
+                            source_hash=recorded_hash,
+                        )
                     )
             else:
                 # Pre-existing unmanaged file in destination
-                plan.conflicts.append(f"Pre-existing unmanaged file: {pf.rel_destination}")
+                plan.conflict_items.append(
+                    ConflictItem(
+                        path=pf.rel_destination,
+                        conflict_type="UNMANAGED_FILE",
+                        message=f"Pre-existing unmanaged file: {pf.rel_destination}",
+                        existing_hash=sha256_file(dest_full),
+                    )
+                )
+
+    # Consolidate string conflict messages for backward compatibility and CLI reporting
+    if on_conflict not in ("replace", "rename", "keep"):
+        # Default abort behavior: record all unresolved conflicts
+        seen_paths = set()
+        for ci in plan.conflict_items:
+            if ci.path not in seen_paths:
+                plan.conflicts.append(ci.message)
+                seen_paths.add(ci.path)
 
     # Security Audit Invariant Check
     has_sec_audit = any(a.id == "security-audit" for a in artifacts)
@@ -487,15 +814,18 @@ def build_installation_plan(
 
 
 # ============================================================================
-# Apply Engine
+# Apply Engine & Rollback
 # ============================================================================
 
 def apply_installation_plan(plan: InstallationPlan, force: bool = False) -> Dict[str, Any]:
-    if plan.conflicts and not force:
+    # Backward compatibility: force=True acts as on_conflict="replace"
+    effective_conflict_policy = "replace" if force else plan.on_conflict
+
+    if plan.conflicts and effective_conflict_policy == "abort":
         conflict_msg = "\n  - ".join(plan.conflicts)
         raise RuntimeError(
             f"Cannot apply installation due to {len(plan.conflicts)} conflict(s):\n  - {conflict_msg}\n"
-            "Use --force to overwrite conflicting files."
+            "Use --on-conflict {keep,replace,rename} or --force to resolve."
         )
 
     target_dir = plan.target_dir
@@ -503,18 +833,37 @@ def apply_installation_plan(plan: InstallationPlan, force: bool = False) -> Dict
 
     manifest_path = target_dir / ".agent-toolkit" / "manifest.json"
     manifest_data: Dict[str, Any] = {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "installed_at": datetime.now(timezone.utc).isoformat(),
         "adapter": plan.adapter,
         "profile": plan.profile_id,
         "skill": plan.skill_id,
         "artifacts": [{"group": a.group, "id": a.id, "version": a.version} for a in plan.artifacts],
+        "aliases": plan.aliases,
+        "conflict_policy": effective_conflict_policy,
         "files": {},
+        "backups": [],
     }
 
+    # Backup preparation for REPLACE policy
+    backup_timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    backup_dir = target_dir / ".agent-toolkit" / "backups" / backup_timestamp
+    backed_up_files: List[Tuple[Path, Path]] = []  # (original, backup_location)
     created_paths: List[Path] = []
 
     try:
+        # Create backups if replacing existing files
+        if effective_conflict_policy == "replace":
+            for pf in plan.files:
+                dest_path = target_dir / pf.rel_destination
+                if dest_path.exists():
+                    backup_file = backup_dir / pf.rel_destination
+                    backup_file.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(dest_path, backup_file)
+                    backed_up_files.append((dest_path, backup_file))
+                    manifest_data["backups"].append(str(pf.rel_destination))
+
+        # Write planned files
         for pf in plan.files:
             dest_path = ensure_safe_relative_path(target_dir, pf.rel_destination)
             dest_path.parent.mkdir(parents=True, exist_ok=True)
@@ -549,6 +898,14 @@ def apply_installation_plan(plan: InstallationPlan, force: bool = False) -> Dict
                     p.unlink()
                 except Exception:
                     pass
+
+        # Restore from backups if any
+        for orig, backup in backed_up_files:
+            try:
+                shutil.copy2(backup, orig)
+            except Exception:
+                pass
+
         raise RuntimeError(f"Installation failed and was rolled back: {exc}") from exc
 
 
@@ -567,6 +924,7 @@ def run_doctor(target_dir: Path) -> Dict[str, Any]:
         "verified_files": 0,
         "missing_files": [],
         "corrupted_files": [],
+        "shadowed_skills": [],
         "warnings": [],
         "errors": [],
     }
@@ -589,7 +947,12 @@ def run_doctor(target_dir: Path) -> Dict[str, Any]:
     report["profile"] = manifest.get("profile")
     report["skill"] = manifest.get("skill")
 
+    adapter_name = manifest.get("adapter")
+    spec = ADAPTER_SPECS.get(adapter_name) if adapter_name else None
+
     files = manifest.get("files", {})
+    entrypoint_file = spec.entrypoint_file if spec else None
+
     for rel_path, meta in files.items():
         file_path = target_dir / rel_path
         if not file_path.exists():
@@ -602,7 +965,7 @@ def run_doctor(target_dir: Path) -> Dict[str, Any]:
             actual_hash = sha256_file(file_path)
             if actual_hash != expected_hash:
                 # If it's the managed entrypoint, check if managed block is still intact
-                if rel_path in ("CLAUDE.md", "AGENTS.md"):
+                if entrypoint_file and (rel_path == entrypoint_file or rel_path in ("CLAUDE.md", "AGENTS.md", "GEMINI.md", ".cursorrules", ".github/copilot-instructions.md")):
                     content = file_path.read_text(encoding="utf-8")
                     if MANAGED_START_MARKER in content and MANAGED_END_MARKER in content:
                         report["warnings"].append(f"Managed entrypoint {rel_path} was customized by user (managed block intact).")
@@ -613,6 +976,21 @@ def run_doctor(target_dir: Path) -> Dict[str, Any]:
                 continue
 
         report["verified_files"] += 1
+
+    # Detect shadowed skills in secondary discovery roots
+    if spec:
+        installed_skills = [
+            a["id"] for a in manifest.get("artifacts", []) if a.get("group") == "skills"
+        ]
+        for sec_root in spec.secondary_skill_roots:
+            sec_dir = target_dir / sec_root
+            if sec_dir.exists():
+                for sk_id in installed_skills:
+                    shadow_check = sec_dir / sk_id
+                    if shadow_check.exists():
+                        report["shadowed_skills"].append(
+                            f"Skill '{sk_id}' in primary path '{spec.preferred_skill_root}' may be shadowed by secondary path '{sec_root}/{sk_id}'."
+                        )
 
     # Security Audit Invariant Check
     sec_audit_installed = (target_dir / ".agent-toolkit" / "skills" / "security-audit").exists()
@@ -661,14 +1039,16 @@ def cmd_list(args: argparse.Namespace) -> int:
     print("\n" + "=" * 70)
     print("SUPPORTED VENDOR ADAPTERS")
     print("=" * 70)
-    print("  * claude-code              Anthropic Claude Code CLI (.claude/skills, CLAUDE.md)")
-    print("  * codex                    OpenAI Codex CLI (.agents/skills, AGENTS.md)")
+    for a_id, spec in sorted(ADAPTER_SPECS.items()):
+        aliases_str = f" (aliases: {', '.join(spec.aliases)})" if spec.aliases else ""
+        print(f"  * {a_id:<24} {spec.description}{aliases_str}")
     print()
     return 0
 
 
 def cmd_plan(args: argparse.Namespace) -> int:
     try:
+        on_conflict = getattr(args, "on_conflict", "abort") or "abort"
         plan = build_installation_plan(
             target_dir=Path(args.into).resolve(),
             adapter=args.agent or args.adapter,
@@ -676,6 +1056,8 @@ def cmd_plan(args: argparse.Namespace) -> int:
             skill_id=args.skill,
             selected_optionals=set(args.with_optional) if args.with_optional else None,
             all_optional=args.all_optional,
+            on_conflict=on_conflict,
+            custom_alias=getattr(args, "alias", None),
         )
     except Exception as exc:
         print(f"Error during plan generation: {exc}", file=sys.stderr)
@@ -690,6 +1072,7 @@ def cmd_plan(args: argparse.Namespace) -> int:
         print(f"Profile:      {plan.profile_id}")
     if plan.skill_id:
         print(f"Skill:        {plan.skill_id}")
+    print(f"Conflict:     {plan.on_conflict}")
 
     print("\nResolved Artifacts Closure:")
     by_group: Dict[str, List[str]] = {}
@@ -697,6 +1080,11 @@ def cmd_plan(args: argparse.Namespace) -> int:
         by_group.setdefault(art.group, []).append(f"{art.id} (v{art.version})")
     for group, items in sorted(by_group.items()):
         print(f"  [{group.upper()}]: {', '.join(items)}")
+
+    if plan.aliases:
+        print("\nConfigured Aliases:")
+        for orig, ali in plan.aliases.items():
+            print(f"  * {orig} -> {ali}")
 
     if plan.optional_included:
         print(f"\nOptional Dependencies Included: {', '.join(plan.optional_included)}")
@@ -719,7 +1107,7 @@ def cmd_plan(args: argparse.Namespace) -> int:
         print("\nConflicts Detected:")
         for c in plan.conflicts:
             print(f"  [X] {c}")
-        print("\nPlan finished with conflicts. Use 'apply --force' to override.")
+        print("\nPlan finished with conflicts. Use --on-conflict {keep,replace,rename} or --force to resolve.")
         return 2
 
     print("\nPlan valid and ready to apply. No files were modified.")
@@ -728,6 +1116,41 @@ def cmd_plan(args: argparse.Namespace) -> int:
 
 def cmd_apply(args: argparse.Namespace) -> int:
     try:
+        on_conflict = getattr(args, "on_conflict", "abort") or "abort"
+        if getattr(args, "force", False):
+            on_conflict = "replace"
+
+        # Interactive resolution if requested
+        if getattr(args, "interactive", False) and sys.stdin.isatty():
+            test_plan = build_installation_plan(
+                target_dir=Path(args.into).resolve(),
+                adapter=args.agent or args.adapter,
+                profile_id=args.profile,
+                skill_id=args.skill,
+                selected_optionals=set(args.with_optional) if args.with_optional else None,
+                all_optional=args.all_optional,
+                on_conflict="abort",
+            )
+            if test_plan.conflicts:
+                print("\nConflicts detected in target project:")
+                for c in test_plan.conflicts:
+                    print(f"  [X] {c}")
+                print("\nChoose conflict resolution policy:")
+                print("  [1] Keep existing files (skip conflicting items)")
+                print("  [2] Replace existing files (create backup and overwrite)")
+                print("  [3] Install alongside using alias (agent-toolkit-<skill>)")
+                print("  [4] Cancel installation")
+                choice = input("\nEnter choice [1-4]: ").strip()
+                if choice == "1":
+                    on_conflict = "keep"
+                elif choice == "2":
+                    on_conflict = "replace"
+                elif choice == "3":
+                    on_conflict = "rename"
+                else:
+                    print("Installation canceled.")
+                    return 1
+
         plan = build_installation_plan(
             target_dir=Path(args.into).resolve(),
             adapter=args.agent or args.adapter,
@@ -735,6 +1158,8 @@ def cmd_apply(args: argparse.Namespace) -> int:
             skill_id=args.skill,
             selected_optionals=set(args.with_optional) if args.with_optional else None,
             all_optional=args.all_optional,
+            on_conflict=on_conflict,
+            custom_alias=getattr(args, "alias", None),
         )
         manifest = apply_installation_plan(plan, force=args.force)
     except Exception as exc:
@@ -748,6 +1173,8 @@ def cmd_apply(args: argparse.Namespace) -> int:
     print(f"Adapter:      {plan.adapter}")
     print(f"Total Files:  {len(manifest['files'])}")
     print(f"Manifest:     {plan.target_dir / '.agent-toolkit' / 'manifest.json'}")
+    if manifest.get("backups"):
+        print(f"Backups:      {len(manifest['backups'])} file(s) backed up in .agent-toolkit/backups/")
     if plan.warnings:
         print("\nWarnings:")
         for w in plan.warnings:
@@ -781,6 +1208,11 @@ def cmd_doctor(args: argparse.Namespace) -> int:
         for cf in report["corrupted_files"]:
             print(f"  [X] {cf}")
 
+    if report["shadowed_skills"]:
+        print("\nShadowed Skills Detected:")
+        for ss in report["shadowed_skills"]:
+            print(f"  [!] {ss}")
+
     if report["warnings"]:
         print("\nWarnings:")
         for w in report["warnings"]:
@@ -806,7 +1238,7 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="subcommand", required=True)
 
     # list
-    subparsers.add_parser("list", help="List available profiles and skills")
+    subparsers.add_parser("list", help="List available profiles, skills, and adapters")
 
     # plan
     plan_parser = subparsers.add_parser("plan", help="Preview installation without modifying files")
@@ -815,7 +1247,8 @@ def build_parser() -> argparse.ArgumentParser:
     # apply
     apply_parser = subparsers.add_parser("apply", help="Apply installation into selected destination")
     _add_target_args(apply_parser)
-    apply_parser.add_argument("--force", action="store_true", help="Overwrite conflicting or modified files")
+    apply_parser.add_argument("--force", action="store_true", help="Overwrite conflicting or modified files (shorthand for --on-conflict replace)")
+    apply_parser.add_argument("--interactive", action="store_true", help="Prompt interactively for conflict resolution")
 
     # doctor
     doctor_parser = subparsers.add_parser("doctor", help="Check integrity of an installed project")
@@ -829,13 +1262,14 @@ def _add_target_args(p: argparse.ArgumentParser) -> None:
     group.add_argument("--profile", help="Name of profile to install (e.g. ui-ux, security-audit)")
     group.add_argument("--skill", help="ID of standalone skill to install (e.g. code-review, teach)")
 
+    valid_adapter_choices = sorted(list(ADAPTER_SPECS.keys()) + [a for spec in ADAPTER_SPECS.values() for a in spec.aliases])
     p.add_argument(
         "--agent",
         "--adapter",
         dest="agent",
-        choices=["claude-code", "codex"],
+        choices=valid_adapter_choices,
         required=True,
-        help="Target coding assistant adapter",
+        help="Target coding assistant adapter (claude-code, codex, cursor, gemini-cli, github-copilot, opencode)",
     )
     p.add_argument("--into", required=True, help="Target project directory path")
     p.add_argument(
@@ -848,6 +1282,16 @@ def _add_target_args(p: argparse.ArgumentParser) -> None:
         "--all-optional",
         action="store_true",
         help="Include all available optional dependencies",
+    )
+    p.add_argument(
+        "--on-conflict",
+        choices=["keep", "replace", "rename", "abort"],
+        default="abort",
+        help="Policy when encountering existing files or skills (keep, replace, rename, abort)",
+    )
+    p.add_argument(
+        "--alias",
+        help="Custom alias name when renaming conflicting skills (default: agent-toolkit-<skill>)",
     )
 
 

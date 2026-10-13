@@ -345,5 +345,193 @@ class TestSecurityAuditTrustBoundary(unittest.TestCase):
         self.assertNotEqual(trusted_wf.read_text(encoding="utf-8"), "untrusted attacking workflow")
 
 
+class TestSixRuntimeAdapters(unittest.TestCase):
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.target = Path(self.temp_dir.name)
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    def test_claude_code_adapter(self):
+        plan = build_installation_plan(self.target, adapter="claude-code", profile_id="security-audit")
+        apply_installation_plan(plan)
+        self.assertTrue((self.target / "CLAUDE.md").exists())
+        self.assertTrue((self.target / ".claude" / "skills" / "security-audit" / "SKILL.md").exists())
+        self.assertTrue((self.target / ".claude" / "agents" / "security-auditor.md").exists())
+        report = run_doctor(self.target)
+        self.assertEqual(report["status"], "PASS")
+
+    def test_codex_adapter(self):
+        plan = build_installation_plan(self.target, adapter="codex", profile_id="security-audit")
+        apply_installation_plan(plan)
+        self.assertTrue((self.target / "AGENTS.md").exists())
+        self.assertTrue((self.target / ".agents" / "skills" / "security-audit" / "SKILL.md").exists())
+        self.assertTrue((self.target / ".codex" / "agents" / "security-auditor.toml").exists())
+        report = run_doctor(self.target)
+        self.assertEqual(report["status"], "PASS")
+
+    def test_cursor_adapter(self):
+        plan = build_installation_plan(self.target, adapter="cursor", profile_id="security-audit")
+        apply_installation_plan(plan)
+        self.assertTrue((self.target / ".cursor" / "rules" / "agent-toolkit.mdc").exists())
+        self.assertTrue((self.target / ".cursor" / "skills" / "security-audit" / "SKILL.md").exists())
+        self.assertTrue((self.target / ".cursor" / "rules" / "security-auditor.mdc").exists())
+        rule_content = (self.target / ".cursor" / "rules" / "agent-toolkit.mdc").read_text(encoding="utf-8")
+        self.assertIn("alwaysApply: true", rule_content)
+        self.assertIn(MANAGED_START_MARKER, rule_content)
+        report = run_doctor(self.target)
+        self.assertEqual(report["status"], "PASS")
+
+    def test_gemini_cli_adapter(self):
+        plan = build_installation_plan(self.target, adapter="gemini-cli", profile_id="security-audit")
+        apply_installation_plan(plan)
+        self.assertTrue((self.target / "GEMINI.md").exists())
+        self.assertTrue((self.target / ".gemini" / "skills" / "security-audit" / "SKILL.md").exists())
+        self.assertTrue((self.target / ".gemini" / "agents" / "security-auditor.md").exists())
+        report = run_doctor(self.target)
+        self.assertEqual(report["status"], "PASS")
+
+    def test_github_copilot_adapter(self):
+        plan = build_installation_plan(self.target, adapter="github-copilot", profile_id="security-audit")
+        apply_installation_plan(plan)
+        self.assertTrue((self.target / ".github" / "copilot-instructions.md").exists())
+        self.assertTrue((self.target / ".github" / "skills" / "security-audit" / "SKILL.md").exists())
+        self.assertTrue((self.target / ".github" / "agents" / "security-auditor.md").exists())
+        report = run_doctor(self.target)
+        self.assertEqual(report["status"], "PASS")
+
+    def test_opencode_adapter(self):
+        plan = build_installation_plan(self.target, adapter="opencode", profile_id="security-audit")
+        apply_installation_plan(plan)
+        self.assertTrue((self.target / "AGENTS.md").exists())
+        self.assertTrue((self.target / ".opencode" / "skills" / "security-audit" / "SKILL.md").exists())
+        self.assertTrue((self.target / ".opencode" / "agents" / "security-auditor.md").exists())
+        report = run_doctor(self.target)
+        self.assertEqual(report["status"], "PASS")
+
+    def test_adapter_aliases_work(self):
+        for alias, canonical in [("claude", "claude-code"), ("gemini", "gemini-cli"), ("copilot", "github-copilot"), ("openai-codex", "codex")]:
+            plan = build_installation_plan(self.target, adapter=alias, skill_id="tdd")
+            self.assertEqual(plan.adapter, canonical)
+
+
+class TestConflictDetectionAndPolicies(unittest.TestCase):
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.target = Path(self.temp_dir.name)
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    def test_unmanaged_skill_detected_as_conflict(self):
+        # Simulate pre-existing unmanaged skill in target
+        unmanaged_skill = self.target / ".cursor" / "skills" / "tdd" / "SKILL.md"
+        unmanaged_skill.parent.mkdir(parents=True, exist_ok=True)
+        unmanaged_skill.write_text("# Third Party TDD\n", encoding="utf-8")
+
+        plan = build_installation_plan(self.target, adapter="cursor", skill_id="tdd", on_conflict="abort")
+        self.assertGreater(len(plan.conflicts), 0)
+        self.assertTrue(any("unmanaged" in c.lower() for c in plan.conflicts))
+
+        # Abort policy fails apply
+        with self.assertRaises(RuntimeError) as ctx:
+            apply_installation_plan(plan)
+        self.assertIn("conflict", str(ctx.exception).lower())
+
+    def test_policy_keep_preserves_existing_skill(self):
+        unmanaged_skill = self.target / ".cursor" / "skills" / "tdd" / "SKILL.md"
+        unmanaged_skill.parent.mkdir(parents=True, exist_ok=True)
+        unmanaged_skill.write_text("# Third Party TDD\n", encoding="utf-8")
+
+        plan = build_installation_plan(self.target, adapter="cursor", skill_id="tdd", on_conflict="keep")
+        self.assertEqual(len(plan.conflicts), 0)
+        self.assertTrue(any("preserving" in w.lower() for w in plan.warnings))
+
+        apply_installation_plan(plan)
+        # Original content preserved
+        self.assertEqual(unmanaged_skill.read_text(encoding="utf-8"), "# Third Party TDD\n")
+
+    def test_policy_replace_creates_backup_and_overwrites(self):
+        unmanaged_skill = self.target / ".cursor" / "skills" / "tdd" / "SKILL.md"
+        unmanaged_skill.parent.mkdir(parents=True, exist_ok=True)
+        unmanaged_skill.write_text("# Third Party TDD\n", encoding="utf-8")
+
+        plan = build_installation_plan(self.target, adapter="cursor", skill_id="tdd", on_conflict="replace")
+        self.assertEqual(len(plan.conflicts), 0)
+
+        manifest = apply_installation_plan(plan)
+        self.assertNotEqual(unmanaged_skill.read_text(encoding="utf-8"), "# Third Party TDD\n")
+        self.assertGreater(len(manifest["backups"]), 0)
+
+        # Check backup exists on disk
+        backup_dir = self.target / ".agent-toolkit" / "backups"
+        self.assertTrue(backup_dir.exists())
+        backed_up_files = list(backup_dir.rglob("SKILL.md"))
+        self.assertEqual(len(backed_up_files), 1)
+        self.assertEqual(backed_up_files[0].read_text(encoding="utf-8"), "# Third Party TDD\n")
+
+    def test_policy_rename_installs_alongside(self):
+        unmanaged_skill = self.target / ".cursor" / "skills" / "tdd" / "SKILL.md"
+        unmanaged_skill.parent.mkdir(parents=True, exist_ok=True)
+        unmanaged_skill.write_text("# Third Party TDD\n", encoding="utf-8")
+
+        plan = build_installation_plan(self.target, adapter="cursor", skill_id="tdd", on_conflict="rename")
+        self.assertEqual(len(plan.conflicts), 0)
+        self.assertEqual(plan.aliases.get("tdd"), "agent-toolkit-tdd")
+
+        apply_installation_plan(plan)
+        # Both skills co-exist
+        self.assertTrue(unmanaged_skill.exists())
+        self.assertEqual(unmanaged_skill.read_text(encoding="utf-8"), "# Third Party TDD\n")
+
+        aliased_skill = self.target / ".cursor" / "skills" / "agent-toolkit-tdd" / "SKILL.md"
+        self.assertTrue(aliased_skill.exists())
+        self.assertIn("name: agent-toolkit-tdd", aliased_skill.read_text(encoding="utf-8"))
+
+    def test_case_insensitive_collision_detected(self):
+        unmanaged_skill = self.target / ".cursor" / "skills" / "TDD" / "SKILL.md"
+        unmanaged_skill.parent.mkdir(parents=True, exist_ok=True)
+        unmanaged_skill.write_text("# Upper case TDD\n", encoding="utf-8")
+
+        plan = build_installation_plan(self.target, adapter="cursor", skill_id="tdd", on_conflict="abort")
+        self.assertGreater(len(plan.conflicts), 0)
+
+    def test_shadowed_skills_reported_by_doctor(self):
+        # Install into cursor (.cursor/skills/tdd)
+        plan = build_installation_plan(self.target, adapter="cursor", skill_id="tdd")
+        apply_installation_plan(plan)
+
+        # Place a conflicting unmanaged skill in secondary root (.agents/skills/tdd)
+        secondary_skill = self.target / ".agents" / "skills" / "tdd" / "SKILL.md"
+        secondary_skill.parent.mkdir(parents=True, exist_ok=True)
+        secondary_skill.write_text("# Shadowed TDD\n", encoding="utf-8")
+
+        report = run_doctor(self.target)
+        self.assertGreater(len(report["shadowed_skills"]), 0)
+        self.assertTrue(any("shadowed" in s.lower() for s in report["shadowed_skills"]))
+
+
+class TestManualOnlyInvocationAcrossRuntimes(unittest.TestCase):
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.target = Path(self.temp_dir.name)
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    def test_manual_only_frontmatter_injected(self):
+        for adp in ["claude-code", "cursor", "gemini-cli", "github-copilot", "opencode"]:
+            target_sub = self.target / adp
+            plan = build_installation_plan(target_sub, adapter=adp, skill_id="tune")
+            apply_installation_plan(plan)
+
+            # Check that installed tune SKILL.md has disable-model-invocation: true
+            installed_files = list(target_sub.rglob("SKILL.md"))
+            adapter_skill = [f for f in installed_files if ".agent-toolkit" not in f.parts][0]
+            content = adapter_skill.read_text(encoding="utf-8")
+            self.assertIn("disable-model-invocation: true", content)
+
+
 if __name__ == "__main__":
     unittest.main()
