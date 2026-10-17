@@ -1,0 +1,232 @@
+{
+  "schema_version": "1.0",
+  "goal": "SYNTHETIC: plan a contract field addition without changing current services",
+  "mode": "deep",
+  "outcome": "complete",
+  "budget": {
+    "max_concurrent": 5,
+    "max_tasks": 10,
+    "max_followup_waves": 1
+  },
+  "repositories": [
+    {
+      "id": "service-a",
+      "locator": "synthetic://service-a",
+      "revision": "aaaabbbbccccdddd",
+      "dirty": false,
+      "authorized": true
+    },
+    {
+      "id": "service-b",
+      "locator": "synthetic://service-b",
+      "revision": "ddddeeeeffffaaaa",
+      "dirty": false,
+      "authorized": true
+    }
+  ],
+  "participants": [
+    {
+      "id": "I1",
+      "role": "path_explorer",
+      "context_id": "runtime-session-001",
+      "context_origin": "harness"
+    },
+    {
+      "id": "I2",
+      "role": "contract_explorer",
+      "context_id": "runtime-session-002",
+      "context_origin": "harness"
+    },
+    {
+      "id": "C1",
+      "role": "coverage_critic",
+      "context_id": "runtime-session-003",
+      "context_origin": "harness"
+    },
+    {
+      "id": "V1",
+      "role": "evidence_verifier",
+      "context_id": "runtime-session-004",
+      "context_origin": "harness"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T1",
+      "participant_id": "I1",
+      "repository_ids": [
+        "service-a"
+      ],
+      "question": "Where does service A emit the existing field?",
+      "status": "completed"
+    },
+    {
+      "id": "T2",
+      "participant_id": "I2",
+      "repository_ids": [
+        "service-a",
+        "service-b"
+      ],
+      "question": "What contracts connect the services?",
+      "status": "completed"
+    },
+    {
+      "id": "T3",
+      "participant_id": "C1",
+      "repository_ids": [
+        "service-a",
+        "service-b"
+      ],
+      "question": "Which relevant consumers are unexamined?",
+      "status": "completed"
+    },
+    {
+      "id": "T4",
+      "participant_id": "V1",
+      "repository_ids": [
+        "service-a",
+        "service-b"
+      ],
+      "question": "Does the code confirm the proposed dependency?",
+      "status": "completed"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E1",
+      "repository_id": "service-a",
+      "revision": "aaaabbbbccccdddd",
+      "path": "src/producer.py",
+      "line_start": 18,
+      "line_end": 30,
+      "observation": "Synthetic fixture emits event field v1",
+      "participant_id": "I1"
+    },
+    {
+      "id": "E2",
+      "repository_id": "service-b",
+      "revision": "ddddeeeeffffaaaa",
+      "path": "src/consumer.py",
+      "line_start": 40,
+      "line_end": 47,
+      "observation": "Synthetic fixture reads event field v1",
+      "participant_id": "I2"
+    },
+    {
+      "id": "E3",
+      "repository_id": "service-b",
+      "revision": "ddddeeeeffffaaaa",
+      "path": "src/consumer.py",
+      "line_start": 40,
+      "line_end": 47,
+      "observation": "Independent synthetic review confirms read",
+      "participant_id": "V1"
+    }
+  ],
+  "edges": [
+    {
+      "id": "G1",
+      "kind": "EMITS",
+      "from": {
+        "repository_id": "service-a",
+        "symbol": "emit_event"
+      },
+      "to": {
+        "repository_id": "service-b",
+        "symbol": "event.v1"
+      },
+      "status": "OBSERVED",
+      "evidence_ids": [
+        "E1",
+        "E2"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "F1",
+      "statement": "Synthetic producer and consumer depend on event field v1",
+      "status": "OBSERVED",
+      "impact": "high",
+      "material": true,
+      "investigator_id": "I2",
+      "evidence_ids": [
+        "E1",
+        "E2"
+      ],
+      "verification_id": "V-1"
+    }
+  ],
+  "verifications": [
+    {
+      "id": "V-1",
+      "claim_id": "F1",
+      "participant_id": "V1",
+      "verdict": "confirmed",
+      "evidence_ids": [
+        "E3"
+      ],
+      "notes": "Source locations independently inspected in this synthetic example; not a real harness run."
+    }
+  ],
+  "coverage": [
+    {
+      "id": "K1",
+      "obligation": "Locate event producer and consumer",
+      "priority": "material",
+      "status": "covered",
+      "evidence_ids": [
+        "E1",
+        "E2"
+      ],
+      "claim_ids": [
+        "F1"
+      ]
+    },
+    {
+      "id": "K2",
+      "obligation": "Unrelated scheduled consumer outside declared scope",
+      "priority": "low",
+      "status": "out_of_scope",
+      "reason": "Excluded explicitly in fixture",
+      "evidence_ids": [],
+      "claim_ids": []
+    }
+  ],
+  "plan": [
+    {
+      "id": "P1",
+      "kind": "REQUIRED",
+      "action": "Plan additive event field with consumer compatibility",
+      "claim_ids": [
+        "F1"
+      ],
+      "depends_on": [],
+      "validation": "Verify old and new consumers by contract tests",
+      "retirement": false
+    },
+    {
+      "id": "P2",
+      "kind": "CONDITIONAL",
+      "action": "Consider removing legacy event field only after verified migration",
+      "claim_ids": [
+        "F1"
+      ],
+      "depends_on": [
+        "P1"
+      ],
+      "validation": "Contract test all active consumers and rollback",
+      "retirement": true,
+      "retirement_conditions": [
+        "All active consumers migrated",
+        "Rollback compatibility verified"
+      ]
+    }
+  ],
+  "review": {
+    "critic_participant_id": "C1",
+    "verifier_participant_id": "V1",
+    "final_ledger_review": true,
+    "notes": "Synthetic review metadata only. Not evidence of real independent runtime sessions."
+  }
+}

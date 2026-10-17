@@ -410,8 +410,18 @@ class TestSixRuntimeAdapters(unittest.TestCase):
         report = run_doctor(self.target)
         self.assertEqual(report["status"], "PASS")
 
+    def test_antigravity_adapter(self):
+        plan = build_installation_plan(self.target, adapter="antigravity", skill_id="code-explore", all_optional=True)
+        apply_installation_plan(plan)
+        self.assertTrue((self.target / "AGENTS.md").exists())
+        self.assertTrue((self.target / ".agents" / "skills" / "code-explore" / "SKILL.md").exists())
+        self.assertTrue((self.target / ".agents" / "agents" / "agent-toolkit-code-contract-explorer.md").exists())
+        self.assertTrue((self.target / ".agent-toolkit" / "scripts" / "validate_code_exploration.py").exists())
+        report = run_doctor(self.target)
+        self.assertEqual(report["status"], "PASS")
+
     def test_adapter_aliases_work(self):
-        for alias, canonical in [("claude", "claude-code"), ("gemini", "gemini-cli"), ("copilot", "github-copilot"), ("openai-codex", "codex")]:
+        for alias, canonical in [("claude", "claude-code"), ("gemini", "gemini-cli"), ("copilot", "github-copilot"), ("openai-codex", "codex"), ("agy", "antigravity")]:
             plan = build_installation_plan(self.target, adapter=alias, skill_id="tdd")
             self.assertEqual(plan.adapter, canonical)
 
