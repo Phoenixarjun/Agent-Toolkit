@@ -32,7 +32,7 @@ All shared resources are deployed into a private, installer-managed `.agent-tool
 | **Gemini CLI** | `--agent gemini-cli` (`gemini`) | `.gemini/skills/` | `GEMINI.md` | `.gemini/agents/<agent>.md` | Frontmatter `disable-model-invocation: true` |
 | **GitHub Copilot** | `--agent github-copilot` (`copilot`) | `.github/skills/` | `.github/copilot-instructions.md` | `.github/agents/<agent>.md` | Frontmatter + instruction guidelines |
 | **OpenCode** | `--agent opencode` | `.opencode/skills/` | `AGENTS.md` | `.opencode/agents/<agent>.md` | Frontmatter `disable-model-invocation: true` |
-| **Google Antigravity** | `--agent antigravity` (`agy`) | `.agents/skills/` | `AGENTS.md` | `.agents/agents/<agent>.md` | Frontmatter `model: flash`, read-only tools |
+| **Google Antigravity** | `--agent antigravity` (`agy`) | `.agents/skills/` | `AGENTS.md` | `.agents/agents/<agent>.md` | Frontmatter `model: flash`, scoped tool allowlists |
 
 ---
 
