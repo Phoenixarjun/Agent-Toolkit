@@ -161,6 +161,22 @@ skills:
         - code-evidence-verifier
       templates:
         - code-impact-report
+  - id: code
+    path: skills/code
+    category: engineering
+    domains:
+      - software-engineering
+      - implementation
+    maturity: stable
+    version: "1.0.0"
+    optional_dependencies:
+      workflows:
+        - implementation-review-loop
+      agents:
+        - code-builder
+        - code-verifier
+      templates:
+        - code-implementation-report
 
 
 workflows:
@@ -310,6 +326,16 @@ agents:
     category: review
     maturity: experimental
     version: "1.0.1"
+  - id: code-builder
+    path: agents/code-builder/AGENT.md
+    category: implementation
+    maturity: stable
+    version: "1.0.0"
+  - id: code-verifier
+    path: agents/code-verifier/AGENT.md
+    category: review
+    maturity: stable
+    version: "1.0.0"
 
 
 prompts:
@@ -447,6 +473,11 @@ evals:
     target: code-explore
     maturity: experimental
     version: "1.0.1"
+  - id: code
+    path: evals/code/cases.yaml
+    target: code
+    maturity: stable
+    version: "1.0.0"
 
 
 profiles:
@@ -490,6 +521,11 @@ adapters:
     target: antigravity
     maturity: experimental
     version: "1.0.1"
+  - id: antigravity-code
+    path: adapters/antigravity/code
+    target: antigravity
+    maturity: stable
+    version: "1.0.0"
 
 
 forms:
@@ -555,3 +591,8 @@ templates:
     category: engineering
     maturity: experimental
     version: "1.0.1"
+  - id: code-implementation-report
+    path: templates/documents/CODE-IMPLEMENTATION-REPORT.md
+    category: engineering
+    maturity: stable
+    version: "1.0.0"

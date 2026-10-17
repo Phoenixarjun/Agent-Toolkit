@@ -508,10 +508,13 @@ def serialize_specialist_agent(adapter_spec: AdapterSpec, agent_artifact: Resolv
 
     else:
         # Check if pre-configured adapter agent definition exists
-        adapter_agent_path = ROOT / "adapters" / adapter_spec.name / "code-explore" / "agents" / f"agent-toolkit-{ag_id}.md"
-        if adapter_agent_path.exists():
-            dest_rel = f"{adapter_spec.agent_root}/agent-toolkit-{ag_id}.md"
-            return PlanFile(rel_destination=dest_rel, source_path=None, content=adapter_agent_path.read_text(encoding="utf-8"), is_adapter_specific=True)
+        adapter_dir = ROOT / "adapters" / adapter_spec.name
+        if adapter_dir.exists():
+            matching_adapter_agents = list(adapter_dir.rglob(f"agent-toolkit-{ag_id}.md"))
+            if matching_adapter_agents:
+                adapter_agent_path = matching_adapter_agents[0]
+                dest_rel = f"{adapter_spec.agent_root}/agent-toolkit-{ag_id}.md"
+                return PlanFile(rel_destination=dest_rel, source_path=None, content=adapter_agent_path.read_text(encoding="utf-8"), is_adapter_specific=True)
 
         # Markdown agent definitions for Claude, Gemini CLI, Copilot, OpenCode, Antigravity
         dest_rel = f"{adapter_spec.agent_root}/{ag_id}.md"
@@ -612,6 +615,12 @@ def build_installation_plan(
     # Ensure validate_code_exploration.py is present in .agent-toolkit/scripts/ if code-explore is installed
     if any(a.id == "code-explore" for a in artifacts):
         val_source = "scripts/validate_code_exploration.py"
+        if (ROOT / val_source).exists():
+            plan.files.append(PlanFile(rel_destination=f".agent-toolkit/{val_source}", source_path=val_source))
+
+    # Ensure validate_code_implementation.py is present in .agent-toolkit/scripts/ if code is installed
+    if any(a.id == "code" for a in artifacts):
+        val_source = "scripts/validate_code_implementation.py"
         if (ROOT / val_source).exists():
             plan.files.append(PlanFile(rel_destination=f".agent-toolkit/{val_source}", source_path=val_source))
 
