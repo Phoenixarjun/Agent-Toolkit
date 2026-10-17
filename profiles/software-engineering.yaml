@@ -6,6 +6,7 @@ rules:
   - global-workspace-safety
 skills:
   - intent-capture
+  - code-explore
   - code-review
   - tdd
 workflows:

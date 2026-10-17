@@ -23,6 +23,7 @@ Add an adapter only when the target assistant needs behavior or configuration th
 - [`gemini/`](gemini/README.md) - User-level global template (`GEMINI.template.md`), native skill directory (`.gemini/skills/`), entrypoint instructions (`GEMINI.md`), and subagents (`.gemini/agents/`).
 - [`copilot/`](copilot/README.md) - Instruction template (`copilot-instructions.template.md`), native skill directory (`.github/skills/`), instructions (`.github/copilot-instructions.md`), and agent configurations (`.github/agents/`).
 - [`opencode/`](opencode/README.md) - User-level global template (`AGENTS.template.md`), native skill directory (`.opencode/skills/`), entrypoint instructions (`AGENTS.md`), and agent configurations (`.opencode/agents/`).
+- [`antigravity/`](antigravity/code-explore/INSTALL.md) - Workspace skill discovery (`.agents/skills/`), specialist subagents (`.agents/agents/`), read-only tools, and `flash` model tier routing for Google Antigravity 2.0 / CLI.
 
 ## Instruction Integrity and Trust Boundaries
 

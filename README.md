@@ -38,6 +38,7 @@ The examples below show what the toolkit does. This is a **curated showcase**, n
 | **[Grill Me](docs/skills/grill-me.md)** | Expose consequential unknowns and challenge assumptions with focused questions. |
 | **[Intent Capture](docs/skills/intent-capture.md)** | Turn a sufficiently understood request into observable acceptance criteria and scope boundaries. |
 | **[Problem to Solution](docs/skills/problem-to-solution.md)** | Explore distinct solution mechanisms, narrow alternatives, and justify a direction. |
+| **[Code Explore](docs/skills/code-explore.md)** | Discover implementation impact, trace execution paths, and verify findings before changing code. |
 | **[TDD](docs/skills/tdd.md)** | Build in test-first slices, challenge weak tests, and verify real runtime behavior. |
 | **[Code Review](docs/skills/code-review.md)** | Judge a change against intent, correctness, risk, and the complete Git diff before commit. |
 | **[Security Audit](docs/skills/security-audit.md)** | Perform risk-calibrated, independently checked security assessment without fixing code. |

@@ -143,6 +143,25 @@ skills:
         - research-evidence-verifier
       templates:
         - research-report
+  - id: code-explore
+    path: skills/code-explore
+    category: engineering
+    domains:
+      - software-engineering
+      - code-exploration
+    maturity: experimental
+    version: "1.0.1"
+    optional_dependencies:
+      workflows:
+        - code-impact-exploration
+      agents:
+        - code-path-explorer
+        - code-contract-explorer
+        - code-coverage-critic
+        - code-evidence-verifier
+      templates:
+        - code-impact-report
+
 
 workflows:
   - id: implementation-review-loop
@@ -191,6 +210,22 @@ workflows:
         - research-evidence-verifier
       templates:
         - research-report
+  - id: code-impact-exploration
+    path: workflows/code-impact-exploration/WORKFLOW.md
+    category: delivery
+    domains:
+      - software-engineering
+    maturity: experimental
+    version: "1.0.1"
+    dependencies:
+      agents:
+        - code-path-explorer
+        - code-contract-explorer
+        - code-coverage-critic
+        - code-evidence-verifier
+      templates:
+        - code-impact-report
+
 
 rules:
   - id: global-engineering
@@ -255,6 +290,27 @@ agents:
     category: research
     maturity: experimental
     version: "1.0.0"
+  - id: code-path-explorer
+    path: agents/code-path-explorer/AGENT.md
+    category: exploration
+    maturity: experimental
+    version: "1.0.1"
+  - id: code-contract-explorer
+    path: agents/code-contract-explorer/AGENT.md
+    category: exploration
+    maturity: experimental
+    version: "1.0.1"
+  - id: code-coverage-critic
+    path: agents/code-coverage-critic/AGENT.md
+    category: review
+    maturity: experimental
+    version: "1.0.1"
+  - id: code-evidence-verifier
+    path: agents/code-evidence-verifier/AGENT.md
+    category: review
+    maturity: experimental
+    version: "1.0.1"
+
 
 prompts:
   - id: architecture-grill
@@ -386,6 +442,12 @@ evals:
     target: research
     maturity: experimental
     version: "1.0.0"
+  - id: code-explore
+    path: evals/code-explore/cases.yaml
+    target: code-explore
+    maturity: experimental
+    version: "1.0.1"
+
 
 profiles:
   - id: software-engineering
@@ -423,6 +485,12 @@ adapters:
     target: codex
     maturity: stable
     version: "1.0.0"
+  - id: antigravity-code-explore
+    path: adapters/antigravity/code-explore
+    target: antigravity
+    maturity: experimental
+    version: "1.0.1"
+
 
 forms:
   - id: ui-design-intake
@@ -482,3 +550,8 @@ templates:
     category: research
     maturity: experimental
     version: "1.0.0"
+  - id: code-impact-report
+    path: templates/documents/CODE-IMPACT-REPORT.md
+    category: engineering
+    maturity: experimental
+    version: "1.0.1"
