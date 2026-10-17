@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "intent": {
+    "id": "INT-EXAMPLE",
+    "revision": "1",
+    "acceptance_ids": ["AC-01"],
+    "preservation_ids": ["INV-01"]
+  },
+  "baseline": {
+    "repositories": [{"id": "app", "revision": "0123456", "dirty_paths": []}]
+  },
+  "tasks": [{
+    "id": "CODE-001",
+    "builder_context": "example-builder-context",
+    "repository": "app",
+    "depends_on": [],
+    "allowed_paths": ["src/feature.py"],
+    "changed_paths": ["src/feature.py"],
+    "acceptance_ids": ["AC-01"],
+    "status": "DONE"
+  }],
+  "candidate": {"id": "example-candidate-001", "paths": [{"repository": "app", "path": "src/feature.py"}]},
+  "events": [
+    {"seq": 1, "type": "BUILD_COMPLETED"},
+    {"seq": 2, "type": "TDD_ASSIST_STARTED"},
+    {"seq": 3, "type": "FINAL_CANDIDATE_SELECTED"},
+    {"seq": 4, "type": "INDEPENDENT_VERIFICATION_COMPLETED"}
+  ],
+  "post_build_testing": {"decision": "USED", "mode": "post_implementation", "reason": "Observable feature behavior warrants a post-build probe"},
+  "checks": [
+    {"id": "CHECK-01", "candidate_id": "example-candidate-001", "runner_context": "example-verifier-context", "kind": "behavior_test", "status": "PASS", "evidence": "Illustrative only: local API probe succeeded"},
+    {"id": "CHECK-02", "candidate_id": "example-candidate-001", "runner_context": "example-verifier-context", "kind": "regression", "status": "PASS", "evidence": "Illustrative only: existing invariant probe succeeded"}
+  ],
+  "requirements": [
+    {"id": "AC-01", "status": "PASS", "check_ids": ["CHECK-01"]},
+    {"id": "INV-01", "status": "PASS", "check_ids": ["CHECK-02"]}
+  ],
+  "verification": {"context": "example-verifier-context", "candidate_id": "example-candidate-001", "status": "PASS"},
+  "review": {"candidate_id": "example-candidate-001", "status": "PASS", "evidence": "Illustrative only: completed independent diff review"},
+  "outcome": "VERIFIED",
+  "unsafe_actions": []
+}

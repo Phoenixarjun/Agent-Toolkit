@@ -7,12 +7,15 @@ rules:
 skills:
   - intent-capture
   - code-explore
+  - code
   - code-review
   - tdd
 workflows:
   - implementation-review-loop
 agents:
   - architect
+  - code-builder
+  - code-verifier
 prompts:
   - architecture-grill
 knowledge:
