@@ -128,6 +128,18 @@ ADAPTER_SPECS: Dict[str, AdapterSpec] = {
         description="OpenCode CLI (.opencode/skills, AGENTS.md)",
         supports_specialist_agents=True,
     ),
+    "antigravity": AdapterSpec(
+        name="antigravity",
+        aliases=["agy"],
+        preferred_skill_root=".agents/skills",
+        secondary_skill_roots=[".gemini/skills"],
+        entrypoint_file="AGENTS.md",
+        agent_root=".agents/agents",
+        manual_invocation_strategy="frontmatter",
+        display_name="Google Antigravity",
+        description="Google Antigravity 2.0 / CLI (.agents/skills, .agents/agents)",
+        supports_specialist_agents=True,
+    ),
 }
 
 
@@ -494,7 +506,13 @@ def serialize_specialist_agent(adapter_spec: AdapterSpec, agent_artifact: Resolv
         return PlanFile(rel_destination=dest_rel, source_path=None, content=toml_content, is_adapter_specific=True)
 
     else:
-        # Markdown agent definitions for Claude, Gemini CLI, Copilot, OpenCode
+        # Check if pre-configured adapter agent definition exists
+        adapter_agent_path = ROOT / "adapters" / adapter_spec.name / "code-explore" / "agents" / f"agent-toolkit-{ag_id}.md"
+        if adapter_agent_path.exists():
+            dest_rel = f"{adapter_spec.agent_root}/agent-toolkit-{ag_id}.md"
+            return PlanFile(rel_destination=dest_rel, source_path=None, content=adapter_agent_path.read_text(encoding="utf-8"), is_adapter_specific=True)
+
+        # Markdown agent definitions for Claude, Gemini CLI, Copilot, OpenCode, Antigravity
         dest_rel = f"{adapter_spec.agent_root}/{ag_id}.md"
         if not agent_content.startswith("---\n"):
             wrapped = (
@@ -589,6 +607,12 @@ def build_installation_plan(
     target_pref_file = target_dir / pref_dest
     if not target_pref_file.exists():
         plan.files.append(PlanFile(rel_destination=pref_dest, source_path=pref_source))
+
+    # Ensure validate_code_exploration.py is present in .agent-toolkit/scripts/ if code-explore is installed
+    if any(a.id == "code-explore" for a in artifacts):
+        val_source = "scripts/validate_code_exploration.py"
+        if (ROOT / val_source).exists():
+            plan.files.append(PlanFile(rel_destination=f".agent-toolkit/{val_source}", source_path=val_source))
 
     # 2. Specialist Agents Native Serialization
     agents = [a for a in artifacts if a.group == "agents"]

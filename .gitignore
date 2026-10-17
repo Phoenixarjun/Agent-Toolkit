@@ -23,3 +23,5 @@ secrets/
 *.log
 .agent-toolkit-test/
 scratch/
+.agent-toolkit/
+.agents/
