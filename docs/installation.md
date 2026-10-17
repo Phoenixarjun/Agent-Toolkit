@@ -1,12 +1,13 @@
-# Agent Toolkit - Six-Runtime Installation & Deployment Guide
+# Agent Toolkit - Multi-Runtime Installation & Deployment Guide
 
-This guide describes how to install Agent Toolkit capabilities into consumer projects reliably, safely, and portably across six AI coding assistants:
+This guide describes how to install Agent Toolkit capabilities into consumer projects reliably, safely, and portably across seven AI coding assistants:
 1. **Claude Code** (`claude-code`, `claude`)
 2. **OpenAI Codex** (`codex`, `openai-codex`)
 3. **Cursor** (`cursor`)
 4. **Gemini CLI** (`gemini-cli`, `gemini`)
 5. **GitHub Copilot** (`github-copilot`, `copilot`)
 6. **OpenCode** (`opencode`)
+7. **Google Antigravity** (`antigravity`, `agy`)
 
 ---
 
@@ -31,6 +32,7 @@ All shared resources are deployed into a private, installer-managed `.agent-tool
 | **Gemini CLI** | `--agent gemini-cli` (`gemini`) | `.gemini/skills/` | `GEMINI.md` | `.gemini/agents/<agent>.md` | Frontmatter `disable-model-invocation: true` |
 | **GitHub Copilot** | `--agent github-copilot` (`copilot`) | `.github/skills/` | `.github/copilot-instructions.md` | `.github/agents/<agent>.md` | Frontmatter + instruction guidelines |
 | **OpenCode** | `--agent opencode` | `.opencode/skills/` | `AGENTS.md` | `.opencode/agents/<agent>.md` | Frontmatter `disable-model-invocation: true` |
+| **Google Antigravity** | `--agent antigravity` (`agy`) | `.agents/skills/` | `AGENTS.md` | `.agents/agents/<agent>.md` | Frontmatter `model: flash`, read-only tools |
 
 ---
 

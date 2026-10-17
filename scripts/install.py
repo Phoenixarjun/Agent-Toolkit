@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """
-Agent Toolkit — Six-Runtime Profile-Aware Installer
+Agent Toolkit - Multi-Runtime Profile-Aware Installer
 
 Deterministic deployment, dependency resolution, collision detection, and verification utility
-for Agent Toolkit capabilities across six AI coding assistants:
+for Agent Toolkit capabilities across seven AI coding assistants:
 1. Claude Code
 2. OpenAI Codex
 3. Cursor
 4. Gemini CLI
 5. GitHub Copilot
 6. OpenCode
+7. Google Antigravity
 """
 
 from __future__ import annotations
@@ -1037,7 +1038,7 @@ def cmd_list(args: argparse.Namespace) -> int:
     profiles = get_profiles()
     catalog = get_catalog()
 
-    print("Agent Toolkit — Available Profiles & Skills\n")
+    print("Agent Toolkit - Available Profiles & Skills\n")
     print("=" * 70)
     print("PROFILES")
     print("=" * 70)
@@ -1088,7 +1089,7 @@ def cmd_plan(args: argparse.Namespace) -> int:
         return 1
 
     print("\n======================================================================")
-    print("Agent Toolkit — Installation Plan (Dry Run)")
+    print("Agent Toolkit - Installation Plan (Dry Run)")
     print("======================================================================")
     print(f"Destination:  {plan.target_dir}")
     print(f"Adapter:      {plan.adapter}")
@@ -1191,7 +1192,7 @@ def cmd_apply(args: argparse.Namespace) -> int:
         return 1
 
     print("\n======================================================================")
-    print("Agent Toolkit — Installation Applied Successfully")
+    print("Agent Toolkit - Installation Applied Successfully")
     print("======================================================================")
     print(f"Destination:  {plan.target_dir}")
     print(f"Adapter:      {plan.adapter}")
@@ -1212,7 +1213,7 @@ def cmd_doctor(args: argparse.Namespace) -> int:
     report = run_doctor(target_dir)
 
     print("\n======================================================================")
-    print("Agent Toolkit — Installation Doctor Report")
+    print("Agent Toolkit - Installation Doctor Report")
     print("======================================================================")
     print(f"Target Directory: {report['target_dir']}")
     print(f"Overall Status:   {report['status']}")
@@ -1293,7 +1294,7 @@ def _add_target_args(p: argparse.ArgumentParser) -> None:
         dest="agent",
         choices=valid_adapter_choices,
         required=True,
-        help="Target coding assistant adapter (claude-code, codex, cursor, gemini-cli, github-copilot, opencode)",
+        help="Target coding assistant adapter (claude-code, codex, cursor, gemini-cli, github-copilot, opencode, antigravity)",
     )
     p.add_argument("--into", required=True, help="Target project directory path")
     p.add_argument(
