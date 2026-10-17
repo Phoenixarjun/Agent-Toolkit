@@ -531,7 +531,7 @@ class TestManualOnlyInvocationAcrossRuntimes(unittest.TestCase):
         self.temp_dir.cleanup()
 
     def test_manual_only_frontmatter_injected(self):
-        for adp in ["claude-code", "cursor", "gemini-cli", "github-copilot", "opencode"]:
+        for adp in ["claude-code", "cursor", "gemini-cli", "github-copilot", "opencode", "antigravity"]:
             target_sub = self.target / adp
             plan = build_installation_plan(target_sub, adapter=adp, skill_id="tune")
             apply_installation_plan(plan)
