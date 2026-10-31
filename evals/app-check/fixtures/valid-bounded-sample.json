@@ -1,0 +1,27 @@
+{
+  "schema": "app-check-report-v1",
+  "assessment": {
+    "status": "LIMITED",
+    "verification": "SELF_CHECKED",
+    "scope": "Synthetic local-state application, source only",
+    "no_code_changes": true,
+    "inspected_sources": ["synthetic-repo/src/app.ts@sample-revision"]
+  },
+  "applicability": [
+    {"area": "correctness", "status": "APPLICABLE", "reason": "Local user interaction and state transitions are present"},
+    {"area": "distributed-recovery", "status": "NOT_APPLICABLE", "reason": "No remote state, queue, or distributed boundary exists in the inspected scope"}
+  ],
+  "questions": [],
+  "measurements": [{"name": "peak concurrency", "status": "UNKNOWN", "value": null}],
+  "findings": [{
+    "id": "APP-001",
+    "topic": "test_quality",
+    "status": "SUPPORTED_RISK",
+    "priority": "P2",
+    "affected_behavior": "A test uses a constant assertion without checking the user's state transition",
+    "applicability_reason": "The application has a state update used by its primary interaction",
+    "evidence": [{"kind": "OBSERVED_SOURCE", "locator": "synthetic-repo/tests/app.test.ts:10", "provenance": "Inspected synthetic fixture at sample-revision"}],
+    "recommendation": {"decision": "NEXT", "action_kind": "FIX", "rationale": "Test assertion does not establish important state behavior", "verification": "A test fails on deliberately incorrect state updates and passes on correct behavior"}
+  }],
+  "top_actions": [{"finding_id": "APP-001", "decision": "NEXT"}]
+}
