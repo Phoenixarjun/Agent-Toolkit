@@ -179,6 +179,25 @@ skills:
         - code-implementation-report
 
 
+  - id: app-check
+    path: skills/app-check
+    category: engineering
+    domains:
+      - software-engineering
+      - health-assessment
+    maturity: experimental
+    version: "1.0.0"
+    optional_dependencies:
+      skills:
+        - code-explore
+        - tdd
+        - grill-me
+        - security-audit
+        - code
+      workflows:
+        - application-health-assessment
+      templates:
+        - app-health-report
 workflows:
   - id: implementation-review-loop
     path: workflows/implementation-review-loop/WORKFLOW.md
@@ -243,6 +262,17 @@ workflows:
         - code-impact-report
 
 
+  - id: application-health-assessment
+    path: workflows/application-health-assessment/WORKFLOW.md
+    category: delivery
+    domains:
+      - software-engineering
+      - health-assessment
+    maturity: experimental
+    version: "1.0.0"
+    optional_dependencies:
+      templates:
+        - app-health-report
 rules:
   - id: global-engineering
     path: rules/global/engineering-rules.md
@@ -480,6 +510,11 @@ evals:
     version: "1.0.0"
 
 
+  - id: app-check
+    path: evals/app-check/cases.yaml
+    target: app-check
+    maturity: experimental
+    version: "1.0.0"
 profiles:
   - id: software-engineering
     path: profiles/software-engineering.yaml
@@ -595,4 +630,9 @@ templates:
     path: templates/documents/CODE-IMPLEMENTATION-REPORT.md
     category: engineering
     maturity: stable
+    version: "1.0.0"
+  - id: app-health-report
+    path: templates/documents/APP-HEALTH-REPORT.md
+    category: engineering
+    maturity: experimental
     version: "1.0.0"
