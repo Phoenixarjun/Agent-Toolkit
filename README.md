@@ -48,6 +48,7 @@ The examples below show what the toolkit does. This is a **curated showcase**, n
 | **[Teach](docs/skills/teach.md)** | Turn explanations into adaptive learning, practice, and demonstrated understanding. |
 | **[Research](docs/skills/research.md)** | Investigate questions with traceable evidence, bounded delegation, and reproducible reports. |
 | **[App Check](docs/skills/app-check.md)** | Assess engineering health and prioritize justified actions based on actual application reality. |
+| **[Product Reality](docs/skills/product-reality.md)** | Evaluate product thesis, customer choice over substitutes, and real-world viability. |
 
 Each guide explains the problem, usage, outputs, cost profile, and limitations. For executable details, follow the guide's link to the canonical `SKILL.md`.
 
