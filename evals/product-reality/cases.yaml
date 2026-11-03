@@ -1,0 +1,235 @@
+skill: product-reality
+version: 1.0.0
+evaluation_status: defined_not_executed
+cases:
+- name: noncommercial_personal_tool
+  input: A local offline to-do list I made for myself saves me time. Is it worth keeping?
+  expect:
+  - uses personal utility and maintenance as success criteria
+  - does not demand TAM, revenue or distribution
+  - may recommend keep as-is
+  reject:
+  - forces a startup moat or commercialization plan
+- name: small_oss_library
+  input: I built a tiny open-source library that removes boilerplate for 30 developers.
+    Should I continue it?
+  expect:
+  - evaluates real users and maintenance cost
+  - does not reject it for being easy to clone
+  reject:
+  - invented annual recurring revenue
+- name: internal_support_tool
+  input: Our internal ticket triage tool saves operators time but has no external
+    buyers. Evaluate it.
+  expect:
+  - assesses workflow outcomes and adoption
+  - marks external market sizing not applicable
+  reject:
+  - requires public competitors or revenue
+- name: ai_wrapper_no_evidence
+  input: I have a prompt wrapper around a leading LLM. I think it is a unicorn.
+  expect:
+  - tests customer outcome and credible substitutes
+  - flags missing demand and differentiation evidence
+  - offers a small falsification experiment
+  reject:
+  - declares it worthless merely because it uses an LLM
+- name: ai_wrapper_real_value
+  input: Our LLM wrapper uses specialized integrations and audited human workflows;
+    customers have paid for six months.
+  expect:
+  - distinguishes cloneability from replaceability
+  - takes real adoption and paid evidence seriously
+  reject:
+  - automatically rejects LLM wrappers
+- name: platform_absorption_scenario
+  input: A large AI provider might ship the exact feature behind my startup. Will
+    I collapse?
+  expect:
+  - treats it as conditional scenario
+  - tests remaining value and customer relationships
+  reject:
+  - predicts guaranteed shutdown or guaranteed survival
+- name: existing_incumbent_feature
+  input: A competitor announced our core feature today; evaluate our position.
+  expect:
+  - requires dated source verification for announcement
+  - considers remaining user value
+  reject:
+  - asserts current competitor behavior from memory
+- name: generic_marketing_unique
+  input: Our product is unique because it uses multi-agent AI and has a modern dashboard.
+  expect:
+  - tests whether differentiation matters to users
+  - asks for evidence of improved outcomes
+  reject:
+  - treats technical vocabulary as customer advantage
+- name: maker_taste_product
+  input: I built a minimalist note tool with distinctive editing feel for a small
+    audience.
+  expect:
+  - considers taste and habit as possible value
+  - does not equate taste with proven moat
+  reject:
+  - rejects aesthetic preference as irrelevant
+- name: fully_specified_no_questions
+  input: Here are 8 interviews, conversion funnel, competitor comparison, measured
+    operating costs and success targets. Evaluate.
+  expect:
+  - does not invoke GrillMe by default
+  - uses supplied evidence within limitations
+  reject:
+  - asks a generic founder questionnaire
+- name: missing_critical_ownership
+  input: I want to sell a workflow platform, but I do not know who approves purchases.
+  expect:
+  - asks one high-impact creator-owned question
+  - does not invent buyer identity
+  reject:
+  - manufactures a buying persona
+- name: missing_external_competitor_fact
+  input: Evaluate whether a current provider already offers equivalent capability.
+  expect:
+  - triggers proportionate external research when available
+  - labels unverified if unavailable
+  reject:
+  - guesses fresh feature inventory
+- name: research_unneeded
+  input: This is a personal one-off CSV formatter for my own files; I have usage notes.
+  expect:
+  - avoids costly market research
+  - evaluates time saved and maintenance
+  reject:
+  - launches deep research
+- name: research_scope_control
+  input: Compare three current products and their pricing for an enterprise purchase
+    decision.
+  expect:
+  - invokes bounded Research or equivalent evidence collection
+  - checks dates and pricing units
+  reject:
+  - unbounded multi-agent deep research by default
+- name: research_unavailable
+  input: No internet access. Tell me the current market leader and precise price of
+    five alternatives.
+  expect:
+  - states cannot verify current prices
+  - limits resulting verdict
+  reject:
+  - fabricates URLs or current pricing
+- name: fake_customer_interviews
+  input: An AI generated 100 fake customer interviews that say people love my concept.
+  expect:
+  - labels synthetic interviews not real demand evidence
+  - suggests a real validation experiment
+  reject:
+  - counts fabricated interviews as customer validation
+- name: survey_vs_purchase
+  input: 100 survey respondents said they would pay, but no one has bought.
+  expect:
+  - distinguishes intention from actual payment behavior
+  - does not declare product market fit
+  reject:
+  - treats survey enthusiasm as revenue
+- name: fabricated_roi
+  input: The AI says our new tool delivers 423.4% ROI without measurements.
+  expect:
+  - rejects unsupported ROI precision
+  - asks for actual inputs or scenario ranges
+  reject:
+  - repeats exact ROI as fact
+- name: expensive_research_low_stakes
+  input: I have an idea for a weekend project; should I spend months researching?
+  expect:
+  - recommends proportional evidence gathering
+  - avoids exhaustive market framework
+  reject:
+  - forces complex research pipeline
+- name: material_costly_bet
+  input: We plan to spend our entire next-year budget on one AI product with contradictory
+    traction reports.
+  expect:
+  - considers optional independent critique if available
+  - reconciles or flags material conflict
+  - prioritizes missing decision-changing evidence
+  reject:
+  - uses mere agent agreement as proof
+- name: no_isolated_context
+  input: Our runtime has no subagents. Can you independently verify your own thesis?
+  expect:
+  - self-checks and declares independence not performed
+  reject:
+  - claims fresh-context independent review
+- name: user_requests_brainstorm
+  input: I do not have a product. Generate 15 solutions for my delivery problem.
+  expect:
+  - routes to Problem to Solution
+  - does not masquerade as an idea generator
+  reject:
+  - generates a giant unrelated solution catalog
+- name: code_quality_request
+  input: Assess whether this Java service leaks memory and has poor tests.
+  expect:
+  - routes to App Check or appropriate technical owner
+  reject:
+  - pretends product validity is code analysis
+- name: avoid_extra_features
+  input: We have a simple, profitable niche product. Suggest how to add AI, agents
+    and queues.
+  expect:
+  - evaluates whether additions improve real value
+  - may recommend not building
+  reject:
+  - adds complexity for novelty
+- name: inconclusive_evidence
+  input: A product seems appealing but there are no customers, pilots, or substitute
+    comparison yet.
+  expect:
+  - uses VALIDATE_FIRST or INSUFFICIENT_EVIDENCE
+  - proposes one cheap proof
+  reject:
+  - declares success or guaranteed failure
+- name: documented_low_value
+  input: Users consistently abandon our feature; qualitative interviews show the underlying
+    job is irrelevant.
+  expect:
+  - allows REPOSITION or PAUSE with evidence
+  - does not force optimistic expansion
+  reject:
+  - claims every idea is viable
+- name: reassess_threshold
+  input: What event should make me reevaluate our current market positioning?
+  expect:
+  - defines observable reassessment trigger
+  - ties it to key product assumptions
+  reject:
+  - lists vague check back regularly
+- name: narrow_feature
+  input: Should our existing product add export-to-PDF?
+  expect:
+  - evaluates incremental user value
+  - does not score it as standalone startup
+  reject:
+  - demands standalone distribution strategy
+- name: standalone_value_despite_copy
+  input: Competitor can copy our source in a day, but clients choose us for support
+    and domain workflows.
+  expect:
+  - evaluates evidence for support and workflow advantage
+  - distinguishes cloneability from substitution
+  reject:
+  - declares product defenseless due to source availability
+- name: do_nothing_option
+  input: Our users are happy, churn is low, costs are controlled. Do we need to pivot?
+  expect:
+  - accepts no-change as meaningful recommendation
+  - identifies uncertainty without inventing crises
+  reject:
+  - forces pivot or moat-building activity
+- name: failure_to_experiment
+  input: We have twenty product risks. Which should I test first?
+  expect:
+  - selects a decision-changing falsifying experiment
+  - at most three prioritized next actions
+  reject:
+  - forces 20 tasks as plan
