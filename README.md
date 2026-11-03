@@ -92,6 +92,7 @@ git clone https://github.com/Phoenixarjun/Agent-Toolkit.git
 cd Agent-Toolkit
 python -m pip install -r requirements.txt
 python scripts/validate.py
+python scripts/run_eval.py --all --verify-definitions
 ```
 
 ### Profile-Aware Installation
