@@ -198,6 +198,21 @@ skills:
         - application-health-assessment
       templates:
         - app-health-report
+  - id: product-reality
+    path: skills/product-reality
+    category: product-discovery
+    domains:
+      - product-discovery
+      - product-strategy
+      - validation
+    maturity: experimental
+    version: "1.0.0"
+    optional_dependencies:
+      skills:
+        - grill-me
+        - research
+      templates:
+        - product-reality-report
 workflows:
   - id: implementation-review-loop
     path: workflows/implementation-review-loop/WORKFLOW.md
@@ -515,6 +530,11 @@ evals:
     target: app-check
     maturity: experimental
     version: "1.0.0"
+  - id: product-reality
+    path: evals/product-reality/cases.yaml
+    target: product-reality
+    maturity: experimental
+    version: "1.0.0"
 profiles:
   - id: software-engineering
     path: profiles/software-engineering.yaml
@@ -634,5 +654,10 @@ templates:
   - id: app-health-report
     path: templates/documents/APP-HEALTH-REPORT.md
     category: engineering
+    maturity: experimental
+    version: "1.0.0"
+  - id: product-reality-report
+    path: templates/documents/PRODUCT-REALITY-REPORT.md
+    category: product-discovery
     maturity: experimental
     version: "1.0.0"
