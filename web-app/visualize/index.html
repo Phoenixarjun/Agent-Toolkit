@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fc">
+  <title>Visualize · Architecture Explorer</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="brand">/visualize</span>
+        <span class="header-divider"></span>
+        <nav id="crumbs" class="breadcrumbs" aria-label="Architecture location"></nav>
+      </div>
+      <div class="global-search-wrap">
+        <span class="global-search-icon" data-icon="search"></span>
+        <input id="global-search" class="global-search" type="search" autocomplete="off" placeholder="Search components, services, and flows…" aria-label="Search architecture" aria-expanded="false" aria-controls="search-results">
+        <kbd class="search-shortcut">⌘ K</kbd>
+        <div id="search-results" class="search-results" role="region" aria-label="Search results" hidden></div>
+      </div>
+      <button id="theme-toggle" class="topbar-theme" type="button" aria-label="Switch to dark theme" title="Switch light or dark theme"><span data-icon="moon"></span></button>
+    </header>
+    <div class="workspace">
+      <nav id="tool-rail" class="tool-rail" aria-label="Workspace controls">
+        <button id="rail-expand" class="rail-button rail-expand" type="button" data-tooltip="Expand navigation" aria-label="Expand navigation" aria-expanded="false"><span data-icon="layers"></span><span class="rail-label">Collapse / expand</span></button>
+        <button id="rail-overview" class="rail-button active" type="button" data-tooltip="Architecture overview" aria-label="Architecture overview"><span data-icon="cube"></span><span class="rail-label">Architecture</span></button>
+        <button id="rail-flows" class="rail-button" type="button" data-tooltip="Execution flows" aria-label="Execution flows"><span data-icon="route"></span><span class="rail-label">Flows</span></button>
+        <button id="rail-catalog" class="rail-button" type="button" data-tooltip="Component catalog" aria-label="Component catalog"><span data-icon="layers"></span><span class="rail-label">Catalog</span></button>
+        <button id="rail-issues" class="rail-button" type="button" data-tooltip="Connection findings" aria-label="Connection findings"><span data-icon="alert"></span><span id="rail-issue-count" class="rail-counter" hidden></span><span class="rail-label">Findings</span></button>
+        <button id="rail-coverage" class="rail-button" type="button" data-tooltip="Repository coverage" aria-label="Repository coverage"><span data-icon="shield"></span><span class="rail-label">Coverage</span></button>
+        <div class="rail-section-label">Display</div>
+        <div class="rail-view-selector" role="group" aria-label="Architecture rendering mode">
+          <button id="view-3d" class="rail-button active" type="button" data-tooltip="3D architecture" aria-label="3D architecture view" aria-pressed="true"><span data-icon="cube"></span><span class="rail-label">3D view</span></button>
+          <button id="view-2d" class="rail-button" type="button" data-tooltip="2D diagram" aria-label="2D diagram view" aria-pressed="false"><span data-icon="grid"></span><span class="rail-label">2D view</span></button>
+        </div>
+        <button id="rail-focus" class="rail-button" type="button" data-tooltip="Toggle flow focus" aria-label="Focus on active flow" aria-pressed="true"><span data-icon="focus"></span><span class="rail-label">Focus flow</span></button>
+        <button id="rail-reset-layout" class="rail-button" type="button" data-tooltip="Reset 2D positions" aria-label="Reset 2D node positions"><span data-icon="restart"></span><span class="rail-label">Reset 2D layout</span></button>
+        <div class="rail-spacer"></div>
+        <button id="rail-import" class="rail-button" type="button" data-tooltip="Import architecture model" aria-label="Import architecture model"><span data-icon="upload"></span><span class="rail-label">Import model</span></button>
+        <input id="import-model" type="file" accept=".json,application/json" hidden>
+
+        <button id="rail-help" class="rail-button" type="button" data-tooltip="Navigation help" aria-label="Navigation help"><span data-icon="help"></span><span class="rail-label">Help</span></button>
+      </nav>
+      <div class="workspace-main">
+        <div class="stage" id="stage">
+          <main class="world" aria-label="Interactive software architecture explorer">
+            <canvas id="world-canvas" aria-label="Three-dimensional architecture. Drag to orbit, Shift-drag or right-drag to pan, scroll to zoom, and select a component to inspect."></canvas>
+            <svg id="diagram-2d" class="diagram-2d" role="group" aria-label="Interactive two-dimensional architecture. Drag nodes to rearrange, drag the background to pan, scroll to zoom, select an edge to inspect, and double click a component to enter." tabindex="0" hidden></svg>
+            <div id="world-fallback" class="world-fallback" hidden></div>
+            <div id="world-labels" class="world-labels"></div>
+            <div class="scene-topline"><span id="scene-context" class="scene-context">Architecture overview</span><div class="scene-top-actions"><span id="model-badge" class="model-badge">Demo · illustrative</span></div></div>
+            <div id="connection-chip" class="connection-chip" hidden></div>
+            <div id="slice-controls" class="slice-controls" hidden><button id="slice-prev" type="button" aria-label="Previous architecture group">←</button><span id="slice-label" aria-live="polite"></span><button id="slice-next" type="button" aria-label="Next architecture group">→</button></div>
+            <button id="packet-chip" class="packet-chip" type="button" hidden><span class="packet-icon" data-icon="package"></span><span>Inspect data</span></button>
+            <div class="viewport-controls" aria-label="Architecture navigation controls">
+              <button id="camera-orbit" class="view-button selected" type="button" title="Orbit" aria-label="Orbit camera"><span data-icon="orbit"></span></button>
+              <button id="camera-pan" class="view-button" type="button" title="Pan" aria-label="Pan camera"><span data-icon="move"></span></button>
+              <span class="view-divider"></span>
+              <button id="reset-camera" class="view-button" type="button" title="Fit current view" aria-label="Fit current view"><span data-icon="focus"></span></button>
+              <button id="zoom-out" class="view-button" type="button" title="Zoom out" aria-label="Zoom out"><span data-icon="minus"></span></button>
+              <button id="zoom-in" class="view-button" type="button" title="Zoom in" aria-label="Zoom in"><span data-icon="plus"></span></button>
+            </div>
+            <div id="scene-hint" class="scene-hint">Drag to orbit · Shift-drag to pan · Double-click to enter</div>
+          </main>
+          <aside id="inspector-panel" class="inspector-panel" aria-label="Selection inspector" hidden>
+            <div class="inspector-top"><div class="inspector-symbol" id="inspector-symbol"><span data-icon="cube"></span></div><div class="inspector-heading"><div id="inspector-type" class="inspector-type">Component</div><h2 id="inspector-name">Component</h2></div><button id="close-inspector" class="close-button" type="button" aria-label="Close inspector"><span data-icon="close"></span></button></div>
+            <div class="inspector-tabs" role="tablist" aria-label="Inspector views"><button id="inspector-overview-tab" class="inspector-tab active" type="button" role="tab" aria-selected="true">Overview</button><button id="inspector-flow-tab" class="inspector-tab" type="button" role="tab" aria-selected="false">Flow</button></div>
+            <div id="inspector-content" class="inspector-content" role="tabpanel"></div>
+            <div class="inspector-bottom"><span id="inspector-verification">Evidence shown when available</span></div>
+          </aside>
+        </div>
+        <section id="player" class="flow-player" aria-label="Execution journey playback" hidden>
+          <div class="player-left"><button id="play-button" class="player-main-button" type="button" aria-label="Play flow"><span data-icon="play"></span></button><div class="player-info"><div id="playback-name" class="player-name">Selected flow</div><div id="playback-step" class="player-detail">Ready to explore</div></div></div>
+          <div class="player-center"><div class="player-steps" id="player-steps"></div><input id="player-progress-input" type="range" min="0" max="1" value="0" step="1" aria-label="Jump to flow stage"></div>
+          <div class="player-right"><button id="journey-story" class="player-story" type="button" title="Read the full journey">Steps</button><button id="player-path" class="player-story" type="button" title="Choose an execution path" hidden>Choose path</button><span id="playback-progress" class="player-progress">0 / 0</span><button id="step-button" class="player-utility" type="button" title="Next stage" aria-label="Next stage"><span data-icon="next"></span></button><button id="reset-flow" class="player-utility" type="button" title="Restart journey" aria-label="Restart journey"><span data-icon="restart"></span></button><button id="speed-button" class="player-speed" type="button" title="Playback speed" aria-label="Playback speed">1×</button><button id="close-player" class="player-utility" type="button" title="Exit flow" aria-label="Exit flow"><span data-icon="close"></span></button></div>
+        </section>
+      </div>
+    </div>
+    <div id="overlay" class="overlay" hidden><div class="overlay-shade" id="overlay-shade"></div><section class="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="overlay-title"><div class="overlay-header"><div><div id="overlay-eyebrow" class="overlay-eyebrow">Explore</div><h2 id="overlay-title">Explore</h2></div><button id="overlay-close" class="close-button" type="button" aria-label="Close dialog"><span data-icon="close"></span></button></div><div id="overlay-body" class="overlay-body"></div></section></div>
+    <div id="notification" class="notification" role="status" aria-live="polite" hidden></div>
+    <div id="flow-announcement" class="screen-reader-only" role="status" aria-live="polite"></div>
+  </div>
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>

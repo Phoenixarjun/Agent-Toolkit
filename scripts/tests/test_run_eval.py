@@ -107,6 +107,22 @@ class RunEvalUnitTests(unittest.TestCase):
         self.assertIn("Stop interview", c4.expect)
         self.assertIn("Return summary", c4.expect)
 
+        # 5. Visualize style with given / when
+        c5 = runner.normalize_case(
+            "test-suite",
+            {
+                "id": "VIS-01",
+                "given": "A monolith with internal services",
+                "when": "Visualize the app",
+                "expect": ["Logical top-level components"],
+            },
+            4,
+        )
+        self.assertEqual(c5.case_id, "VIS-01")
+        self.assertIn("Given: A monolith", c5.input)
+        self.assertIn("When: Visualize the app", c5.input)
+        self.assertEqual(c5.expect, ["Logical top-level components"])
+
     def test_verify_case_definition(self):
         valid_case = runner.EvalCase(
             suite="test",
