@@ -1,0 +1,53 @@
+# Agent Toolkit — Release Packaging Matrix Configuration
+# Defines the canonical set of capability artifacts and target assistant adapters
+# packaged for official repository releases.
+#
+# Schema Version: 1.0.0
+# Distribution policy:
+# - Artifact metadata (description, version, dependencies) remains canonical in catalog/ and profiles/.
+# - This file defines distribution scope only and must not duplicate catalog metadata.
+
+schema_version: "1.0.0"
+
+targets:
+  # Standalone Skills
+  - id: "code-review"
+    type: "skill"
+    adapters:
+      - "canonical"
+      - "claude-code"
+      - "codex"
+      - "cursor"
+      - "gemini-cli"
+
+  - id: "teach"
+    type: "skill"
+    adapters:
+      - "canonical"
+      - "claude-code"
+
+  - id: "tdd"
+    type: "skill"
+    adapters:
+      - "canonical"
+      - "cursor"
+
+  - id: "security-audit"
+    type: "skill"
+    adapters:
+      - "canonical"
+      - "claude-code"
+
+  # Composed Capability Profiles
+  - id: "ui-ux"
+    type: "profile"
+    adapters:
+      - "canonical"
+      - "claude-code"
+      - "cursor"
+
+  - id: "software-engineering"
+    type: "profile"
+    adapters:
+      - "canonical"
+      - "claude-code"

@@ -128,3 +128,94 @@ Pass via `--adapter` or `--agent`:
    - Every file matches its cryptographic digest in both `bundle-manifest.json` and `SHA256SUMS`.
 2. **Safe Consumption**: `INSTALL.md` instructs consumers to inspect archives and warns against blind overwrites.
 3. **Execution Assurance Boundary**: When packaging multi-agent workflows (such as `security-audit`), the package manifest and installation guide explicitly document that multi-agent security assurance requires isolated execution environments and that workflows statically bind to trusted `.agent-toolkit/workflows/` paths.
+
+---
+
+## 6. Versioned Release & Distribution Pipeline
+
+The release pipeline (`scripts/release.py`) coordinates full, multi-artifact official releases using the deterministic packaging engine.
+
+### Release Versioning Contract
+
+| Concept | Scope | Example | Governance |
+| :--- | :--- | :--- | :--- |
+| **Repository Release Version** | Entire repository distribution snapshot | `v0.1.0` | Follows SemVer format `vX.Y.Z`. Required for official builds. |
+| **Artifact Version** | Individual capability version | `1.2.0` | Owned by `catalog/catalog.yaml` and `profiles/`. Preserved independently across releases. |
+| **Source Revision** | Git commit SHA | `b17807d...` | Exact 40-character commit hash used to build assets. Releases strictly reject dirty working trees. |
+
+### Release Packaging Matrix (`catalog/release-matrix.yaml`)
+
+Distribution scope is defined in `catalog/release-matrix.yaml`. It configures which registered skills and capability profiles are packaged for which target assistants, without duplicating catalog descriptions, versions, or dependencies:
+
+```yaml
+schema_version: "1.0.0"
+targets:
+  - id: "code-review"
+    type: "skill"
+    adapters: ["canonical", "claude-code", "codex", "cursor", "gemini-cli"]
+  - id: "teach"
+    type: "skill"
+    adapters: ["canonical", "claude-code"]
+  - id: "tdd"
+    type: "skill"
+    adapters: ["canonical", "cursor"]
+  - id: "security-audit"
+    type: "skill"
+    adapters: ["canonical", "claude-code"]
+  - id: "ui-ux"
+    type: "profile"
+    adapters: ["canonical", "claude-code", "cursor"]
+  - id: "software-engineering"
+    type: "profile"
+    adapters: ["canonical", "claude-code"]
+```
+
+### Release Index (`release-index.json` v1.0.0)
+
+A machine-readable release index generated into the release output directory for website consumption:
+
+```json
+{
+  "schema_version": "1.0.0",
+  "repository": "Phoenixarjun/Agent-Toolkit",
+  "release_version": "v0.1.0",
+  "source_commit": "b17807d5...",
+  "generated_at": "2026-11-13T11:25:20+00:00",
+  "asset_count": 16,
+  "assets": [
+    {
+      "type": "skill",
+      "id": "code-review",
+      "artifact_version": "1.2.0",
+      "adapter": "canonical",
+      "filename": "code-review-1.2.0-canonical.zip",
+      "sha256": "...",
+      "size_bytes": 6245,
+      "verification": "structurally-verified",
+      "warnings": []
+    }
+  ]
+}
+```
+
+### Release Commands
+
+```bash
+# 1. Preview release packaging matrix and git status
+python scripts/release.py plan
+
+# 2. Build full release packages (runs all quality gates and verifies assets)
+python scripts/release.py build --tag v0.1.0 --output-dir dist/release/
+
+# 3. Independently verify an existing release directory
+python scripts/release.py verify --dir dist/release/
+```
+
+### GitHub Actions Release Workflow
+
+The `.github/workflows/release.yml` workflow provides controlled release building:
+- **Authorized Branches**: Restricts runs to `main` and `dev` branches.
+- **Dry-Run by Default**: Runs manual `workflow_dispatch` with dry-run verification enabled.
+- **Artifact Upload**: Uploads verified release bundles and `release-index.json` for maintainer review via `actions/upload-artifact@v4`.
+- **Publication Guard**: Automatic publishing to GitHub Releases or tag creation is disabled until explicit maintainer authorization.
+
