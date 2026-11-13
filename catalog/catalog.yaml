@@ -213,6 +213,21 @@ skills:
         - research
       templates:
         - product-reality-report
+  - id: visualize
+    path: skills/visualize
+    category: engineering
+    domains:
+      - architecture
+      - software-engineering
+    maturity: experimental
+    version: "0.3.0"
+    optional_dependencies:
+      workflows:
+        - visualize
+      agents:
+        - visualize-explorer
+        - visualize-graph-verifier
+        - visualize-failure-verifier
 workflows:
   - id: implementation-review-loop
     path: workflows/implementation-review-loop/WORKFLOW.md
@@ -288,6 +303,19 @@ workflows:
     optional_dependencies:
       templates:
         - app-health-report
+  - id: visualize
+    path: workflows/visualize/WORKFLOW.md
+    category: delivery
+    domains:
+      - architecture
+      - software-engineering
+    maturity: experimental
+    version: "0.3.0"
+    optional_dependencies:
+      agents:
+        - visualize-explorer
+        - visualize-graph-verifier
+        - visualize-failure-verifier
 rules:
   - id: global-engineering
     path: rules/global/engineering-rules.md
@@ -382,6 +410,22 @@ agents:
     maturity: stable
     version: "1.0.0"
 
+
+  - id: visualize-explorer
+    path: agents/visualize-explorer/AGENT.md
+    category: exploration
+    maturity: experimental
+    version: "0.3.0"
+  - id: visualize-graph-verifier
+    path: agents/visualize-graph-verifier/AGENT.md
+    category: review
+    maturity: experimental
+    version: "0.3.0"
+  - id: visualize-failure-verifier
+    path: agents/visualize-failure-verifier/AGENT.md
+    category: review
+    maturity: experimental
+    version: "0.3.0"
 
 prompts:
   - id: architecture-grill
@@ -535,6 +579,11 @@ evals:
     target: product-reality
     maturity: experimental
     version: "1.0.0"
+  - id: visualize
+    path: evals/visualize/cases.yaml
+    target: visualize
+    maturity: experimental
+    version: "0.2.0"
 profiles:
   - id: software-engineering
     path: profiles/software-engineering.yaml
