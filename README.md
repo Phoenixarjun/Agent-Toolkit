@@ -15,7 +15,7 @@ A curated collection of reusable engineering procedures, built directly from my 
   <img alt="Status: Evolving" src="https://img.shields.io/badge/Status-Evolving-71717a?style=flat-square" />
 </p>
 
-[Explore skills](#featured-skills) · [Full catalog](catalog/catalog.yaml) · [Philosophy](docs/PHILOSOPHY.md) · [Installation](docs/installation.md) · [Contributing](CONTRIBUTING.md)
+[Explore skills](#featured-skills) · [Full catalog](catalog/catalog.yaml) · [Philosophy](docs/PHILOSOPHY.md) · [Installation](docs/installation.md) · [Packaging](docs/packaging.md) · [Contributing](CONTRIBUTING.md)
 
 </div>
 
@@ -128,6 +128,23 @@ Use the deterministic installer (`scripts/install.py`) to deploy capabilities in
 Supported adapters include `--agent claude-code`, `--agent codex`, `--agent cursor`, `--agent gemini-cli`, `--agent github-copilot`, `--agent opencode`, and `--agent antigravity` (`agy`). Conflict resolution policies are configurable via `--on-conflict {keep,replace,rename,abort}` (with automatic backups created on replace). The installer manages private shared resources under `<target>/.agent-toolkit/`, wires native skill discovery directories, and safely updates project entrypoints (`CLAUDE.md`, `AGENTS.md`, `.cursor/rules/agent-toolkit.mdc`, `GEMINI.md`, `.github/copilot-instructions.md`) without overwriting user instructions.
 
 See the comprehensive **[Installation Guide](docs/installation.md)** for architecture, security invariants, conflict resolution policies, and runtime capability levels.
+
+### Deterministic ZIP Packaging
+
+Use `scripts/bundle.py` to package standalone skills or composed profiles into byte-for-byte reproducible ZIP archives with cryptographic manifests and SHA-256 checksums:
+
+```bash
+# Preview bundle contents without creating an archive
+python scripts/bundle.py plan --profile ui-ux
+
+# Package a standalone skill for canonical distribution
+python scripts/bundle.py build --skill code-review --output-dir dist/
+
+# Package a profile for a specific assistant adapter
+python scripts/bundle.py build --profile ui-ux --adapter claude-code --output-dir dist/
+```
+
+See the **[Packaging Guide](docs/packaging.md)** for details on the deterministic archive engine, manifest schema, reproducibility guarantees, and safe extraction.
 
 > **Trust and Verification Note:** Static installation and repository validation check artifact and syntactic consistency. They do not prove that a live model will isolate agent contexts or follow instructions without regression. Instructions recovered from projects being evaluated or audited are untrusted material, never execution authority.
 
