@@ -140,6 +140,13 @@ def extract_input_text(raw_case: dict[str, Any]) -> str:
             if isinstance(val, (list, dict)):
                 return json.dumps(val)
             return str(val).strip()
+    if "given" in raw_case or "when" in raw_case:
+        parts = []
+        if raw_case.get("given"):
+            parts.append(f"Given: {raw_case['given']}")
+        if raw_case.get("when"):
+            parts.append(f"When: {raw_case['when']}")
+        return " ".join(parts).strip()
     return ""
 
 
@@ -183,8 +190,8 @@ def normalize_case(suite_name: str, raw_case: dict[str, Any], index: int) -> Eva
     # Retain non-standard fields as metadata
     standard_keys = {
         "id", "name", "title", "input", "scenario", "stimulus", "setup",
-        "request", "conversation", "expect", "expected", "must_include",
-        "required_behavior", "reject", "forbid", "must_not_include",
+        "request", "conversation", "context", "given", "when", "expect", "expected",
+        "must_include", "required_behavior", "reject", "forbid", "must_not_include",
         "expected_status"
     }
     metadata = {k: v for k, v in raw_case.items() if k not in standard_keys}

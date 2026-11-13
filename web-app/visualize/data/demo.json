@@ -1,0 +1,1644 @@
+{
+  "schema_version": "1.0.0",
+  "scope": {
+    "name": "Aster AI Platform",
+    "description": "A fictional platform for exploring hierarchical components, request journeys, and deterministic what-if scenarios.",
+    "demo": true,
+    "authorized_roots": [],
+    "excluded_roots": [],
+    "output_destination": "local browser only"
+  },
+  "snapshots": [
+    {
+      "repository": "fictional-demo",
+      "revision": null,
+      "dirty_state": "not_applicable",
+      "availability": "demo"
+    }
+  ],
+  "components": [
+    {
+      "id": "client",
+      "name": "Developer Client",
+      "role": "client",
+      "responsibility": "Represents incoming requests with symbolic redacted payloads.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "gateway",
+      "name": "API Gateway",
+      "role": "gateway",
+      "responsibility": "Routes public requests and delegates cross-cutting access controls.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "factory",
+      "name": "LLM Factory",
+      "role": "service",
+      "responsibility": "Coordinates candidate discovery, model routing and response transformation.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "graph",
+      "name": "Graph Runtime",
+      "role": "service",
+      "responsibility": "Runs multi-step analysis graphs with bounded execution progress.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "sandbox",
+      "name": "Sandbox Runtime",
+      "role": "sandbox",
+      "responsibility": "Isolates allowed tool and code execution from the application runtime.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "vector",
+      "name": "Vector Store",
+      "role": "storage",
+      "responsibility": "Stores and searches vector embeddings for retrieval workloads.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "vector"
+    },
+    {
+      "id": "events",
+      "name": "Event Backbone",
+      "role": "stream",
+      "responsibility": "Represents partitioned, append-only message streams.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "partitioned_log"
+    },
+    {
+      "id": "worker",
+      "name": "Async Workers",
+      "role": "worker",
+      "responsibility": "Consumes supported events and executes bounded background work.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "cache",
+      "name": "Cache Layer",
+      "role": "cache",
+      "responsibility": "Retains short-lived derived data and candidate metadata.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "telemetry",
+      "name": "Telemetry Sink",
+      "role": "storage",
+      "responsibility": "Stores synthetic operational metrics as time series.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "time_series"
+    },
+    {
+      "id": "provider",
+      "name": "Model Provider",
+      "role": "external",
+      "responsibility": "Represents an external model inference endpoint, not an owned internal service.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "sql",
+      "name": "Application DB",
+      "role": "storage",
+      "responsibility": "Stores relational application and tenancy state.",
+      "parent_id": null,
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "relational"
+    },
+    {
+      "id": "gateway-auth",
+      "name": "Auth Guard",
+      "role": "decision",
+      "responsibility": "Validates access claims before forwarding requests.",
+      "parent_id": "gateway",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "gateway-limit",
+      "name": "Rate Limiter",
+      "role": "rate_limiter",
+      "responsibility": "Applies a configured token budget to each request.",
+      "parent_id": "gateway",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "gateway-proxy",
+      "name": "Reverse Proxy",
+      "role": "router",
+      "responsibility": "Selects an upstream destination after access checks.",
+      "parent_id": "gateway",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "factory-router",
+      "name": "Model Router",
+      "role": "router",
+      "responsibility": "Matches model requirements to available candidate capabilities.",
+      "parent_id": "factory",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "factory-registry",
+      "name": "Model Registry",
+      "role": "storage",
+      "responsibility": "Stores provider descriptions, capabilities and declared availability.",
+      "parent_id": "factory",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "document"
+    },
+    {
+      "id": "factory-selector",
+      "name": "Candidate Selection",
+      "role": "decision",
+      "responsibility": "Filters or ranks eligible candidates using explicit selection policies.",
+      "parent_id": "factory",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "factory-adapter",
+      "name": "Provider Adapter",
+      "role": "module",
+      "responsibility": "Normalizes requests for provider contracts and interprets responses.",
+      "parent_id": "factory",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "factory-transform",
+      "name": "Response Transform",
+      "role": "transform",
+      "responsibility": "Converts selected-provider responses into stable application results.",
+      "parent_id": "factory",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "registry-catalog",
+      "name": "Provider Catalog",
+      "role": "storage",
+      "responsibility": "Describes configured model endpoints and their declared capabilities.",
+      "parent_id": "factory-registry",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "document"
+    },
+    {
+      "id": "registry-health",
+      "name": "Health Metadata",
+      "role": "cache",
+      "responsibility": "Maintains synthetic availability metadata used by candidate filters.",
+      "parent_id": "factory-registry",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "registry-policy",
+      "name": "Capability Index",
+      "role": "storage",
+      "responsibility": "Indexes model capabilities and constraints for lookup.",
+      "parent_id": "factory-registry",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "key_value"
+    },
+    {
+      "id": "graph-planner",
+      "name": "Plan Builder",
+      "role": "module",
+      "responsibility": "Constructs executable steps for a requested analysis.",
+      "parent_id": "graph",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "graph-execute",
+      "name": "Step Executor",
+      "role": "worker",
+      "responsibility": "Runs graph steps and routes between declared state transitions.",
+      "parent_id": "graph",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "graph-decision",
+      "name": "Branch Decision",
+      "role": "decision",
+      "responsibility": "Evaluates state-dependent branches.",
+      "parent_id": "graph",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "graph-checkpoint",
+      "name": "Checkpoint Writer",
+      "role": "storage",
+      "responsibility": "Persists synthetic progress snapshots.",
+      "parent_id": "graph",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "document"
+    },
+    {
+      "id": "sandbox-control",
+      "name": "Execution Supervisor",
+      "role": "scheduler",
+      "responsibility": "Allocates bounded execution slots and handles timeouts.",
+      "parent_id": "sandbox",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "sandbox-worker",
+      "name": "Sandbox Worker",
+      "role": "worker",
+      "responsibility": "Executes isolated synthetic tasks within explicit limits.",
+      "parent_id": "sandbox",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "events-requests",
+      "name": "Request Events",
+      "role": "topic",
+      "responsibility": "A partitioned stream of request lifecycle messages.",
+      "parent_id": "events",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "partitioned_log"
+    },
+    {
+      "id": "events-billing",
+      "name": "Billing Events",
+      "role": "topic",
+      "responsibility": "An output stream whose downstream consumer is outside inspected scope.",
+      "parent_id": "events",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "partitioned_log"
+    },
+    {
+      "id": "worker-consumer",
+      "name": "Event Consumer",
+      "role": "queue",
+      "responsibility": "Acknowledges and dispatches supported events.",
+      "parent_id": "worker",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "fifo"
+    },
+    {
+      "id": "worker-index",
+      "name": "Indexing Task",
+      "role": "worker",
+      "responsibility": "Performs asynchronous synthetic indexing operations.",
+      "parent_id": "worker",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    },
+    {
+      "id": "sql-tables",
+      "name": "Row Store",
+      "role": "storage",
+      "responsibility": "Organizes relational rows for application entities.",
+      "parent_id": "sql",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      },
+      "variant": "relational"
+    },
+    {
+      "id": "vector-search",
+      "name": "Vector Search",
+      "role": "module",
+      "responsibility": "Runs similarity retrieval over indexed embeddings.",
+      "parent_id": "vector",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "attributes": {
+        "fixture": "illustrative, not source-verified"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "r-client-gateway",
+      "from": "client",
+      "to": "gateway",
+      "kind": "calls",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-gateway-factory",
+      "from": "gateway",
+      "to": "factory",
+      "kind": "routes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-gateway-graph",
+      "from": "gateway",
+      "to": "graph",
+      "kind": "routes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-gateway-sql",
+      "from": "gateway",
+      "to": "sql",
+      "kind": "reads_from",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-factory-provider",
+      "from": "factory",
+      "to": "provider",
+      "kind": "calls",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-factory-cache",
+      "from": "factory",
+      "to": "cache",
+      "kind": "reads_from",
+      "direction": "bidirectional",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-factory-vector",
+      "from": "factory",
+      "to": "vector",
+      "kind": "reads_from",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-graph-sandbox",
+      "from": "graph",
+      "to": "sandbox",
+      "kind": "calls",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-graph-vector",
+      "from": "graph",
+      "to": "vector",
+      "kind": "reads_from",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-graph-events",
+      "from": "graph",
+      "to": "events",
+      "kind": "publishes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-events-worker",
+      "from": "events",
+      "to": "worker",
+      "kind": "emits_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-worker-vector",
+      "from": "worker",
+      "to": "vector",
+      "kind": "writes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-graph-telemetry",
+      "from": "graph",
+      "to": "telemetry",
+      "kind": "writes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-gateway-telemetry",
+      "from": "gateway",
+      "to": "telemetry",
+      "kind": "writes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-gateway-auth",
+      "from": "gateway-auth",
+      "to": "gateway-limit",
+      "kind": "routes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-gateway-limit",
+      "from": "gateway-limit",
+      "to": "gateway-proxy",
+      "kind": "routes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-factory-route-reg",
+      "from": "factory-router",
+      "to": "factory-registry",
+      "kind": "reads_from",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-factory-reg-select",
+      "from": "factory-registry",
+      "to": "factory-selector",
+      "kind": "routes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-factory-select-adapter",
+      "from": "factory-selector",
+      "to": "factory-adapter",
+      "kind": "routes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-factory-adapter-transform",
+      "from": "factory-adapter",
+      "to": "factory-transform",
+      "kind": "transforms_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-reg-catalog",
+      "from": "factory-registry",
+      "to": "registry-catalog",
+      "kind": "reads_from",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-reg-health",
+      "from": "factory-registry",
+      "to": "registry-health",
+      "kind": "reads_from",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-reg-policy",
+      "from": "factory-registry",
+      "to": "registry-policy",
+      "kind": "reads_from",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-plan-execute",
+      "from": "graph-planner",
+      "to": "graph-execute",
+      "kind": "routes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-execute-decision",
+      "from": "graph-execute",
+      "to": "graph-decision",
+      "kind": "routes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-execute-checkpoint",
+      "from": "graph-execute",
+      "to": "graph-checkpoint",
+      "kind": "writes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-supervisor-worker",
+      "from": "sandbox-control",
+      "to": "sandbox-worker",
+      "kind": "routes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-events-request",
+      "from": "events",
+      "to": "events-requests",
+      "kind": "publishes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-events-billing",
+      "from": "events",
+      "to": "events-billing",
+      "kind": "publishes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-requests-consumer",
+      "from": "events-requests",
+      "to": "worker-consumer",
+      "kind": "emits_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-consumer-index",
+      "from": "worker-consumer",
+      "to": "worker-index",
+      "kind": "routes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-index-vector",
+      "from": "worker-index",
+      "to": "vector-search",
+      "kind": "writes_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE"
+    },
+    {
+      "id": "r-billing-missing",
+      "from": "events-billing",
+      "to": null,
+      "kind": "emits_to",
+      "direction": "forward",
+      "source_refs": [],
+      "evidence_status": "UNRESOLVED",
+      "fault_status": "INDETERMINATE",
+      "unresolved_target": "Billing consumer not present in provided fixture"
+    },
+    {
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE",
+      "id": "r-provider-transform-response",
+      "to": "factory-transform",
+      "kind": "returns_to",
+      "direction": "forward",
+      "from": "provider",
+      "protocol": "modeled handoff"
+    },
+    {
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE",
+      "id": "r-factory-client-response",
+      "to": "client",
+      "kind": "returns_to",
+      "direction": "forward",
+      "from": "factory-transform",
+      "protocol": "modeled handoff"
+    },
+    {
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE",
+      "id": "r-worker-checkpoint-response",
+      "to": "graph-checkpoint",
+      "kind": "returns_to",
+      "direction": "forward",
+      "from": "sandbox-worker",
+      "protocol": "modeled handoff"
+    },
+    {
+      "source_refs": [],
+      "evidence_status": "INFERRED",
+      "fault_status": "NONE",
+      "id": "r-checkpoint-client-response",
+      "to": "client",
+      "kind": "returns_to",
+      "direction": "forward",
+      "from": "graph-checkpoint",
+      "protocol": "modeled handoff"
+    }
+  ],
+  "journeys": [
+    {
+      "id": "chat",
+      "name": "Chat completion",
+      "entry": "client",
+      "known_outcomes": [
+        "Illustrative completion only"
+      ],
+      "steps": [
+        {
+          "id": "chat-1",
+          "component_id": "client",
+          "action": "prepare request",
+          "input_shape": {},
+          "output_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The developer submits a symbolic completion request. The client packages its request type and prompt before entering the platform."
+        },
+        {
+          "id": "chat-2",
+          "component_id": "gateway-auth",
+          "action": "verify access claims",
+          "input_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]"
+          },
+          "output_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed"
+          },
+          "field_changes": [],
+          "conditions": [
+            "Access claims accepted in this fictional example"
+          ],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The gateway checks whether this request has the required access claims. The example follows the allowed branch; a rejected request would stop here."
+        },
+        {
+          "id": "chat-3",
+          "component_id": "gateway-limit",
+          "action": "evaluate request budget",
+          "input_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed"
+          },
+          "output_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed"
+          },
+          "field_changes": [],
+          "conditions": [
+            "Request budget available in this fictional example"
+          ],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The rate limiter evaluates the request against its configured request budget before allowing the next stage to continue."
+        },
+        {
+          "id": "chat-4",
+          "component_id": "gateway-proxy",
+          "action": "route request",
+          "input_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed"
+          },
+          "output_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The reverse proxy determines which application capability should receive the accepted request."
+        },
+        {
+          "id": "chat-5",
+          "component_id": "factory-router",
+          "action": "resolve route",
+          "input_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory"
+          },
+          "output_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The model router chooses an eligible model-routing path for this request. This is routing logic, not the final provider invocation."
+        },
+        {
+          "id": "chat-6",
+          "component_id": "factory-registry",
+          "action": "read candidate capabilities",
+          "input_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory"
+          },
+          "output_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory",
+            "candidates": [
+              "candidate-a",
+              "candidate-b"
+            ]
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The registry provides the candidate capabilities and constraints required by selection. It does not itself execute model inference."
+        },
+        {
+          "id": "chat-7",
+          "component_id": "factory-selector",
+          "action": "select eligible candidate",
+          "input_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory",
+            "candidates": [
+              "candidate-a",
+              "candidate-b"
+            ]
+          },
+          "output_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory",
+            "chosen_candidate": "candidate-a"
+          },
+          "field_changes": [],
+          "conditions": [
+            "Candidate must satisfy the illustrative registry and selection policy"
+          ],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "Candidate selection filters or ranks eligible alternatives using the declared policy. The selected candidate determines the next adapter."
+        },
+        {
+          "id": "chat-8",
+          "component_id": "factory-adapter",
+          "action": "build provider request",
+          "input_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory",
+            "chosen_candidate": "candidate-a"
+          },
+          "output_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory",
+            "chosen_candidate": "candidate-a",
+            "provider_output": "[symbolic model response]"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The provider adapter converts the platform request into the provider-facing request contract."
+        },
+        {
+          "id": "chat-9",
+          "component_id": "provider",
+          "action": "symbolic provider response",
+          "input_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory",
+            "chosen_candidate": "candidate-a",
+            "provider_output": "[symbolic model response]"
+          },
+          "output_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory",
+            "chosen_candidate": "candidate-a",
+            "provider_output": "[symbolic model response]"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The external model provider returns the symbolic response in the modeled journey. No real provider endpoint is contacted."
+        },
+        {
+          "id": "chat-10",
+          "component_id": "factory-transform",
+          "action": "normalize output",
+          "input_shape": {
+            "request_type": "completion",
+            "tenant_id": "demo-tenant",
+            "prompt": "[sample prompt]",
+            "access": "allowed",
+            "destination": "llm-factory",
+            "chosen_candidate": "candidate-a",
+            "provider_output": "[symbolic model response]"
+          },
+          "output_shape": {
+            "status": "complete",
+            "content": "[symbolic model response]",
+            "request_type": "completion"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "Normalized completion result",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The transformer normalizes the provider-specific response into the output expected by the platform client.",
+          "via_relation_id": "r-provider-transform-response"
+        },
+        {
+          "id": "chat-11",
+          "component_id": "client",
+          "action": "receive response",
+          "input_shape": {
+            "status": "complete",
+            "content": "[symbolic model response]",
+            "request_type": "completion"
+          },
+          "output_shape": {
+            "status": "complete",
+            "content": "[symbolic model response]",
+            "request_type": "completion"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "Illustrative completion delivered to client",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The client receives the normalized result and completes this illustrative journey.",
+          "via_relation_id": "r-factory-client-response"
+        }
+      ],
+      "coverage": "partial",
+      "source_refs": []
+    },
+    {
+      "id": "analysis",
+      "name": "Analysis execution",
+      "entry": "client",
+      "known_outcomes": [
+        "Illustrative completion only"
+      ],
+      "steps": [
+        {
+          "id": "analysis-1",
+          "component_id": "client",
+          "action": "request analysis",
+          "input_shape": {},
+          "output_shape": {
+            "analysis_id": "example",
+            "input": "[symbolic input]"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative"
+        },
+        {
+          "id": "analysis-2",
+          "component_id": "gateway",
+          "action": "route to analysis runtime",
+          "input_shape": {
+            "analysis_id": "example"
+          },
+          "output_shape": {
+            "runtime": "graph"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative"
+        },
+        {
+          "id": "analysis-3",
+          "component_id": "graph-planner",
+          "action": "build graph steps",
+          "input_shape": {
+            "runtime": "graph"
+          },
+          "output_shape": {
+            "steps": [
+              "plan",
+              "execute",
+              "finalize"
+            ]
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The graph planner determines the ordered work that will be carried out by the analysis runtime."
+        },
+        {
+          "id": "analysis-4",
+          "component_id": "graph-execute",
+          "action": "dispatch stateful step",
+          "input_shape": {
+            "steps": [
+              "plan",
+              "execute",
+              "finalize"
+            ]
+          },
+          "output_shape": {
+            "step_id": "execute"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The graph runtime dispatches a stateful operation and retains enough progress information for the next modeled stage."
+        },
+        {
+          "id": "analysis-5",
+          "component_id": "sandbox-control",
+          "action": "allocate bounded worker",
+          "input_shape": {
+            "step_id": "execute"
+          },
+          "output_shape": {
+            "slot": "synthetic"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative"
+        },
+        {
+          "id": "analysis-6",
+          "component_id": "sandbox-worker",
+          "action": "simulate isolated execution",
+          "input_shape": {
+            "slot": "synthetic"
+          },
+          "output_shape": {
+            "result": "[sample]"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The bounded sandbox worker performs a symbolic isolated operation. This animation does not run application code."
+        },
+        {
+          "id": "analysis-7",
+          "component_id": "graph-checkpoint",
+          "action": "persist progress snapshot",
+          "input_shape": {
+            "result": "[sample]"
+          },
+          "output_shape": {
+            "checkpoint": "symbolic"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "via_relation_id": "r-worker-checkpoint-response"
+        },
+        {
+          "id": "analysis-8",
+          "component_id": "client",
+          "action": "receive analysis result",
+          "input_shape": {
+            "checkpoint": "symbolic"
+          },
+          "output_shape": {
+            "status": "completed"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "via_relation_id": "r-checkpoint-client-response"
+        }
+      ],
+      "coverage": "partial",
+      "source_refs": []
+    },
+    {
+      "id": "ingestion",
+      "name": "Event ingestion",
+      "entry": "events-requests",
+      "known_outcomes": [
+        "Illustrative completion only"
+      ],
+      "steps": [
+        {
+          "id": "ingest-1",
+          "component_id": "events-requests",
+          "action": "emit partitioned event",
+          "input_shape": {},
+          "output_shape": {
+            "event_id": "evt-demo",
+            "type": "indexed"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "A producer writes a symbolic event to a partitioned topic. Consumption happens independently of the producer request."
+        },
+        {
+          "id": "ingest-2",
+          "component_id": "worker-consumer",
+          "action": "accept message",
+          "input_shape": {
+            "event_id": "evt-demo"
+          },
+          "output_shape": {
+            "ack": "pending"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "Event consumed asynchronously in this modeled scenario",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "A consumer receives the modeled event from the stream and begins a separate processing step.",
+          "via_relation_id": "r-requests-consumer"
+        },
+        {
+          "id": "ingest-3",
+          "component_id": "worker-index",
+          "action": "prepare indexing payload",
+          "input_shape": {
+            "ack": "pending"
+          },
+          "output_shape": {
+            "vector": "[synthetic embedding]"
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative"
+        },
+        {
+          "id": "ingest-4",
+          "component_id": "vector-search",
+          "action": "write vector index",
+          "input_shape": {
+            "vector": "[synthetic embedding]"
+          },
+          "output_shape": {
+            "indexed": true
+          },
+          "field_changes": [],
+          "conditions": [],
+          "outcome": "symbolic transition",
+          "source_refs": [],
+          "certainty": "INFERRED",
+          "mode": "illustrative",
+          "explanation": "The indexing component writes the prepared vector entry into the vector storage capability.",
+          "via_relation_id": "r-index-vector"
+        }
+      ],
+      "coverage": "partial",
+      "source_refs": []
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "burst",
+      "name": "10,000-request token bucket",
+      "journey_id": "chat",
+      "mode": "synthetic",
+      "inputs": {
+        "event_count": 10000,
+        "arrival_rate_per_second": 200,
+        "payload": {
+          "tenant_id": "demo",
+          "request_type": "completion"
+        }
+      },
+      "initial_state": {
+        "tokens": 120
+      },
+      "rules": [
+        {
+          "type": "token_bucket",
+          "capacity": 120,
+          "refill_per_second": 60,
+          "component_id": "gateway-limit"
+        }
+      ],
+      "assumptions": [
+        "All requests cost one token",
+        "Constant 200 arrivals per second",
+        "No actual service was queried",
+        "Token bucket state starts full",
+        "The capacity is a synthetic fixture value"
+      ],
+      "expected_outputs": {},
+      "provenance": "explicit synthetic fixture, not derived from inspected source"
+    },
+    {
+      "id": "selection",
+      "name": "Candidate selection example",
+      "journey_id": "chat",
+      "mode": "synthetic",
+      "inputs": {
+        "candidates": [
+          {
+            "id": "candidate-a",
+            "quality": 72
+          },
+          {
+            "id": "candidate-b",
+            "quality": 95
+          },
+          {
+            "id": "candidate-c",
+            "quality": 84
+          }
+        ]
+      },
+      "initial_state": {},
+      "rules": [
+        {
+          "type": "select_candidate",
+          "strategy": {
+            "type": "max_numeric_field",
+            "field": "quality"
+          },
+          "component_id": "factory-selector"
+        }
+      ],
+      "assumptions": [
+        "Ranking is a synthetic maximum-quality rule",
+        "The actual application may use different filtering and routing",
+        "No inference provider was contacted"
+      ],
+      "expected_outputs": {
+        "selected": {
+          "id": "candidate-b",
+          "quality": 95
+        }
+      },
+      "provenance": "explicit synthetic fixture"
+    },
+    {
+      "id": "fifo",
+      "name": "Queue backpressure",
+      "journey_id": "ingestion",
+      "mode": "synthetic",
+      "inputs": {
+        "operations": [
+          {
+            "time": 0,
+            "type": "enqueue",
+            "id": "evt-a"
+          },
+          {
+            "time": 0.2,
+            "type": "enqueue",
+            "id": "evt-b"
+          },
+          {
+            "time": 0.4,
+            "type": "enqueue",
+            "id": "evt-c"
+          },
+          {
+            "time": 0.6,
+            "type": "dequeue"
+          },
+          {
+            "time": 0.8,
+            "type": "dequeue"
+          }
+        ]
+      },
+      "initial_state": {},
+      "rules": [
+        {
+          "type": "fifo_queue",
+          "capacity": 2,
+          "component_id": "worker-consumer"
+        }
+      ],
+      "assumptions": [
+        "A synthetic queue accepts two messages before becoming full",
+        "The operations are preordered by time",
+        "No real Kafka, RabbitMQ or Redis instance is accessed"
+      ],
+      "expected_outputs": {},
+      "provenance": "explicit generic queue model"
+    },
+    {
+      "id": "partitioned-log",
+      "name": "Partitioned stream",
+      "journey_id": "ingestion",
+      "mode": "synthetic",
+      "inputs": {
+        "events": [
+          {
+            "key": "team-a",
+            "event": "created"
+          },
+          {
+            "key": "team-b",
+            "event": "created"
+          },
+          {
+            "key": "team-a",
+            "event": "updated"
+          },
+          {
+            "key": "team-c",
+            "event": "created"
+          }
+        ]
+      },
+      "initial_state": {},
+      "rules": [
+        {
+          "type": "partitioned_log",
+          "partitions": 3,
+          "component_id": "events-requests"
+        }
+      ],
+      "assumptions": [
+        "A deterministic hash partitions on event key",
+        "Offsets increase within a partition",
+        "No live broker interaction or delivery guarantee is implied"
+      ],
+      "expected_outputs": {},
+      "provenance": "explicit synthetic partitioned-log model"
+    },
+    {
+      "id": "cache",
+      "name": "Cache expiry timeline",
+      "journey_id": "chat",
+      "mode": "synthetic",
+      "inputs": {
+        "operations": [
+          {
+            "time": 0,
+            "type": "set",
+            "key": "candidate-list",
+            "value": "[symbolic list]",
+            "ttl": 5
+          },
+          {
+            "time": 2,
+            "type": "get",
+            "key": "candidate-list"
+          },
+          {
+            "time": 5,
+            "type": "get",
+            "key": "candidate-list"
+          }
+        ]
+      },
+      "initial_state": {},
+      "rules": [
+        {
+          "type": "cache_ttl",
+          "component_id": "cache"
+        }
+      ],
+      "assumptions": [
+        "Expiry at t=5 is exact and deterministic",
+        "No eviction policy other than TTL is modeled",
+        "No Redis connection is opened"
+      ],
+      "expected_outputs": {},
+      "provenance": "explicit synthetic cache model"
+    },
+    {
+      "id": "workers",
+      "name": "Worker saturation",
+      "journey_id": "ingestion",
+      "mode": "synthetic",
+      "inputs": {
+        "jobs": [
+          {
+            "arrival": 0,
+            "duration": 3
+          },
+          {
+            "arrival": 0,
+            "duration": 4
+          },
+          {
+            "arrival": 1,
+            "duration": 2
+          },
+          {
+            "arrival": 2,
+            "duration": 1
+          },
+          {
+            "arrival": 3,
+            "duration": 2
+          }
+        ]
+      },
+      "initial_state": {},
+      "rules": [
+        {
+          "type": "worker_pool",
+          "workers": 2,
+          "component_id": "worker"
+        }
+      ],
+      "assumptions": [
+        "Two identical synthetic workers execute one job each at a time",
+        "Jobs cannot be preempted",
+        "Durations are model inputs, not measured application latency"
+      ],
+      "expected_outputs": {},
+      "provenance": "explicit worker scheduling model"
+    }
+  ],
+  "findings": [],
+  "coverage": [
+    {
+      "boundary": "entire system",
+      "status": "unknown",
+      "reason": "Fictional fixture, not inspected source code"
+    }
+  ]
+}
