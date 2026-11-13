@@ -409,7 +409,7 @@ def ensure_safe_relative_path(
 
     norm = Path(rel_str)
     # Reject absolute paths, drive roots (C:foo, C:\foo), UNC paths (\\server\share)
-    if norm.is_absolute() or norm.drive:
+    if norm.is_absolute() or norm.drive or re.match(r"^[a-zA-Z]:", rel_str):
         raise ValueError(f"Path traversal detected: absolute or drive-qualified path '{rel_path}'")
 
     # Check parts for traversal components
