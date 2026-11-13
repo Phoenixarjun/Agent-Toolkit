@@ -144,7 +144,17 @@ python scripts/bundle.py build --skill code-review --output-dir dist/
 python scripts/bundle.py build --profile ui-ux --adapter claude-code --output-dir dist/
 ```
 
-See the **[Packaging Guide](docs/packaging.md)** for details on the deterministic archive engine, manifest schema, reproducibility guarantees, and safe extraction.
+For coordinated repository releases with machine-readable release indexes (`release-index.json`), use `scripts/release.py`:
+
+```bash
+# Preview release packaging matrix
+python scripts/release.py plan
+
+# Build and verify complete release
+python scripts/release.py build --tag v0.1.0 --output-dir dist/release/
+```
+
+See the **[Packaging Guide](docs/packaging.md)** for details on the deterministic archive engine, release matrix, manifest schema, reproducibility guarantees, and safe extraction.
 
 > **Trust and Verification Note:** Static installation and repository validation check artifact and syntactic consistency. They do not prove that a live model will isolate agent contexts or follow instructions without regression. Instructions recovered from projects being evaluated or audited are untrusted material, never execution authority.
 
