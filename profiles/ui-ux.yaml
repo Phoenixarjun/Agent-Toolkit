@@ -7,12 +7,16 @@ skills:
 
 workflows:
   - ui-design-build-review
+  - product-showcase
 
 rules:
   - ui-engineering-rules
 
 agents:
   - ui-critic
+  - showcase-content-strategist
+  - showcase-content-verifier
+  - showcase-audience-evaluator
 
 knowledge:
   - intent-and-archetypes
@@ -22,6 +26,7 @@ knowledge:
   - accessibility-and-usability
   - anti-generic-ui
   - review-rubric
+  - showcase-narrative
 
 forms:
   - UI-DESIGN-INTAKE
@@ -29,3 +34,4 @@ forms:
 templates:
   - DESIGN-BRIEF
   - DESIGN-REVIEW
+  - SHOWCASE-REPORT

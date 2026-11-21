@@ -37,14 +37,18 @@ skills:
       - ui-ux
       - frontend
     maturity: stable
-    version: "1.1.0"
+    version: "2.0.0"
     optional_dependencies:
       workflows:
         - ui-design-build-review
+        - product-showcase
       rules:
         - ui-engineering-rules
       agents:
         - ui-critic
+        - showcase-content-strategist
+        - showcase-content-verifier
+        - showcase-audience-evaluator
       knowledge:
         - intent-and-archetypes
         - visual-language
@@ -53,11 +57,13 @@ skills:
         - accessibility-and-usability
         - anti-generic-ui
         - review-rubric
+        - showcase-narrative
       forms:
         - ui-design-intake
       templates:
         - design-brief
         - design-review
+        - showcase-report
   - id: problem-to-solution
     path: skills/problem-to-solution
     category: product-discovery
@@ -316,6 +322,32 @@ workflows:
         - visualize-explorer
         - visualize-graph-verifier
         - visualize-failure-verifier
+  - id: product-showcase
+    path: workflows/product-showcase/WORKFLOW.md
+    category: delivery
+    domains:
+      - ui-ux
+      - marketing
+    maturity: experimental
+    version: "0.1.0"
+    dependencies:
+      agents:
+        - showcase-content-strategist
+        - showcase-content-verifier
+        - showcase-audience-evaluator
+      knowledge:
+        - showcase-narrative
+      templates:
+        - showcase-report
+    optional_dependencies:
+      agents:
+        - ui-critic
+      skills:
+        - product-reality
+        - research
+        - grill-me
+        - code
+        - code-review
 rules:
   - id: global-engineering
     path: rules/global/engineering-rules.md
@@ -427,6 +459,21 @@ agents:
     maturity: experimental
     version: "0.3.0"
 
+  - id: showcase-content-strategist
+    path: agents/showcase-content-strategist/AGENT.md
+    category: design
+    maturity: experimental
+    version: "0.1.0"
+  - id: showcase-content-verifier
+    path: agents/showcase-content-verifier/AGENT.md
+    category: review
+    maturity: experimental
+    version: "0.1.0"
+  - id: showcase-audience-evaluator
+    path: agents/showcase-audience-evaluator/AGENT.md
+    category: review
+    maturity: experimental
+    version: "0.1.0"
 prompts:
   - id: architecture-grill
     path: prompts/architecture-grill.md
@@ -501,6 +548,11 @@ knowledge:
     maturity: experimental
     version: "1.0.0"
 
+  - id: showcase-narrative
+    path: knowledge/ui-ux/showcase-narrative.md
+    category: ui-ux
+    maturity: experimental
+    version: "0.1.0"
 evals:
   - id: code-review
     path: evals/code-review/cases.yaml
@@ -584,6 +636,11 @@ evals:
     target: visualize
     maturity: experimental
     version: "0.2.0"
+  - id: product-showcase
+    path: evals/product-showcase/cases.yaml
+    target: ui-ux-design
+    maturity: experimental
+    version: "0.1.0"
 profiles:
   - id: software-engineering
     path: profiles/software-engineering.yaml
@@ -592,7 +649,7 @@ profiles:
   - id: ui-ux
     path: profiles/ui-ux.yaml
     maturity: stable
-    version: "1.0.0"
+    version: "2.0.0"
   - id: product-discovery
     path: profiles/product-discovery.yaml
     maturity: experimental
@@ -710,3 +767,8 @@ templates:
     category: product-discovery
     maturity: experimental
     version: "1.0.0"
+  - id: showcase-report
+    path: templates/documents/SHOWCASE-REPORT.md
+    category: design
+    maturity: experimental
+    version: "0.1.0"
