@@ -203,3 +203,18 @@ Motion can be more expressive, but high-frequency interactions must remain fast.
 | Campaign/experimental | 3 | 2–3 | variable |
 
 Treat the table as a prior, never an automatic answer.
+
+## Product category is not surface purpose
+
+A developer tool can have an operational dashboard, a marketing homepage, and technical documentation. Do not force one visual/motion treatment across all three merely because they share a product category.
+
+Classify the immediate surface job when it changes a design decision:
+
+```text
+PERSUADE   Understand value, verify proof, decide the next step.
+OPERATE   Complete frequent tasks reliably and efficiently.
+READ      Find, understand, and retain information.
+EXPERIENCE Explore content where interaction itself is meaningful.
+```
+
+Use product archetypes and the calibration matrix above as starting priors. The actual visitor task, trust level, available proof and established brand override any default creative/motion setting. `product-showcase` owns orchestration for substantive PERSUADE and product-specific EXPERIENCE websites; ordinary UI work remains with `ui-design-build-review`.

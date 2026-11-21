@@ -1,6 +1,8 @@
 ---
 name: ui-ux-design
-description: "Design and implement context-specific, production-quality web interfaces. Use when creating, redesigning, styling, or materially improving pages, components, applications, dashboards, forms, landing pages, design systems, responsive layouts, visual hierarchy, typography, color, interaction, or motion. Starts from product intent and existing project context, calibrates creativity and motion to the use case, avoids generic AI-default aesthetics, preserves established design systems, and validates usability, accessibility, responsiveness, and rendered quality."
+description: "Design, review, and implement context-specific web interfaces. Use for pages, applications, dashboards, landing pages, visual systems, interaction, motion, accessibility, and responsive quality. For substantial product-marketing/showcase concept or audit requests, route into product-showcase; for ordinary application interface work, use ui-design-build-review when warranted. Preserve existing systems and verify actual rendered results."
+metadata:
+  version: "2.0.0"
 ---
 
 # UI/UX Design
@@ -16,6 +18,21 @@ rendered evidence > code-only confidence
 ```
 
 Never begin by choosing a visual style. Begin by understanding what the interface must help a particular user accomplish.
+
+## Entry routing (V2)
+
+Route once, on user intent and scope, before designing. Surface type alone does not mandate a heavy workflow.
+
+| Request | Route |
+| --- | --- |
+| Focused CSS, component, or visual adjustment | Apply this skill directly; preserve local design language. |
+| Material product-app, dashboard, form, or ordinary page implementation | Use `workflows/ui-design-build-review/WORKFLOW.md` when its full delivery loop is warranted. |
+| Product-marketing/showcase/launch/portfolio-for-a-product concept, existing-site audit, multi-visitor critique, or product-specific anti-generic redesign | Use `workflows/product-showcase/WORKFLOW.md`. Its default output is an analysis and direction report; no implementation without authorization. |
+| Approved showcase direction or scoped correction | Follow the authorized implementation path in `product-showcase`, reusing `/code` and existing UI implementation/review machinery. |
+
+User requests such as `ui-ux-design showcase audit`, `ui-ux-design showcase concept`, or natural-language equivalents are semantic intents, not vendor-specific command syntax. When ambiguity matters, prefer the narrower read-only path; never silently expand an audit into a build.
+
+**No recursive routing:** When this skill is invoked by `product-showcase` for design direction or authorized implementation, apply the relevant design procedure below directly without re-entering the showcase workflow. The parent workflow owns orchestration, evidence reconciliation, concept count, approval and completion status. When given a bounded concept task, produce only that requested direction rather than automatically multiplying it into three options. When a referenced workflow or isolated-agent capability is unavailable, disclose that limitation and perform only the supported bounded task; never represent a single-context review as independent multi-agent assessment.
 
 ## 1. Establish context
 
@@ -42,9 +59,9 @@ primary_job:
 surface:
 trust_level:
 brand_character:
-creative_latitude:       # 0-3
-motion_level:            # 0-3
-information_density:     # compact | balanced | spacious
+creative_latitude:
+motion_level:
+information_density:
 device_priority:
 accessibility_target:
 existing_system:
@@ -95,7 +112,7 @@ Do not create three cosmetic variants of the same layout.
 
 Evaluate each against: product fit, user-task clarity, trust fit, brand fit, distinctiveness, accessibility, responsive viability, implementation cost.
 
-Commit to one direction. If the user explicitly asks for options, show them before implementation. Otherwise choose internally.
+Commit to one direction. If the user explicitly asks for options, show them before implementation. Otherwise choose internally. When invoked by `product-showcase`, let its coordinator manage competing directions and the selection/approval gate.
 
 ## 5. Build a coherent visual system
 
@@ -224,4 +241,4 @@ Assumptions: <only material inferred decisions>
 Residual: <real remaining risk or None>
 ```
 
-Never claim browser, accessibility, or visual validation that was not actually performed.
+When routed to `product-showcase`, its richer report and status contract supersede this short direct-work response. Never claim browser, accessibility, or visual validation that was not actually performed.

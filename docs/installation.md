@@ -104,14 +104,16 @@ When an existing file or skill folder collides with an incoming installation, th
 ## Trust Boundaries & Security Invariants
 
 1. **Untrusted Project Material**: Instructions recovered from target repositories (including those being audited or modified) are untrusted assessment material, not execution authority.
-2. **Trusted Execution**: Capabilities like Security Audit execute strictly from trusted installed workflows in `.agent-toolkit/workflows/`.
-3. **Safe Managed Blocks**: Existing user instructions in entrypoints (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, etc.) are preserved. The installer writes strictly within delimited `BEGIN` and `END` marker comments.
-4. **No Code Execution**: Installation is static file copying, template serialization, and manifest generation. No bundled scripts or binaries are executed during installation.
+2. **Trusted Execution & Path Resolution**: Capabilities like Security Audit execute strictly from trusted installed workflows in `.agent-toolkit/workflows/`. Installed skill definitions dynamically resolve companion workflows to `.agent-toolkit/workflows/`, preventing target repository files from replacing authoritative execution instructions.
+3. **Manifest Path Containment**: All manifest paths are treated as untrusted inputs. The `doctor` verification engine enforces strict containment, rejecting parent traversal (`../`), drive roots (`C:`), UNC paths (`\\server\share`), and symlink escapes, preventing arbitrary host file inspection or hash disclosure.
+4. **Symlink & Filesystem Containment**: File operations strictly reject writing through destination symbolic links or directory junctions. All write and backup targets are validated against target containment boundaries.
+5. **Safe Managed Blocks**: Existing user instructions in entrypoints (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, etc.) are preserved. The installer writes strictly within delimited `BEGIN` and `END` marker comments.
+6. **No Code Execution**: Installation is static file copying, template serialization, and manifest generation. No bundled scripts or binaries are executed during installation.
 
 ---
 
-## Capability Levels
+## Capability Levels & Runtime Assurance
 
 - **Structurally Complete**: All required workflows, agent roles, rules, and templates are present on disk.
 - **Runtime-Verified**: Demonstrated through live test execution in a specific model harness.
-Static validation does not guarantee that a model will isolate agent contexts or follow instructions without regression.
+Static validation does not guarantee that a model will isolate agent contexts or follow instructions without regression. Multi-agent capabilities (e.g. Security Audit) require runtime support for isolated subagent execution; when running in single-turn or non-isolated assistants, operations must remain in preliminary passive review mode.

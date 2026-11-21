@@ -118,3 +118,7 @@ Human judgment remains necessary for:
 - cognitive load
 - motion comfort
 - product-specific assistive-technology use
+
+## Immersive and animated website review
+
+When motion, parallax, animated overlays, canvas, WebGL or 3D are used, validate the message and primary action without motion or GPU acceleration. Respect reduced-motion at both CSS and JavaScript animation boundaries; do not assume a library implements the preference automatically. Keep text and interactive affordances available in the semantic document, not only inside a rendered canvas. Inspect foreground contrast over moving backgrounds and preserve focus, keyboard reachability, and scroll control. Avoid pointer-only access to essential spatial interactions; provide an equivalent accessible action. Test representative mobile and desktop states rather than relying on code-level assertions alone.

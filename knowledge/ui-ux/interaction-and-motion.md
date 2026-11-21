@@ -104,3 +104,21 @@ Reduced-motion mode must remain understandable.
 Remove or simplify large movement, parallax, repeated motion, or unnecessary spatial animation.
 
 Keep essential state communication through non-motion cues.
+
+## Motion and spatial media selection
+
+Before adding motion, ask: **What information, relation, state change, or product character would be lost if this moved element were static?** If nothing consequential is lost, prefer a static composition or a smaller effect.
+
+Choose the smallest adequate mechanism:
+
+| Need | Default choice | Escalate only when |
+| --- | --- | --- |
+| Focus, hover, disclosure, short feedback | CSS / native browser behavior | Complex coordination or interruptibility is genuinely required |
+| Related UI elements and layout transitions | Platform animation APIs or a project-standard motion library | State synchronization, gesture behavior or complex timeline warrants it |
+| Sequential illustration or product explanation | SVG or semantic DOM with optional motion | A timeline/state machine adds meaningful understanding |
+| Choreographed narrative | Purposeful scroll-driven motion or a dedicated animation library | The story truly depends on spatial or temporal progression |
+| Product inspection in 3D | Lightweight interactive model | Real form, geometry or spatial interaction matters to the buyer |
+
+Never choose GSAP, Motion, Rive, Lottie, Three.js, WebGL or parallax merely because they are available or fashionable. Evaluate extra bytes, load path, input latency, mobile device constraints, fallback quality, and removal cost. Verify real performance rather than asserting it from library choice.
+
+A reduced-motion or non-GPU experience must preserve the same core message and primary actions. For immersive or scroll-driven designs, keep an understandable semantic reading order and meaningful static fallback.
