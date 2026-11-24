@@ -46,6 +46,17 @@ class ArtifactContractTests(unittest.TestCase):
         self.assertRegex(text, r'\| content \+ linkedin;[^\n]+\| career-linkedin-content \|')
         self.assertRegex(text, r'\| content \+ blog;[^\n]+\| career-blog \|')
 
+    def test_entry_state_modes_and_audit_dispositions(self):
+        skill_text = SKILL.read_text(encoding='utf-8')
+        for mode in ('--plan', '--import-plan', '--audit-plan', '--continue', '--review'):
+            self.assertIn(mode, skill_text)
+        plan_wf = WORKFLOWS['career-plan'].read_text(encoding='utf-8')
+        for disposition in ('KEEP', 'KEEP_WITH_OBSERVATIONS', 'REVISION_RECOMMENDED', 'INSUFFICIENT_EVIDENCE'):
+            self.assertIn(disposition, plan_wf)
+        delegation = (ROOT / 'skills/career/references/delegation-and-review.md').read_text(encoding='utf-8')
+        for tier in ('DIRECT', 'FOCUSED', 'DEEP'):
+            self.assertIn(tier, delegation)
+
 
 if __name__ == '__main__':
     unittest.main()

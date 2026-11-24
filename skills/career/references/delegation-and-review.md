@@ -21,3 +21,12 @@ Use `quality-rubrics.md` for domain criteria. Custom criteria may be proposed be
 ## Reconciliation
 
 Collect isolated returns, deduplicate issues while preserving dissent. Identify owner (facts, positioning, content, presentation, capability, timeline or external source). Resolve highest-impact defects first; never use vote count as truth. Require evidence or label competing interpretations. Send the smallest targeted revision to the owner and reverify changed claims and cross-artifact consistency. Default max two correction rounds after first review; a third only if user explicitly extends scope. Stop on PASS or when only preferences remain. If material issue persists, return REVISE/BLOCKED with unresolved issue and next action; do not endlessly criticize. Scope and evidence may justify re-opening a prior pass, not subjective churn.
+
+## Minimum sufficient execution
+
+Select execution depth by requested outcome, uncertainty, complexity and consequence:
+- **DIRECT**: Lead agent handles routine, narrow tasks without launching comprehensive workflows or specialist panels (e.g., retrieve an existing company record, list shortlisted companies, look up a specific compensation field from appropriate sources, display remaining milestones, record confirmed progress, retrieve prior research, update an authorized workspace record).
+- **FOCUSED**: Lead agent or one relevant bounded specialist handles domain-specific investigation or judgment (e.g., targeted company screening, focused compensation investigation, evaluate a single job description, review one profile section, assess a specific project concern). Delegate only when it provides meaningful improvement or is required by the applicable verification contract.
+- **DEEP**: Specialized workflows and independent reviewers handle complex or consequential tasks (e.g., comprehensive career planning, material plan revisions, full professional-profile optimization, substantial technical research, comprehensive résumé verification, technical interview panels, deep employer due diligence, offer decisions).
+
+Execution depth never weakens factual verification, privacy, authorization or approval gates. Do not force independent review where no independent-review requirement applies, and never bypass mandatory review for consequential claims or decisions merely because fewer agents are requested.

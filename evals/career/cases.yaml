@@ -1,5 +1,5 @@
 skill: career
-version: 1.0.1
+version: 1.0.2
 cases:
 - id: full-transition-route
   given: Candidate is employed, targeting AI engineering in 12 months, with partial backend evidence.
@@ -377,3 +377,71 @@ cases:
   when: Invoke career.
   expect:
   - Do not force LinkedIn posting or portfolio projects; prioritize immediate interview and application needs.
+- id: adopt-external-18-month-plan
+  given: Candidate has an externally established 18-month roadmap, has completed 12 months of preparation, and wants Career to support the remaining 6 months.
+  when: Invoke career --import-plan or state I am in month twelve of my eighteen-month plan.
+  expect:
+  - Preserves original roadmap as historical evidence and records completed 12-month work separately in progress.
+  - Calculates remaining capacity using only the remaining 6 months without restarting preparation or reintroducing completed work.
+  - Requires explicit candidate approval before activating the normalized plan.
+- id: adopt-plan-incomplete-history
+  given: Candidate provides an external roadmap with missing completion dates and partial effort estimates for past milestones.
+  when: Import the existing plan.
+  expect:
+  - Retains original historical record and produces a transparent mapping of remaining executable work.
+  - Does not invent historical dates, effort estimates or completion evidence, nor bypass plan_store validation.
+- id: preserve-finalized-plan
+  given: Candidate states My current plan is finalized. Do not change it.
+  when: Track progress and identify a material schedule risk.
+  expect:
+  - Recovers plan, tracks authorized progress and identifies ready milestones without altering goals, priorities, milestones or deadlines.
+  - Reports the material risk separately without generating an unsolicited replacement or activating a revision.
+- id: read-only-audit-sound-plan
+  given: Candidate provides a well-aligned, capacity-feasible roadmap and asks to audit it without changing anything.
+  when: Invoke career --audit-plan.
+  expect:
+  - Returns KEEP without modifying the active plan or manufacturing unnecessary criticism.
+  - Explicitly confirms no material change is necessary.
+- id: read-only-audit-serious-gap
+  given: Candidate provides an existing roadmap missing a core role capability and overloaded for remaining weekly hours.
+  when: Invoke career --audit-plan.
+  expect:
+  - Returns REVISION_RECOMMENDED with specific gap and feasibility findings.
+  - Does not mutate the active plan, generate an unsolicited active replacement or activate a revision without explicit request.
+- id: import-requires-approval-before-activation
+  given: Candidate supplies a complete external plan and asks to import it into a private workspace.
+  when: Run career --import-plan.
+  expect:
+  - Stages normalized proposal and presents mapping and unresolved assumptions.
+  - Does not activate the imported version until explicit candidate approval is recorded.
+- id: resume-approved-plan-no-intake
+  given: Approved Career plan and progress exist in the private workspace.
+  when: Invoke career --continue or Continue my existing preparation.
+  expect:
+  - Recovers active plan and progress directly without restarting initial intake or planning.
+  - Prioritizes only remaining ready milestones.
+- id: direct-company-lookup
+  given: Candidate asks to retrieve an existing saved company record or list shortlisted companies.
+  when: Request company lookup.
+  expect:
+  - Uses DIRECT lead execution without invoking comprehensive workflows or specialist panels.
+- id: focused-compensation-check
+  given: Candidate asks for a focused compensation check for one target role and level.
+  when: Request compensation investigation.
+  expect:
+  - Uses FOCUSED execution with appropriate sources without triggering comprehensive employer due diligence or unrelated career workflows.
+- id: deep-consequential-verification
+  given: Candidate requests a material plan revision or comprehensive resume tailoring while asking to use fewer agents.
+  when: Execute the consequential revision.
+  expect:
+  - Retains DEEP mandatory independent verification and approval gates rather than bypassing verification for convenience.
+- id: import-missing-required-fields
+  given: Candidate provides an external plan that omits remaining weekly hours and target deadline.
+  when: Invoke career --import-plan.
+  expect:
+  - Returns a provisional or text-only mapping listing unresolved required fields rather than fabricating capacity or activating.
+- id: direct-request-no-plan-restart
+  given: Candidate has no Career plan in workspace and directly requests LinkedIn About optimization or interview practice.
+  when: Invoke career --linkedin or career --interview.
+  expect:
+  - Routes directly to the requested workflow without restarting or forcing full career planning.

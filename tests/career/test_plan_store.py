@@ -161,6 +161,19 @@ class PlanStoreTests(unittest.TestCase):
         with self.assertRaises(store.PlanError):
             store.validate_plan(p)
 
+    def test_adopted_remaining_horizon_plan(self):
+        # Normalized remaining 4-week slice of an existing external plan with historical record referenced
+        adopted = plan("adopted-v1", None)
+        adopted["evidence_refs"] = ["external-roadmap-18m-original"]
+        adopted["review_rationale"] = "Adopted remaining 4 weeks of external roadmap; prior milestones preserved in evidence_refs"
+        summary = store.validate_plan(adopted)
+        self.assertEqual(summary["capacity_hours"], 32)
+        staged = store.stage(self.root, adopted)
+        self.assertEqual(staged["state"], "STAGED")
+        self.assertIsNone(store.pointer(self.root))
+        active = store.activate(self.root, "adopted-v1", approval(adopted))
+        self.assertEqual(active["plan_id"], "adopted-v1")
+
 
 if __name__ == "__main__":
     unittest.main()

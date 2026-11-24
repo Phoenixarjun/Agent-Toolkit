@@ -1,10 +1,10 @@
-# Career — v1.0.1 experimental
+# Career — v1.0.2 experimental
 
 One entry skill, independent focused workflows, reusable role contracts, adaptive plan and candidate-controlled output. This is a feature overlay, not a career SaaS, always-on agent, or auto-apply tool.
 
 ## Invoke
 
-Use natural language or the runtime's actual skill mechanism. Conceptual examples: `/career`, `/career --plan`, `/career --review` (review plan), `/career --linkedin`, `/career --github`, `/career --presence`, `/career --content`, `/career --content --linkedin`, `/career --content --blog`, `/career --projects`, `/career --resume`, `/career --search`, `/career --company`, `/career --interview`, `/career --offer`. Other channels route through capability extension. Arguments are conceptual; adapters must map them to actual supported syntax. Explicit requests override unrelated roadmap stages. Bare invocation resumes full transition; not an instruction to run every role in one call.
+Use natural language or the runtime's actual skill mechanism. Conceptual examples: `/career`, `/career --plan`, `/career --import-plan`, `/career --audit-plan`, `/career --continue`, `/career --review` (review plan), `/career --linkedin`, `/career --github`, `/career --presence`, `/career --content`, `/career --content --linkedin`, `/career --content --blog`, `/career --projects`, `/career --resume`, `/career --search`, `/career --company`, `/career --interview`, `/career --offer`. Other channels route through capability extension. Arguments are conceptual; adapters must map them to actual supported syntax. Explicit requests override unrelated roadmap stages. Bare invocation detects candidate entry state (resume approved plan, adopt/audit external plan, or start initial planning); it is not an instruction to run every role in one call.
 
 ## State and planning
 
