@@ -4,7 +4,7 @@ description: 'Plan and execute a candidate-controlled career transition or focus
   profiles, evidence-backed content, projects, resumes, verified job discovery, employer research, interview panels and offers.
   Route only relevant workflows; never apply, publish or message autonomously.'
 metadata:
-  version: 1.0.1
+  version: 1.0.2
   maturity: experimental
   category: career
 ---
@@ -21,8 +21,8 @@ Interpret natural language or adapter-supplied arguments. No mode invokes unrela
 
 | Mode / intent | Workflow ID (under `workflows/career/`) |
 |---|---|
-| No mode; whole career transition; resume progress | career-transition |
-| plan; review; review plan; change target | career-plan |
+| No mode; continue; whole career transition; resume progress | career-transition |
+| plan; import-plan; audit-plan; review; change target | career-plan |
 | linkedin; optimize LinkedIn profile/section | career-linkedin-profile |
 | github; optimize GitHub profile/repositories | career-github-profile |
 | presence; audit multiple professional platforms | career-presence |
@@ -37,17 +37,17 @@ Interpret natural language or adapter-supplied arguments. No mode invokes unrela
 | offer; compare or negotiate | career-offer |
 | unsupported platform or requested new capability | career-extension |
 
-Examples are semantic routes, not promises of native slash commands. `/career --content --linkedin` means post development, not profile rewriting. `resume my plan` means continue a transition, not write a resume. Never re-enter this router from a delegated workflow: load the named workflow directly. Internal reuse of `research`, `grill-me`, `teach`, `code-explore` or `code-review` uses their own contracts, not invented arguments. If missing, report the limitation and perform a bounded equivalent only if the user's outcome remains achievable.
+Examples are semantic routes, not promises of native slash commands: bare `/career` (detect entry state and select path), `--plan` (new plan or requested alternative), `--import-plan` (adopt an external plan into the workspace contract), `--audit-plan` (read-only plan assessment), `--continue` (resume existing plan and progress), and `--review` (evaluate whether changed state or market evidence justifies a revision), plus equivalent natural-language requests. `/career --content --linkedin` means post development, not profile rewriting. `resume my plan` means continue a transition, not write a resume. Never re-enter this router from a delegated workflow: load the named workflow directly. Internal reuse of `research`, `grill-me`, `teach`, `code-explore` or `code-review` uses their own contracts, not invented arguments. If missing, report the limitation and perform a bounded equivalent only if the user's outcome remains achievable.
 
 ## 2. Establish scope and context
 
-Load `references/workspace-and-evidence.md` and `references/delegation-and-review.md` before any substantive multi-stage work. Load other references only as their workflows direct. Recover existing approved candidate and plan records before asking; ask only material missing questions. Reuse `grill-me` when its actual contract fits, with bounded rounds. Do not require a salary history, public profile, account login or exhaustive questionnaire. Confirm ownership of candidate links and scope before public-profile research. Do not infer identity from name matches.
+Load `references/workspace-and-evidence.md` and `references/delegation-and-review.md` before any substantive multi-stage work. Load other references only as their workflows direct. Support three entry states without assuming a missing Career plan requires starting over: (1) no plan, (2) an externally established plan to adopt or audit, or (3) an approved workspace plan to resume. Recover existing approved candidate and plan records before asking; ask only material missing questions. Reuse `grill-me` when its actual contract fits, with bounded rounds. Do not require a salary history, public profile, account login or exhaustive questionnaire. Confirm ownership of candidate links and scope before public-profile research. Do not infer identity from name matches.
 
-For a new full transition, obtain current state, target, timing, hours, hard constraints, evidence and desired platforms; assess readiness and offer an actionable plan. For an existing transition, inspect actual progress, review due date, latest approved plan and urgent events. Direct modes must not modify the approved plan merely because new information appears.
+For a new full transition, obtain current state, target, timing, hours, hard constraints, evidence and desired platforms; assess readiness and offer an actionable plan. For an existing or adopted transition, inspect actual progress, review due date, latest approved plan and urgent events; honor explicit candidate constraints not to change a finalized plan. Direct modes must not modify the approved plan merely because new information appears.
 
 ## 3. Execute and delegate
 
-The lead session owns orchestration, state and approval. Workflows define sequencing; agents are independent bounded roles, not independent authorities. Instantiate multiple instances when section, source, candidate lens or competency differs. Pass a shared versioned fact snapshot and only relevant context. Separate drafting from verification. No nested uncontrolled fan-out. Existing research agents may be used through the existing research workflow. Never imply a subagent ran if isolation was unavailable.
+The lead session owns orchestration, state and approval. Apply minimum sufficient execution (`DIRECT`, `FOCUSED`, or `DEEP` in `references/delegation-and-review.md`) based on outcome, uncertainty, complexity and consequence without weakening verification, privacy, authorization or approval gates. Workflows define sequencing; agents are independent bounded roles, not independent authorities. Instantiate multiple instances when section, source, candidate lens or competency differs. Pass a shared versioned fact snapshot and only relevant context. Separate drafting from verification. No nested uncontrolled fan-out. Existing research agents may be used through the existing research workflow. Never imply a subagent ran if isolation was unavailable.
 
 Before creating any persistent output establish an explicit user-owned workspace; text-only mode remains valid. Never store personal data in this toolkit or a public repository. Stage evidence corrections, plan revisions and rubric changes for approval. Agents return proposals; only the coordinator writes authorized records. No unattended actions or promises of future execution.
 
