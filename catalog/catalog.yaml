@@ -241,7 +241,7 @@ skills:
     path: skills/career
     category: career
     maturity: experimental
-    version: 1.0.1
+    version: 1.0.2
     dependencies:
       workflows:
       - career-application
