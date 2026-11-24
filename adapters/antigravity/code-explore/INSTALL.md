@@ -24,7 +24,7 @@ A complete project-local installation must make all of these readable to the mai
 ```text
 <target>/.agents/skills/code-explore/               # complete skill with references
 <target>/.agents/agents/agent-toolkit-code-*.md     # four Antigravity custom subagent definitions
-<target>/.agent-toolkit/agents/code-*/AGENT.md      # four canonical roles
+<target>/.agent-toolkit/agents/code-explore/code-*/AGENT.md      # four canonical roles
 <target>/.agent-toolkit/workflows/code-impact-exploration/WORKFLOW.md
 <target>/.agent-toolkit/scripts/validate_code_exploration.py
 <target>/.agent-toolkit/templates/documents/CODE-IMPACT-REPORT.md

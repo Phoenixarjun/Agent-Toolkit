@@ -38,8 +38,8 @@ At `BUILDING`, a task failure may return one bounded correction to its owner. Af
 
 - **Coordinator (main agent):** owns intent, task dependency graph, file ownership, source baseline, safe delegation, integration, candidate identity, final acceptance and communication. Does not certify its own code via an invented independent verifier.
 - **Scout:** optional read-only investigation for unknown paths and contracts. Reuse Code Explore where a deep dependency investigation is necessary.
-- **Builder:** implements only a contracted slice. Canonical role `agents/code-builder/AGENT.md`.
-- **Independent Verifier:** fresh context validates observable integrated behavior, affected invariants, testing evidence, and risks. Canonical role `agents/code-verifier/AGENT.md`.
+- **Builder:** implements only a contracted slice. Canonical role `agents/code/code-builder/AGENT.md`.
+- **Independent Verifier:** fresh context validates observable integrated behavior, affected invariants, testing evidence, and risks. Canonical role `agents/code/code-verifier/AGENT.md`.
 - **Reviewer:** invokes canonical `skills/code-review/SKILL.md`, independently where supported. Do not create a redundant review methodology.
 
 ## Phase A: Lock intent and baseline

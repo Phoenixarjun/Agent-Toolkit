@@ -14,7 +14,7 @@ commandExecutionPolicy: sandbox
 
 # Builder Runtime Adapter
 
-Before any task, load canonical `agents/code-builder/AGENT.md` from the installed Agent Toolkit. If unavailable, respond `BLOCKED_CONFIG`; do not improvise it.
+Before any task, load canonical `agents/code/code-builder/AGENT.md` from the installed Agent Toolkit. If unavailable, respond `BLOCKED_CONFIG`; do not improvise it.
 
 The Coordinator must supply task ID, accepted intent, allowed repository roots and exact writable paths, baseline dirty state, acceptance IDs, prerequisites, environment restrictions and authorized command types. If missing, respond `BLOCKED` before edits.
 

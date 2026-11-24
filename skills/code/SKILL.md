@@ -46,7 +46,7 @@ A successful run yields a working authorized change, acceptance-to-evidence mapp
 
 ### 2. Implement without compulsory TDD
 
-1. Delegate bounded coding to Builder role `agents/code-builder/AGENT.md` where supported. The Builder reads only necessary code, changes the smallest justified surface, handles meaningful failure paths, keeps responsibilities cohesive, and obeys the task's write boundary.
+1. Delegate bounded coding to Builder role `agents/code/code-builder/AGENT.md` where supported. The Builder reads only necessary code, changes the smallest justified surface, handles meaningful failure paths, keeps responsibilities cohesive, and obeys the task's write boundary.
 2. **Do not invoke TDD by default while building the initial feature.** The Builder may run smoke/build/type checks and existing fast tests to avoid working blindly, but neither a test-first loop nor new test generation is obligatory during implementation.
 3. After each task, require actual changed paths, contract changes, risks and executed check results. A Builder's statement that a feature is done is not validation.
 4. If new information changes scope or ownership, stop that task and return to the Coordinator for a revised, authorized task contract.
@@ -71,7 +71,7 @@ Read `references/post-build-verification.md` for gates, modes and failure condit
 
 ### 5. Independent candidate verification
 
-1. Delegate `agents/code-verifier/AGENT.md` in a **fresh independent context**, passing accepted intent, final integrated candidate and source locations; do not pass the Builder's claims as established facts.
+1. Delegate `agents/code/code-verifier/AGENT.md` in a **fresh independent context**, passing accepted intent, final integrated candidate and source locations; do not pass the Builder's claims as established facts.
 2. Verify acceptance and preservation invariants through the strongest feasible external seam, plus appropriate static/build/unit/integration/browser/service tests. Check failures, skipped checks, regressions, and unexpected changes.
 3. If verification exposes a defect, create a **bounded correction task**. The Builder corrects it; all affected evidence must be rerun on the new candidate. Default maximum **one** correction round; escalate rather than loop endlessly.
 4. Invoke canonical `code-review` for integrated, intent-aligned risk/scope assessment prior to any commit decision. Avoid claiming commit safety where the candidate or mixed dirty work cannot be isolated.

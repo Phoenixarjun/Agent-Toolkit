@@ -688,105 +688,105 @@ agents:
     maturity: stable
     version: "1.0.0"
   - id: ui-critic
-    path: agents/ui-critic/AGENT.md
+    path: agents/ui-ux-design/ui-critic/AGENT.md
     category: review
     maturity: stable
     version: "1.0.0"
   - id: security-auditor
-    path: agents/security-auditor/AGENT.md
+    path: agents/security-audit/security-auditor/AGENT.md
     category: security
     maturity: experimental
     version: "2.0.0"
   - id: security-authority-investigator
-    path: agents/security-authority-investigator/AGENT.md
+    path: agents/security-audit/security-authority-investigator/AGENT.md
     category: security
     maturity: experimental
     version: "2.0.0"
   - id: security-trust-path-investigator
-    path: agents/security-trust-path-investigator/AGENT.md
+    path: agents/security-audit/security-trust-path-investigator/AGENT.md
     category: security
     maturity: experimental
     version: "2.0.0"
   - id: security-coverage-critic
-    path: agents/security-coverage-critic/AGENT.md
+    path: agents/security-audit/security-coverage-critic/AGENT.md
     category: security
     maturity: experimental
     version: "2.0.0"
   - id: research-scout
-    path: agents/research-scout/AGENT.md
+    path: agents/research/research-scout/AGENT.md
     category: research
     maturity: experimental
     version: "1.0.0"
   - id: research-coverage-critic
-    path: agents/research-coverage-critic/AGENT.md
+    path: agents/research/research-coverage-critic/AGENT.md
     category: research
     maturity: experimental
     version: "1.0.0"
   - id: research-evidence-verifier
-    path: agents/research-evidence-verifier/AGENT.md
+    path: agents/research/research-evidence-verifier/AGENT.md
     category: research
     maturity: experimental
     version: "1.0.0"
   - id: code-path-explorer
-    path: agents/code-path-explorer/AGENT.md
+    path: agents/code-explore/code-path-explorer/AGENT.md
     category: exploration
     maturity: experimental
     version: "1.0.1"
   - id: code-contract-explorer
-    path: agents/code-contract-explorer/AGENT.md
+    path: agents/code-explore/code-contract-explorer/AGENT.md
     category: exploration
     maturity: experimental
     version: "1.0.1"
   - id: code-coverage-critic
-    path: agents/code-coverage-critic/AGENT.md
+    path: agents/code-explore/code-coverage-critic/AGENT.md
     category: review
     maturity: experimental
     version: "1.0.1"
   - id: code-evidence-verifier
-    path: agents/code-evidence-verifier/AGENT.md
+    path: agents/code-explore/code-evidence-verifier/AGENT.md
     category: review
     maturity: experimental
     version: "1.0.1"
   - id: code-builder
-    path: agents/code-builder/AGENT.md
+    path: agents/code/code-builder/AGENT.md
     category: implementation
     maturity: stable
     version: "1.0.0"
   - id: code-verifier
-    path: agents/code-verifier/AGENT.md
+    path: agents/code/code-verifier/AGENT.md
     category: review
     maturity: stable
     version: "1.0.0"
 
 
   - id: visualize-explorer
-    path: agents/visualize-explorer/AGENT.md
+    path: agents/visualize/visualize-explorer/AGENT.md
     category: exploration
     maturity: experimental
     version: "0.3.0"
   - id: visualize-graph-verifier
-    path: agents/visualize-graph-verifier/AGENT.md
+    path: agents/visualize/visualize-graph-verifier/AGENT.md
     category: review
     maturity: experimental
     version: "0.3.0"
   - id: visualize-failure-verifier
-    path: agents/visualize-failure-verifier/AGENT.md
+    path: agents/visualize/visualize-failure-verifier/AGENT.md
     category: review
     maturity: experimental
     version: "0.3.0"
 
   - id: showcase-content-strategist
-    path: agents/showcase-content-strategist/AGENT.md
+    path: agents/ui-ux-design/showcase-content-strategist/AGENT.md
     category: design
     maturity: experimental
     version: "0.1.0"
   - id: showcase-content-verifier
-    path: agents/showcase-content-verifier/AGENT.md
+    path: agents/ui-ux-design/showcase-content-verifier/AGENT.md
     category: review
     maturity: experimental
     version: "0.1.0"
   - id: showcase-audience-evaluator
-    path: agents/showcase-audience-evaluator/AGENT.md
+    path: agents/ui-ux-design/showcase-audience-evaluator/AGENT.md
     category: review
     maturity: experimental
     version: "0.1.0"

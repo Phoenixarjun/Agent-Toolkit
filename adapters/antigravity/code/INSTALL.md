@@ -15,8 +15,8 @@ Only this adapter contains product-specific model tiers, tool names and discover
 <target>/.agents/agents/agent-toolkit-code-builder.md
 <target>/.agents/agents/agent-toolkit-code-verifier.md
 <target>/.agent-toolkit/workflows/implementation-review-loop/WORKFLOW.md
-<target>/.agent-toolkit/agents/code-builder/AGENT.md
-<target>/.agent-toolkit/agents/code-verifier/AGENT.md
+<target>/.agent-toolkit/agents/code/code-builder/AGENT.md
+<target>/.agent-toolkit/agents/code/code-verifier/AGENT.md
 <target>/.agent-toolkit/skills/tdd/SKILL.md     # existing canonical dependency; if installed here
 <target>/.agent-toolkit/skills/code-review/SKILL.md # existing canonical dependency
 ```
