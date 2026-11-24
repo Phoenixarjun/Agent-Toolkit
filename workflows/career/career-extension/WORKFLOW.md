@@ -1,0 +1,10 @@
+---
+name: career-extension
+description: Resolve unsupported platform/task capability through approved temporary composition of existing roles and tools.
+---
+
+# Dynamic Capability Extension
+
+Load workspace, delegation and relevant domain rubrics. Coordinator resolves requested outcome and scope, checks actual installed catalog/skills/workflows/agents and authorized tools. Reuse exact existing workflow first. Partial capability: compose existing roles with distinct assignments and task-specific criteria. Missing capability: propose temporary workflow specification with ID, objective, inputs, stages, owner roles, dependencies, permissions, outputs, hard gates, failure/stop criteria and budget; include platform-specific rubric and independent verifier. Example YouTube content may need source research, script/storyboard, thumbnail direction and video metadata; these are runtime assignments, not new permanent agents. Reuse content research and verified dossier. If transcript or imagery tool unavailable, use user-provided transcript, text storyboard or other honest fallback. Access only permitted sources; no scraping bypass or installation. Do not assume tool availability.
+
+Track active workflow IDs in a call stack; never delegate back into an active workflow, the entry router or the parent transition. Validate no recursive routing, no permission expansion, no external send/publish, no candidate data leakage and no overlapping role ownership. Explicitly ask for approval if new tool access, persistent workflow or material scope expands; ordinary bounded specialization inside requested scope does not need redundant approval. If missing capability cannot be safely composed return BLOCKED with supported alternative. Execute only approved temporary tasks, write run-local record if authorized. Never alter canonical skill, agent or catalog or create unrestricted executable code/integrations. Repeated useful composition may yield permanent-extension proposal with evals and maintainer review; do not promote automatically. Return resolved path, tool and isolation limitations, composition, output, verification and next action.

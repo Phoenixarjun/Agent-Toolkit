@@ -20,7 +20,7 @@ Inventory authorized repository roots deterministically and group investigation 
 
 ## 2. Partition by investigation question
 
-Identify independent subsystem ownerships, actual entrypoints, external contracts, or unresolved flows. Assign each bounded task to the reusable `agents/visualize-explorer/AGENT.md` role. Include:
+Identify independent subsystem ownerships, actual entrypoints, external contracts, or unresolved flows. Assign each bounded task to the reusable `agents/visualize/visualize-explorer/AGENT.md` role. Include:
 
 - Authorization boundary and pinned repository revision(s).
 - Specific responsibility, route, queue/topic, data sink, or unresolved binding to investigate.
@@ -38,9 +38,9 @@ Retain validated `domain`, `owner`, and `group_id` where source evidence establi
 
 ## 4. Verify representation and failure claims separately
 
-Assign `agents/visualize-graph-verifier/AGENT.md` the final material component/relation/journey claims, with original source locators and known uncertainty. The verifier checks evidence, logical ownership, source coverage, and level-projected journeys. Feed its challenges back into reconciliation, then recheck changed material claims with an independent context when available; otherwise lower assurance.
+Assign `agents/visualize/visualize-graph-verifier/AGENT.md` the final material component/relation/journey claims, with original source locators and known uncertainty. The verifier checks evidence, logical ownership, source coverage, and level-projected journeys. Feed its challenges back into reconciliation, then recheck changed material claims with an independent context when available; otherwise lower assurance.
 
-For each *consequential suspected defect* (for example, producer topic with no located consumer, apparently dead route, or contradictory binding), commission `agents/visualize-failure-verifier/AGENT.md` with a falsifiable claim and its scope. The verifier actively searches for disconfirming configurations, external consumers, alternative routing, deployment profiles and other explanations. Its outcome is `CONFIRMED`, `DISPROVEN`, or `INDETERMINATE`; keep a `SUSPECTED` tag while a verdict is pending. Do not treat absent evidence outside authorized scope as proof of absence.
+For each *consequential suspected defect* (for example, producer topic with no located consumer, apparently dead route, or contradictory binding), commission `agents/visualize/visualize-failure-verifier/AGENT.md` with a falsifiable claim and its scope. The verifier actively searches for disconfirming configurations, external consumers, alternative routing, deployment profiles and other explanations. Its outcome is `CONFIRMED`, `DISPROVEN`, or `INDETERMINATE`; keep a `SUSPECTED` tag while a verdict is pending. Do not treat absent evidence outside authorized scope as proof of absence.
 
 No defect verdict authorizes repair. If investigation confirms an issue, record it in the visualization only; never trigger a code-editing or debugging skill automatically.
 

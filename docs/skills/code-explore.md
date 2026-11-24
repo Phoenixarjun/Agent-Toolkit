@@ -41,4 +41,4 @@ The human report contains the existing flow, affected components, ownership/over
 
 **Read-only:** no source changes, code removal, deployments, commits, destructive commands or unauthorized runtime probes. Any eventual implementation and review happens in a separate task/context. The skill remains separate from Security Audit, TDD and Code Review.
 
-**Dependencies:** a complete multi-agent installation includes `workflows/code-impact-exploration/`, four `agents/code-*/` roles and actual isolated subagent support. `SKILL.md` alone cannot provide independent assurance.
+**Dependencies:** a complete multi-agent installation includes `workflows/code-impact-exploration/`, four `agents/code-explore/*/` roles and actual isolated subagent support. `SKILL.md` alone cannot provide independent assurance.
