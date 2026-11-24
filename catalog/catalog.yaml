@@ -234,6 +234,59 @@ skills:
         - visualize-explorer
         - visualize-graph-verifier
         - visualize-failure-verifier
+  - id: career
+    path: skills/career
+    category: career
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      workflows:
+      - career-application
+      - career-blog
+      - career-company
+      - career-content-research
+      - career-extension
+      - career-github-profile
+      - career-interview
+      - career-job-search
+      - career-linkedin-content
+      - career-linkedin-profile
+      - career-offer
+      - career-plan
+      - career-presence
+      - career-projects
+      - career-transition
+      rules:
+      - career-integrity
+      agents:
+      - career-company-investigator
+      - career-content-editor
+      - career-content-manager
+      - career-content-writer
+      - career-critic
+      - career-evidence-verifier
+      - career-hiring-manager
+      - career-job-scout
+      - career-market-analyst
+      - career-offer-analyst
+      - career-opportunity-analyst
+      - career-planner
+      - career-presence-auditor
+      - career-presence-optimizer
+      - career-project-evaluator
+      - career-recruiter
+      - career-resume-strategist
+      - career-technical-interviewer
+    optional_dependencies:
+      skills:
+      - code-explore
+      - code-review
+      - grill-me
+      - research
+      - teach
+    domains:
+    - career
+    - professional-development
 workflows:
   - id: implementation-review-loop
     path: workflows/implementation-review-loop/WORKFLOW.md
@@ -348,6 +401,264 @@ workflows:
         - grill-me
         - code
         - code-review
+  - id: career-application
+    path: workflows/career/career-application/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-resume-strategist
+      - career-content-editor
+      - career-evidence-verifier
+      - career-recruiter
+      - career-critic
+    domains:
+    - career
+    - professional-development
+  - id: career-blog
+    path: workflows/career/career-blog/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-content-manager
+      - career-content-writer
+      - career-content-editor
+      - career-evidence-verifier
+      - career-critic
+    optional_dependencies:
+      workflows:
+      - career-content-research
+      - career-linkedin-content
+      skills:
+      - research
+    domains:
+    - career
+    - professional-development
+  - id: career-company
+    path: workflows/career/career-company/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-company-investigator
+      - career-critic
+    optional_dependencies:
+      skills:
+      - research
+    domains:
+    - career
+    - professional-development
+  - id: career-content-research
+    path: workflows/career/career-content-research/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-content-manager
+      - career-critic
+    optional_dependencies:
+      skills:
+      - research
+    domains:
+    - career
+    - professional-development
+  - id: career-extension
+    path: workflows/career/career-extension/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    domains:
+    - career
+    - professional-development
+  - id: career-github-profile
+    path: workflows/career/career-github-profile/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-presence-auditor
+      - career-presence-optimizer
+      - career-project-evaluator
+      - career-evidence-verifier
+      - career-content-editor
+      - career-critic
+    optional_dependencies:
+      skills:
+      - code-explore
+      - code-review
+    domains:
+    - career
+    - professional-development
+  - id: career-interview
+    path: workflows/career/career-interview/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-recruiter
+      - career-technical-interviewer
+      - career-hiring-manager
+    optional_dependencies:
+      skills:
+      - research
+      - teach
+    domains:
+    - career
+    - professional-development
+  - id: career-job-search
+    path: workflows/career/career-job-search/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-job-scout
+      - career-opportunity-analyst
+    optional_dependencies:
+      workflows:
+      - career-company
+    domains:
+    - career
+    - professional-development
+  - id: career-linkedin-content
+    path: workflows/career/career-linkedin-content/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-content-manager
+      - career-content-writer
+      - career-content-editor
+      - career-evidence-verifier
+      - career-critic
+    optional_dependencies:
+      workflows:
+      - career-content-research
+      skills:
+      - research
+    domains:
+    - career
+    - professional-development
+  - id: career-linkedin-profile
+    path: workflows/career/career-linkedin-profile/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-presence-auditor
+      - career-presence-optimizer
+      - career-evidence-verifier
+      - career-content-editor
+      - career-recruiter
+      - career-critic
+    domains:
+    - career
+    - professional-development
+  - id: career-offer
+    path: workflows/career/career-offer/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-offer-analyst
+      - career-evidence-verifier
+      - career-critic
+      - career-company-investigator
+    optional_dependencies:
+      skills:
+      - research
+    domains:
+    - career
+    - professional-development
+  - id: career-plan
+    path: workflows/career/career-plan/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-planner
+      - career-market-analyst
+      - career-critic
+    optional_dependencies:
+      workflows:
+      - career-presence
+      - career-projects
+      skills:
+      - grill-me
+      - research
+    domains:
+    - career
+    - professional-development
+  - id: career-presence
+    path: workflows/career/career-presence/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-presence-auditor
+    optional_dependencies:
+      workflows:
+      - career-linkedin-profile
+      - career-github-profile
+      - career-extension
+      skills:
+      - research
+    domains:
+    - career
+    - professional-development
+  - id: career-projects
+    path: workflows/career/career-projects/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    dependencies:
+      agents:
+      - career-project-evaluator
+      - career-evidence-verifier
+      - career-critic
+    optional_dependencies:
+      skills:
+      - code-explore
+      - code-review
+    domains:
+    - career
+    - professional-development
+  - id: career-transition
+    path: workflows/career/career-transition/WORKFLOW.md
+    category: delivery
+    maturity: experimental
+    version: 1.0.1
+    optional_dependencies:
+      workflows:
+      - career-application
+      - career-blog
+      - career-company
+      - career-content-research
+      - career-extension
+      - career-github-profile
+      - career-interview
+      - career-job-search
+      - career-linkedin-content
+      - career-linkedin-profile
+      - career-offer
+      - career-plan
+      - career-presence
+      - career-projects
+    domains:
+    - career
+    - professional-development
 rules:
   - id: global-engineering
     path: rules/global/engineering-rules.md
@@ -365,6 +676,11 @@ rules:
     maturity: stable
     version: "1.0.0"
 
+  - id: career-integrity
+    path: rules/career/career-integrity.md
+    scope: domain
+    maturity: experimental
+    version: 1.0.1
 agents:
   - id: architect
     path: agents/architect/AGENT.md
@@ -474,6 +790,96 @@ agents:
     category: review
     maturity: experimental
     version: "0.1.0"
+  - id: career-company-investigator
+    path: agents/career/career-company-investigator/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-content-editor
+    path: agents/career/career-content-editor/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-content-manager
+    path: agents/career/career-content-manager/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-content-writer
+    path: agents/career/career-content-writer/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-critic
+    path: agents/career/career-critic/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-evidence-verifier
+    path: agents/career/career-evidence-verifier/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-hiring-manager
+    path: agents/career/career-hiring-manager/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-job-scout
+    path: agents/career/career-job-scout/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-market-analyst
+    path: agents/career/career-market-analyst/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-offer-analyst
+    path: agents/career/career-offer-analyst/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-opportunity-analyst
+    path: agents/career/career-opportunity-analyst/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-planner
+    path: agents/career/career-planner/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-presence-auditor
+    path: agents/career/career-presence-auditor/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-presence-optimizer
+    path: agents/career/career-presence-optimizer/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-project-evaluator
+    path: agents/career/career-project-evaluator/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-recruiter
+    path: agents/career/career-recruiter/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-resume-strategist
+    path: agents/career/career-resume-strategist/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
+  - id: career-technical-interviewer
+    path: agents/career/career-technical-interviewer/AGENT.md
+    category: career
+    maturity: experimental
+    version: 1.0.1
 prompts:
   - id: architecture-grill
     path: prompts/architecture-grill.md
@@ -641,6 +1047,11 @@ evals:
     target: ui-ux-design
     maturity: experimental
     version: "0.1.0"
+  - id: career
+    path: evals/career/cases.yaml
+    target: career
+    maturity: experimental
+    version: 1.0.1
 profiles:
   - id: software-engineering
     path: profiles/software-engineering.yaml
@@ -671,6 +1082,10 @@ profiles:
     maturity: experimental
     version: "1.0.0"
 
+  - id: career
+    path: profiles/career.yaml
+    maturity: experimental
+    version: 1.0.1
 adapters:
   - id: codex-sol-luna-xi
     path: adapters/codex/sol-luna-xi

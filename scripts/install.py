@@ -565,7 +565,7 @@ def serialize_specialist_agent(adapter_spec: AdapterSpec, agent_artifact: Resolv
         toml_content = (
             f'name = "{ag_id}"\n'
             f'description = "Specialist agent {ag_id} from Agent Toolkit"\n'
-            f'instructions = ".agent-toolkit/agents/{ag_id}/AGENT.md"\n'
+            f'instructions = ".agent-toolkit/{agent_artifact.canonical_path}"\n'
         )
         dest_rel = f"{adapter_spec.agent_root}/{ag_id}.toml"
         return PlanFile(rel_destination=dest_rel, source_path=None, content=toml_content, is_adapter_specific=True)
@@ -808,14 +808,22 @@ def build_installation_plan(
                         # resolves an unmanaged or attacker-controlled file in the target repository.
                         installed_workflows = [a for a in artifacts if a.group == "workflows"]
                         for wf in installed_workflows:
-                            canon_wf = f"workflows/{wf.id}/WORKFLOW.md"
-                            rel_wf = f"../../workflows/{wf.id}/WORKFLOW.md"
-                            trusted_wf = f".agent-toolkit/workflows/{wf.id}/WORKFLOW.md"
+                            canon_wf = wf.canonical_path
+                            rel_wf = f"../../{wf.canonical_path}"
+                            trusted_wf = f".agent-toolkit/{wf.canonical_path}"
                             if canon_wf in skill_content:
                                 skill_content = skill_content.replace(canon_wf, trusted_wf)
                                 content_modified = True
                             if rel_wf in skill_content:
                                 skill_content = skill_content.replace(rel_wf, trusted_wf)
+                                content_modified = True
+                            flat_canon_wf = f"workflows/{wf.id}/WORKFLOW.md"
+                            if flat_canon_wf in skill_content:
+                                skill_content = skill_content.replace(flat_canon_wf, trusted_wf)
+                                content_modified = True
+                            flat_rel_wf = f"../../workflows/{wf.id}/WORKFLOW.md"
+                            if flat_rel_wf in skill_content:
+                                skill_content = skill_content.replace(flat_rel_wf, trusted_wf)
                                 content_modified = True
 
                         # For security-audit specifically, ensure knowledge and template paths resolve to trusted .agent-toolkit/

@@ -1,0 +1,16 @@
+---
+name: career-transition
+description: Coordinate a complete career transition from baseline through adaptive milestones, activation and progress review.
+---
+
+# Career Transition
+
+Lead is coordinator. Load workspace, adaptive-planning and delegation references. This is default full `/career` path, not a batch execution of every workflow.
+
+1. Recover authorized candidate/evidence, approved plan, progress, pending decisions and review due. If no active plan exists, first check pending proposals; if one awaits approval, show it and stop rather than regenerate it or execute a committed roadmap. Otherwise run `career-plan` initial path. If approved plan exists, ask only missing material information.
+2. Inspect real progress and triggers: deadline change, job loss, upcoming interview, offer, target change, overdue review, evidence-backed market signal. Run `career-plan` review path when warranted; pending revision never replaces active plan. Urgent direct task may proceed within authorization without activating proposal.
+3. Select work by remaining time, constraints, dependencies, milestones and candidate priority. Apply the recurring and due-work rules in adaptive-planning: promote due scheduled work logically, confirm conditional triggers, and consider due approved routines against remaining capacity. Resume unfinished occurrence before creating another; avoid backlog storms. Reconcile plan-linked routines if a new version is approved. Categorize ACTIVE (now, ready), SCHEDULED (later), CONDITIONAL (triggered by event). Prefer highest-impact feasible next actions. If long horizon prioritize durable foundations and evidence; use project, GitHub, LinkedIn, content and company sampling as justified; defer per-JD resume and intensive interview until relevant, not by fixed dates. If urgent prioritize verified opportunities/materials and interview. Do not force any platform or project. No autonomous future work.
+4. Propose current sprint: 1–3 high-value outcomes, effort, acceptance, dependencies and deferred items. For candidate-only milestones with null workflow_id, return the actual task and acceptance evidence; do not invent a workflow or mark it complete. Invoke only authorized ready workflows directly (never recurse through entry skill). Ask before material scope expansion or new private workspace writes. Existing teaching and project/code capabilities only on request and compatible scope. Conditional job search, company, application, interview, offer branches activate from evidence and actual event.
+5. Validate returned artifacts, capture candidate-confirmed progress, outstanding approvals and stale downstream references. Record actual occurrence acceptance, advance only accepted/skipped routines, and export the authorized viewer snapshot if opted in. Do not mark milestones done because instructions/drafts were produced if acceptance requires actual candidate work. Stage any plan/evidence change for approval.
+
+Output: baseline/target, active plan version and next review due, completed vs planned, current sprint and exact next actions, why selected, scheduled/conditional work, dependencies, remaining hours/risks, actual workflow results, decisions/limitations. Stop after current authorized scope or blocked decision; no scheduling promise.

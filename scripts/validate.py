@@ -119,12 +119,12 @@ def validate_catalog():
         ids[group] = group_ids
     expected = {
         "skills": {path.parent.relative_to(ROOT).as_posix() for path in (ROOT / "skills").glob("*/SKILL.md")},
-        "workflows": {path.relative_to(ROOT).as_posix() for path in (ROOT / "workflows").glob("*/WORKFLOW.md")},
+        "workflows": {path.relative_to(ROOT).as_posix() for path in (ROOT / "workflows").rglob("WORKFLOW.md")},
         "rules": {path.relative_to(ROOT).as_posix() for path in (ROOT / "rules").rglob("*.md")},
-        "agents": {path.relative_to(ROOT).as_posix() for path in (ROOT / "agents").glob("*/AGENT.md")},
+        "agents": {path.relative_to(ROOT).as_posix() for path in (ROOT / "agents").rglob("AGENT.md")},
         "prompts": {path.relative_to(ROOT).as_posix() for path in (ROOT / "prompts").glob("*.md")},
         "knowledge": {path.relative_to(ROOT).as_posix() for path in (ROOT / "knowledge").rglob("*.md")},
-        "evals": {path.relative_to(ROOT).as_posix() for path in (ROOT / "evals").glob("*/cases.yaml")},
+        "evals": {path.relative_to(ROOT).as_posix() for path in (ROOT / "evals").rglob("cases.yaml")},
         "profiles": {path.relative_to(ROOT).as_posix() for path in (ROOT / "profiles").glob("*.yaml")},
         "forms": {path.relative_to(ROOT).as_posix() for path in (ROOT / "forms").glob("*.md")},
         "templates": {path.relative_to(ROOT).as_posix() for path in (ROOT / "templates" / "documents").glob("*.md")},

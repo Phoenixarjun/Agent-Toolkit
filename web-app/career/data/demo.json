@@ -1,0 +1,773 @@
+{
+  "schema_version": 1,
+  "mode": "demo",
+  "as_of": "2026-11-24",
+  "generated_at": "2026-11-24T10:00:00+05:30",
+  "candidate": {
+    "current_role": "Software Engineer",
+    "target": "AI Engineer"
+  },
+  "plan": {
+    "schema_version": 1,
+    "plan_id": "v1-2",
+    "parent_plan_id": "v1-1",
+    "created_at": "2026-11-01T10:00:00+05:30",
+    "target": "AI Engineer",
+    "start_date": "2026-08-01",
+    "deadline": "2027-08-31",
+    "weekly_hours": 16,
+    "buffer_fraction": 0.2,
+    "review_interval_days": 60,
+    "assumptions": [
+      "Illustrative plan for the viewer. No real candidate."
+    ],
+    "evidence_refs": [
+      "demo-baseline"
+    ],
+    "review_rationale": "Review the market every two months; preserve durable foundations unless evidence justifies a change.",
+    "pillars": [
+      {
+        "id": "backend",
+        "outcome": "Backend engineering",
+        "rationale": "Scalable and reliable services"
+      },
+      {
+        "id": "systems",
+        "outcome": "System design & distributed systems",
+        "rationale": "Architecture, scale and reliability"
+      },
+      {
+        "id": "ai",
+        "outcome": "AI / ML foundations",
+        "rationale": "Retrieval, evaluation and applied AI"
+      },
+      {
+        "id": "projects",
+        "outcome": "Flagship projects",
+        "rationale": "Demonstrable technical depth"
+      },
+      {
+        "id": "presence",
+        "outcome": "Professional presence",
+        "rationale": "GitHub, LinkedIn and technical content"
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "backend-cap",
+        "outcome": "Backend engineering",
+        "pillar_ids": [
+          "backend"
+        ]
+      },
+      {
+        "id": "systems-cap",
+        "outcome": "System design & distributed systems",
+        "pillar_ids": [
+          "systems"
+        ]
+      },
+      {
+        "id": "ai-cap",
+        "outcome": "AI / ML foundations",
+        "pillar_ids": [
+          "ai"
+        ]
+      },
+      {
+        "id": "projects-cap",
+        "outcome": "Flagship projects",
+        "pillar_ids": [
+          "projects"
+        ]
+      },
+      {
+        "id": "presence-cap",
+        "outcome": "Professional presence",
+        "pillar_ids": [
+          "presence"
+        ]
+      }
+    ],
+    "milestones": [
+      {
+        "id": "service",
+        "title": "Backend service baseline",
+        "capability_ids": [
+          "backend-cap"
+        ],
+        "start_date": "2026-08-01",
+        "due_date": "2026-09-30",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "ACTIVE"
+      },
+      {
+        "id": "resilience",
+        "title": "Service resilience review",
+        "capability_ids": [
+          "backend-cap"
+        ],
+        "start_date": "2026-10-01",
+        "due_date": "2026-12-15",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "ACTIVE"
+      },
+      {
+        "id": "distributed",
+        "title": "Distributed systems case study",
+        "capability_ids": [
+          "systems-cap"
+        ],
+        "start_date": "2026-08-01",
+        "due_date": "2026-10-31",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "ACTIVE"
+      },
+      {
+        "id": "design",
+        "title": "Distributed systems design practice",
+        "capability_ids": [
+          "systems-cap"
+        ],
+        "start_date": "2026-11-01",
+        "due_date": "2027-02-28",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "ACTIVE"
+      },
+      {
+        "id": "ml",
+        "title": "ML fundamentals",
+        "capability_ids": [
+          "ai-cap"
+        ],
+        "start_date": "2026-08-01",
+        "due_date": "2026-10-31",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "ACTIVE"
+      },
+      {
+        "id": "rag",
+        "title": "RAG evaluation experiment",
+        "capability_ids": [
+          "ai-cap"
+        ],
+        "start_date": "2026-11-01",
+        "due_date": "2027-01-31",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "ACTIVE"
+      },
+      {
+        "id": "project",
+        "title": "Flagship project evidence",
+        "capability_ids": [
+          "projects-cap"
+        ],
+        "start_date": "2026-11-01",
+        "due_date": "2027-04-30",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "ACTIVE"
+      },
+      {
+        "id": "github",
+        "title": "GitHub profile baseline",
+        "capability_ids": [
+          "presence-cap"
+        ],
+        "start_date": "2026-08-01",
+        "due_date": "2026-10-15",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "ACTIVE"
+      },
+      {
+        "id": "linkedin",
+        "title": "LinkedIn profile review",
+        "capability_ids": [
+          "presence-cap"
+        ],
+        "start_date": "2026-11-01",
+        "due_date": "2026-11-30",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "ACTIVE"
+      },
+      {
+        "id": "article",
+        "title": "Publish a technical case study",
+        "capability_ids": [
+          "presence-cap"
+        ],
+        "start_date": "2026-11-01",
+        "due_date": "2026-12-01",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "ACTIVE"
+      },
+      {
+        "id": "interview",
+        "title": "Role-specific interview practice",
+        "capability_ids": [
+          "systems-cap"
+        ],
+        "start_date": "2027-04-01",
+        "due_date": "2027-07-31",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "SCHEDULED"
+      },
+      {
+        "id": "search",
+        "title": "Targeted job search",
+        "capability_ids": [
+          "presence-cap"
+        ],
+        "start_date": "2027-05-01",
+        "due_date": "2027-08-31",
+        "estimated_hours": 12,
+        "depends_on": [],
+        "acceptance": "Record the completed work and supporting evidence.",
+        "workflow_id": null,
+        "activation": "SCHEDULED"
+      }
+    ]
+  },
+  "plan_state": "APPROVED",
+  "next_review": "2026-12-08",
+  "progress": {
+    "service": {
+      "status": "COMPLETED",
+      "completed_at": "2026-09-30",
+      "evidence_refs": [
+        "demo-service"
+      ]
+    },
+    "resilience": {
+      "status": "IN_PROGRESS"
+    },
+    "distributed": {
+      "status": "COMPLETED",
+      "completed_at": "2026-10-31",
+      "evidence_refs": [
+        "demo-distributed"
+      ]
+    },
+    "design": {
+      "status": "IN_PROGRESS"
+    },
+    "ml": {
+      "status": "COMPLETED",
+      "completed_at": "2026-10-31",
+      "evidence_refs": [
+        "demo-ml"
+      ]
+    },
+    "rag": {
+      "status": "IN_PROGRESS"
+    },
+    "project": {
+      "status": "IN_PROGRESS"
+    },
+    "github": {
+      "status": "COMPLETED",
+      "completed_at": "2026-10-15",
+      "evidence_refs": [
+        "demo-github"
+      ]
+    },
+    "linkedin": {
+      "status": "IN_PROGRESS"
+    },
+    "article": {
+      "status": "NOT_STARTED"
+    },
+    "interview": {
+      "status": "NOT_STARTED"
+    },
+    "search": {
+      "status": "NOT_STARTED"
+    }
+  },
+  "sections": {
+    "projects": [
+      {
+        "id": "rag-project",
+        "title": "Retrieval evaluation service",
+        "status": "IN_PROGRESS",
+        "updated": "2026-11-24",
+        "summary": "A sample technical proof-of-work project.",
+        "fields": [
+          {
+            "label": "Acceptance",
+            "value": "Reproducible benchmark and documented tradeoffs"
+          }
+        ],
+        "document_ids": [
+          "project"
+        ],
+        "blocks": []
+      }
+    ],
+    "presence": [
+      {
+        "id": "linkedin-profile",
+        "title": "LinkedIn profile",
+        "status": "REVISE",
+        "updated": "2026-11-24",
+        "summary": "Headline and About section review.",
+        "fields": [
+          {
+            "label": "Platform",
+            "value": "LinkedIn"
+          },
+          {
+            "label": "Verification",
+            "value": "Illustrative only"
+          }
+        ],
+        "document_ids": [
+          "linkedin"
+        ],
+        "blocks": [
+          {
+            "type": "table",
+            "title": "Section review",
+            "columns": [
+              "Section",
+              "State",
+              "Next action"
+            ],
+            "rows": [
+              [
+                "Headline",
+                "Draft",
+                "Verify positioning"
+              ],
+              [
+                "About",
+                "Review",
+                "Check claims"
+              ],
+              [
+                "Experience",
+                "Pending",
+                "Collect evidence"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "github-profile",
+        "title": "GitHub profile",
+        "status": "COMPLETED",
+        "updated": "2026-11-24",
+        "summary": "Sample profile baseline.",
+        "fields": [
+          {
+            "label": "Platform",
+            "value": "GitHub"
+          },
+          {
+            "label": "Evidence",
+            "value": "Synthetic fixture"
+          }
+        ],
+        "document_ids": [],
+        "blocks": []
+      }
+    ],
+    "content": [
+      {
+        "id": "retrieval-post",
+        "title": "Retrieval evaluation: what to measure",
+        "status": "DRAFT",
+        "updated": "2026-11-24",
+        "summary": "Technical post in preparation.",
+        "fields": [
+          {
+            "label": "Platform",
+            "value": "LinkedIn"
+          },
+          {
+            "label": "Publication date",
+            "value": null
+          },
+          {
+            "label": "Impressions",
+            "value": null
+          }
+        ],
+        "document_ids": [
+          "rag-research",
+          "post"
+        ],
+        "blocks": []
+      },
+      {
+        "id": "case-study",
+        "title": "Distributed systems case study",
+        "status": "IN_REVIEW",
+        "updated": "2026-11-24",
+        "summary": "A sample blog outline.",
+        "fields": [
+          {
+            "label": "Platform",
+            "value": "Blog"
+          }
+        ],
+        "document_ids": [
+          "rag-research"
+        ],
+        "blocks": []
+      },
+      {
+        "id": "sample-published",
+        "title": "Example published article",
+        "status": "PUBLISHED",
+        "updated": "2026-11-24",
+        "summary": "Synthetic publication-history entry; not a real post.",
+        "fields": [
+          {
+            "label": "Platform",
+            "value": "Blog"
+          },
+          {
+            "label": "Publication date",
+            "value": "2026-10-21"
+          },
+          {
+            "label": "Impressions",
+            "value": null
+          }
+        ],
+        "document_ids": [],
+        "blocks": []
+      }
+    ],
+    "resumes": [
+      {
+        "id": "baseline",
+        "title": "AI engineer résumé baseline",
+        "status": "DRAFT",
+        "updated": "2026-11-24",
+        "summary": "Role-family baseline; claims need evidence.",
+        "fields": [
+          {
+            "label": "Version",
+            "value": "v0.1"
+          }
+        ],
+        "document_ids": [
+          "resume"
+        ],
+        "blocks": []
+      }
+    ],
+    "opportunities": [
+      {
+        "id": "sample-opening",
+        "title": "Example AI Engineer opening",
+        "status": "UNVERIFIED",
+        "updated": "2026-11-24",
+        "summary": "Fictional opportunity, not a vacancy.",
+        "fields": [
+          {
+            "label": "Employer",
+            "value": "Example company"
+          },
+          {
+            "label": "Listing status",
+            "value": "Not verified"
+          },
+          {
+            "label": "Fit decision",
+            "value": "HOLD"
+          }
+        ],
+        "document_ids": [
+          "company"
+        ],
+        "blocks": []
+      }
+    ],
+    "companies": [
+      {
+        "id": "sample-company",
+        "title": "Example company",
+        "status": "UNKNOWN",
+        "updated": "2026-11-24",
+        "summary": "Fictional employer intelligence.",
+        "fields": [
+          {
+            "label": "Industry",
+            "value": "Not recorded"
+          }
+        ],
+        "document_ids": [
+          "company"
+        ],
+        "blocks": []
+      }
+    ],
+    "applications": [],
+    "interviews": [
+      {
+        "id": "practice",
+        "title": "Technical panel preparation",
+        "status": "SCHEDULED",
+        "updated": "2026-11-24",
+        "summary": "Sample mock preparation, not an actual interview.",
+        "fields": [
+          {
+            "label": "Stage",
+            "value": "Technical screen"
+          }
+        ],
+        "document_ids": [
+          "interview"
+        ],
+        "blocks": [
+          {
+            "type": "quiz",
+            "title": "Technical self-practice",
+            "questions": [
+              {
+                "id": "idempotency",
+                "kind": "choice",
+                "competency": "Backend reliability",
+                "prompt": "A payment request may be retried after a timeout. Which mechanism helps prevent duplicate charges?",
+                "options": [
+                  "Increasing the timeout only",
+                  "A stable idempotency key with durable result storage",
+                  "Disabling retries for every request"
+                ],
+                "correct_index": 1,
+                "explanation": "A stable key tied to the operation and a durable, atomic record allow retries to return the original outcome. A timeout alone does not establish whether a charge succeeded."
+              },
+              {
+                "id": "rag-design",
+                "kind": "written",
+                "competency": "AI systems design",
+                "prompt": "How would you diagnose a retrieval-augmented application that returns fluent but unsupported answers?",
+                "criteria": [
+                  "Separate retrieval failure from generation failure.",
+                  "Inspect representative queries and retrieved evidence.",
+                  "Define groundedness and retrieval quality measurements.",
+                  "Explain how to test changes against a baseline."
+                ],
+                "explanation": "A strong answer links observed failures to targeted measurements and avoids assuming that switching models alone solves grounding."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "offers": []
+  },
+  "documents": [
+    {
+      "id": "market",
+      "title": "Market reality review",
+      "category": "Strategy",
+      "updated": "2026-11-24",
+      "markdown": "# Review summary\n\nThis is an illustrative report, not a live market investigation.\n\n## Decision\nRetain the current plan until stronger evidence supports a change.\n\n## Evidence gaps\n- Current employer interview requirements\n- Role-specific opportunity sample\n\n| Plan A | Plan B |\n| --- | --- |\n| Retain pillars | Adjust role specialization if corroborated |",
+      "sources": []
+    },
+    {
+      "id": "linkedin",
+      "title": "LinkedIn profile audit",
+      "category": "Presence",
+      "updated": "2026-11-24",
+      "markdown": "# Profile assessment\n\n## About\nThe sample profile emphasizes backend and AI systems experience.\n\n## Recommendations\n- Clarify target role and professional strengths.\n- Link demonstrable projects.\n- Verify quantified achievements before using them.\n\n## Verification\nNo actual profile was reviewed. This is a fictional example.",
+      "sources": []
+    },
+    {
+      "id": "rag-research",
+      "title": "Retrieval evaluation dossier",
+      "category": "Content",
+      "updated": "2026-11-24",
+      "markdown": "# Research brief\n\nCompare retrieval quality and generation quality separately.\n\n## Experiment plan\n- Define a small question set.\n- Evaluate recall and answer support.\n- Report limitations.\n\n```text\nRetrieve -> Rerank -> Generate -> Evaluate\n```\n\nNo experiment results are claimed.",
+      "sources": []
+    },
+    {
+      "id": "post",
+      "title": "Example LinkedIn draft",
+      "category": "Content",
+      "updated": "2026-11-24",
+      "markdown": "# Draft\n\nA retrieval pipeline is only as useful as the evidence it returns. In a future experiment, compare retrieval quality before and after reranking.\n\nThis illustrative draft is not published and does not claim personal results.",
+      "sources": []
+    },
+    {
+      "id": "resume",
+      "title": "Résumé claim audit",
+      "category": "Résumé",
+      "updated": "2026-11-24",
+      "markdown": "# Claim audit\n\n| Claim | Status |\n| --- | --- |\n| Improved latency | Needs evidence |\n| Built a service | Candidate report required |\n\nDo not publish unsubstantiated claims.",
+      "sources": []
+    },
+    {
+      "id": "company",
+      "title": "Example employer reality report",
+      "category": "Company",
+      "updated": "2026-11-24",
+      "markdown": "# Employer research\n\nFictional employer. No live hiring or business claims.\n\n## Open questions\n- Team ownership\n- Product maturity\n- Interview stages",
+      "sources": []
+    },
+    {
+      "id": "interview",
+      "title": "Mock panel preparation",
+      "category": "Interview",
+      "updated": "2026-11-24",
+      "markdown": "# Interview preparation\n\n## Technical architect\nExplain reliability tradeoffs and evaluation design.\n\n## Hiring manager\nDescribe an actual decision, its impact and lessons.\n\nNo mock interview was executed.",
+      "sources": []
+    },
+    {
+      "id": "project",
+      "title": "Project review",
+      "category": "Projects",
+      "updated": "2026-11-24",
+      "markdown": "# Flagship project review\n\n## Acceptance criteria\n- Reproducible local setup\n- Documented architectural decisions\n- Measured performance with scope and limitations",
+      "sources": []
+    }
+  ],
+  "activity": [
+    {
+      "id": "a1",
+      "timestamp": "2026-11-24T09:15:00+05:30",
+      "agent": "Career market analyst",
+      "summary": "Market review recorded",
+      "status": "COMPLETED",
+      "document_ids": [
+        "market"
+      ]
+    },
+    {
+      "id": "a2",
+      "timestamp": "2026-11-23T18:20:00+05:30",
+      "agent": "Career presence auditor",
+      "summary": "LinkedIn audit prepared",
+      "status": "REVISE",
+      "document_ids": [
+        "linkedin"
+      ]
+    },
+    {
+      "id": "a3",
+      "timestamp": "2026-11-23T12:30:00+05:30",
+      "agent": "Career content manager",
+      "summary": "Retrieval topic shortlisted",
+      "status": "COMPLETED",
+      "document_ids": [
+        "rag-research"
+      ]
+    },
+    {
+      "id": "a4",
+      "timestamp": "2026-11-22T17:00:00+05:30",
+      "agent": "Career project evaluator",
+      "summary": "Project acceptance reviewed",
+      "status": "COMPLETED",
+      "document_ids": [
+        "project"
+      ]
+    }
+  ],
+  "extensions": [
+    {
+      "id": "youtube",
+      "title": "YouTube",
+      "description": "Example extension built from reusable components; no actual channel data.",
+      "blocks": [
+        {
+          "type": "metrics",
+          "title": "Video pipeline",
+          "items": [
+            {
+              "label": "Ideas",
+              "value": 2
+            },
+            {
+              "label": "Published",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "title": "Video ideas",
+          "columns": [
+            "Topic",
+            "State"
+          ],
+          "rows": [
+            [
+              "Retrieval quality",
+              "Research"
+            ],
+            [
+              "Service reliability",
+              "Idea"
+            ]
+          ]
+        },
+        {
+          "type": "list",
+          "title": "Next steps",
+          "items": [
+            "Validate topic relevance",
+            "Prepare a script from verified evidence"
+          ]
+        },
+        {
+          "type": "document",
+          "title": "Reference research",
+          "document_id": "rag-research"
+        }
+      ]
+    }
+  ],
+  "routines": [
+    {
+      "id": "weekly-linkedin",
+      "plan_id": "v1-2",
+      "title": "LinkedIn technical content",
+      "workflow_id": "career-linkedin-content",
+      "cadence_days": 7,
+      "next_due": "2026-11-24",
+      "status": "ACTIVE",
+      "summary": "Illustrative approved cadence; prepare an evidence-backed draft, then publish manually if desired.",
+      "document_ids": [
+        "rag-research"
+      ]
+    }
+  ]
+}
