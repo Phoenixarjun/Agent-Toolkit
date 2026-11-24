@@ -659,7 +659,19 @@ def build_installation_plan(
     # 1. Plan canonical resource copies into .agent-toolkit/
     for art in artifacts:
         src_path = ROOT / art.canonical_path
-        if src_path.is_file():
+        if art.group == "apps":
+            app_name = art.id.replace("-viewer", "")
+            for file_path in sorted(src_path.rglob("*")):
+                if file_path.is_file():
+                    if any(part in file_path.parts for part in ["tests", "__pycache__"]):
+                        continue
+                    if file_path.name.endswith((".test.mjs", ".test.cjs", ".test.js")):
+                        continue
+                    rel_to_app = file_path.relative_to(src_path).as_posix()
+                    dest_rel = f".agent-toolkit/apps/{app_name}/{rel_to_app}"
+                    rel_to_root = file_path.relative_to(ROOT).as_posix()
+                    plan.files.append(PlanFile(rel_destination=dest_rel, source_path=rel_to_root))
+        elif src_path.is_file():
             dest_rel = f".agent-toolkit/{art.canonical_path}"
             plan.files.append(PlanFile(rel_destination=dest_rel, source_path=art.canonical_path))
         elif src_path.is_dir():
@@ -687,6 +699,12 @@ def build_installation_plan(
         val_source = "scripts/validate_code_implementation.py"
         if (ROOT / val_source).exists():
             plan.files.append(PlanFile(rel_destination=f".agent-toolkit/{val_source}", source_path=val_source))
+
+    # Ensure plan_store.py is present in .agent-toolkit/scripts/career/ if career is installed
+    if any(a.id == "career" for a in artifacts):
+        cs_source = "scripts/career/plan_store.py"
+        if (ROOT / cs_source).exists():
+            plan.files.append(PlanFile(rel_destination=f".agent-toolkit/{cs_source}", source_path=cs_source))
 
     # 2. Specialist Agents Native Serialization
     agents = [a for a in artifacts if a.group == "agents"]
