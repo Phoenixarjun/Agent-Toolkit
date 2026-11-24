@@ -1,0 +1,144 @@
+{
+  "packageName": "@agent-toolkit-core/cli",
+  "candidateVersion": "0.1.0",
+  "published": false,
+  "publicationStatus": "candidate",
+  "distributionType": "npm",
+  "cliExecutable": "agent-toolkit",
+  "registry": "https://registry.npmjs.org/",
+  "supportedCommands": [
+    {
+      "command": "list",
+      "description": "List available skills, profiles, and assistant adapters",
+      "subcommands": ["skills", "profiles", "adapters"],
+      "example": "npx @agent-toolkit-core/cli list"
+    },
+    {
+      "command": "inspect",
+      "description": "Inspect capability metadata, versions, and dependencies",
+      "options": ["--skill <id>", "--profile <id>", "--json"],
+      "example": "npx @agent-toolkit-core/cli inspect --skill code-review"
+    },
+    {
+      "command": "plan",
+      "description": "Preview installation plan without modifying workspace files (dry-run)",
+      "options": ["--skill <id>", "--profile <id>", "--adapter <target>", "--into <dir>", "--all-optional", "--json"],
+      "example": "npx @agent-toolkit-core/cli plan --skill code-review --adapter claude-code"
+    },
+    {
+      "command": "install",
+      "description": "Install capabilities and companion resources into target project",
+      "options": ["--skill <id>", "--profile <id>", "--adapter <target>", "--into <dir>", "--all-optional", "--force", "--on-conflict <policy>", "--json"],
+      "example": "npx @agent-toolkit-core/cli install --profile software-engineering --adapter claude-code"
+    },
+    {
+      "command": "doctor",
+      "description": "Verify integrity and hash matching of an installed workspace",
+      "options": ["--into <dir>", "--json"],
+      "example": "npx @agent-toolkit-core/cli doctor"
+    },
+    {
+      "command": "open",
+      "description": "Launch local loopback companion application viewer",
+      "arguments": ["career", "visualize"],
+      "options": ["--into <dir>", "--port <port>"],
+      "example": "npx @agent-toolkit-core/cli open career"
+    }
+  ],
+  "supportedAdapters": [
+    {
+      "id": "claude-code",
+      "displayName": "Claude Code",
+      "skillRoot": ".claude/skills",
+      "entrypoint": "CLAUDE.md"
+    },
+    {
+      "id": "codex",
+      "displayName": "OpenAI Codex",
+      "skillRoot": ".agents/skills",
+      "entrypoint": "AGENTS.md"
+    },
+    {
+      "id": "cursor",
+      "displayName": "Cursor",
+      "skillRoot": ".cursor/skills",
+      "entrypoint": ".cursor/rules/agent-toolkit.mdc"
+    },
+    {
+      "id": "gemini-cli",
+      "displayName": "Gemini CLI",
+      "skillRoot": ".gemini/skills",
+      "entrypoint": "GEMINI.md"
+    },
+    {
+      "id": "github-copilot",
+      "displayName": "GitHub Copilot",
+      "skillRoot": ".github/skills",
+      "entrypoint": ".github/copilot-instructions.md"
+    },
+    {
+      "id": "opencode",
+      "displayName": "OpenCode",
+      "skillRoot": ".opencode/skills",
+      "entrypoint": "AGENTS.md"
+    },
+    {
+      "id": "antigravity",
+      "displayName": "Google Antigravity 2.0",
+      "skillRoot": ".agents/skills",
+      "entrypoint": "AGENTS.md"
+    }
+  ],
+  "skills": [
+    "app-check",
+    "career",
+    "code",
+    "code-explore",
+    "code-review",
+    "grill-me",
+    "intent-capture",
+    "problem-to-solution",
+    "product-reality",
+    "research",
+    "security-audit",
+    "tdd",
+    "teach",
+    "tune",
+    "ui-ux-design",
+    "visualize"
+  ],
+  "profiles": [
+    "agent-engineering",
+    "career",
+    "learning",
+    "product-discovery",
+    "research",
+    "security-audit",
+    "software-engineering",
+    "ui-ux"
+  ],
+  "companionApps": [
+    {
+      "id": "career-viewer",
+      "owner": "career",
+      "installedPath": ".agent-toolkit/apps/career",
+      "entrypoint": "index.html",
+      "launchCommand": "npx @agent-toolkit-core/cli open career"
+    },
+    {
+      "id": "visualize-viewer",
+      "owner": "visualize",
+      "installedPath": ".agent-toolkit/apps/visualize",
+      "entrypoint": "index.html",
+      "launchCommand": "npx @agent-toolkit-core/cli open visualize"
+    }
+  ],
+  "runtimePrerequisites": [
+    {
+      "capability": "career",
+      "prerequisite": "Python 3.10+",
+      "optional": true,
+      "description": "Required only when running the optional local plan store CLI or snapshot export helper"
+    }
+  ]
+}

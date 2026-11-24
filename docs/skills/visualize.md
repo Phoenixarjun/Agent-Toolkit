@@ -30,7 +30,7 @@ Two verification roles exist: Graph Verifier checks whether the picture agrees w
 
 ## Installation boundaries
 
-Install `skills/visualize/` alongside `workflows/visualize/` and the three `agents/visualize-*/` role files if the host supports companion agents. The coordinator can still run without subagents, but its assurance is limited. Host-specific delegation, paths, 3D viewer installation and command wiring belong in vendor adapters, not in these canonical files.
+Install `skills/visualize/` alongside `workflows/visualize/` and the three `agents/visualize/*/` role files if the host supports companion agents. The coordinator can still run without subagents, but its assurance is limited. Host-specific delegation, paths, 3D viewer installation and command wiring belong in vendor adapters, not in these canonical files.
 
 The companion viewer is included at `web-app/visualize/`. It implements native WebGL2 3D primitives, hierarchy navigation, flow playback, evidence inspection and a bounded deterministic synthetic runner. It consumes a validated local `visualize.json` and includes a fictional demo fixture. The existence of the viewer does not mean an arbitrary repository has been scanned or rendered: report `rendered` only after checking an actual generated model in a functioning browser. Run the viewer locally through `python3 -m http.server 4173` from its directory; see `web-app/visualize/README.md`.
 

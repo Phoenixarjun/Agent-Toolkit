@@ -10,6 +10,9 @@ NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 errors = []
 
 
+EXCLUDED_PARTS = {".git", ".agent-toolkit", "node_modules", "dist", ".venv", "__pycache__"}
+
+
 def fail(message):
     errors.append(message)
 
@@ -74,19 +77,20 @@ def validate_skill(path):
 
 def validate_toml_files():
     for path in ROOT.rglob("*.toml"):
-        try:
-            with path.open("rb") as handle:
-                tomllib.load(handle)
-        except Exception as exc:
-            fail(f"{path.relative_to(ROOT)}: invalid TOML: {exc}")
+        if not any(part in path.parts for part in EXCLUDED_PARTS):
+            try:
+                with path.open("rb") as handle:
+                    tomllib.load(handle)
+            except Exception as exc:
+                fail(f"{path.relative_to(ROOT)}: invalid TOML: {exc}")
 
 
 def validate_yaml_files():
     for path in ROOT.rglob("*.yaml"):
-        if ".git" not in path.parts:
+        if not any(part in path.parts for part in EXCLUDED_PARTS):
             load_yaml(path)
     for path in ROOT.rglob("*.yml"):
-        if ".git" not in path.parts:
+        if not any(part in path.parts for part in EXCLUDED_PARTS):
             load_yaml(path)
 
 
@@ -96,7 +100,7 @@ def validate_catalog():
     if not isinstance(data, dict):
         return {}
     ids = {}
-    for group in ["skills", "workflows", "rules", "agents", "prompts", "knowledge", "evals", "profiles", "adapters", "forms", "templates"]:
+    for group in ["skills", "workflows", "rules", "agents", "prompts", "knowledge", "evals", "profiles", "adapters", "forms", "templates", "apps"]:
         entries = data.get(group, [])
         if not isinstance(entries, list):
             fail(f"catalog/catalog.yaml: {group} must be a list")
@@ -119,15 +123,16 @@ def validate_catalog():
         ids[group] = group_ids
     expected = {
         "skills": {path.parent.relative_to(ROOT).as_posix() for path in (ROOT / "skills").glob("*/SKILL.md")},
-        "workflows": {path.relative_to(ROOT).as_posix() for path in (ROOT / "workflows").glob("*/WORKFLOW.md")},
+        "workflows": {path.relative_to(ROOT).as_posix() for path in (ROOT / "workflows").rglob("WORKFLOW.md")},
         "rules": {path.relative_to(ROOT).as_posix() for path in (ROOT / "rules").rglob("*.md")},
-        "agents": {path.relative_to(ROOT).as_posix() for path in (ROOT / "agents").glob("*/AGENT.md")},
+        "agents": {path.relative_to(ROOT).as_posix() for path in (ROOT / "agents").rglob("AGENT.md")},
         "prompts": {path.relative_to(ROOT).as_posix() for path in (ROOT / "prompts").glob("*.md")},
         "knowledge": {path.relative_to(ROOT).as_posix() for path in (ROOT / "knowledge").rglob("*.md")},
-        "evals": {path.relative_to(ROOT).as_posix() for path in (ROOT / "evals").glob("*/cases.yaml")},
+        "evals": {path.relative_to(ROOT).as_posix() for path in (ROOT / "evals").rglob("cases.yaml")},
         "profiles": {path.relative_to(ROOT).as_posix() for path in (ROOT / "profiles").glob("*.yaml")},
         "forms": {path.relative_to(ROOT).as_posix() for path in (ROOT / "forms").glob("*.md")},
         "templates": {path.relative_to(ROOT).as_posix() for path in (ROOT / "templates" / "documents").glob("*.md")},
+        "apps": {path.relative_to(ROOT).as_posix() for path in (ROOT / "web-app").iterdir() if path.is_dir()},
     }
     for group, expected_paths in expected.items():
         registered_paths = {entry.get("path") for entry in data.get(group, []) if isinstance(entry, dict)}
@@ -199,7 +204,7 @@ def validate_profiles(ids):
 
 
 def main():
-    skill_paths = [path for path in ROOT.rglob("SKILL.md") if "templates" not in path.parts]
+    skill_paths = sorted((ROOT / "skills").glob("*/SKILL.md"))
     if not skill_paths:
         fail("No skills found")
     for path in skill_paths:

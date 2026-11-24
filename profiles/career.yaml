@@ -1,0 +1,48 @@
+schema_version: '1'
+name: career
+description: Compose career transition and focused professional presence, content, opportunities, materials, interviews
+  and offer capabilities.
+skills:
+- career
+- code-explore
+- code-review
+- grill-me
+- research
+- teach
+workflows:
+- career-application
+- career-blog
+- career-company
+- career-content-research
+- career-extension
+- career-github-profile
+- career-interview
+- career-job-search
+- career-linkedin-content
+- career-linkedin-profile
+- career-offer
+- career-plan
+- career-presence
+- career-projects
+- career-transition
+rules:
+- career-integrity
+agents:
+- career-company-investigator
+- career-content-editor
+- career-content-manager
+- career-content-writer
+- career-critic
+- career-evidence-verifier
+- career-hiring-manager
+- career-job-scout
+- career-market-analyst
+- career-offer-analyst
+- career-opportunity-analyst
+- career-planner
+- career-presence-auditor
+- career-presence-optimizer
+- career-project-evaluator
+- career-recruiter
+- career-resume-strategist
+- career-technical-interviewer

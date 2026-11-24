@@ -17,10 +17,10 @@ Parent reconciles → deterministic validation → audit report → STOP
 Never let a role verify its own finding. Spawn separate real contexts, not simulated viewpoints. Parent may run delegated roles **sequentially** if parallelism is unavailable; it may not replace them by reasoning alone. Reuse the same role in fresh contexts for independent second passes only when useful. No role except parent publishes the final report.
 
 **Role definitions (exact canonical paths):**
-- `agents/security-authority-investigator/AGENT.md`
-- `agents/security-trust-path-investigator/AGENT.md`
-- `agents/security-coverage-critic/AGENT.md`
-- `agents/security-auditor/AGENT.md` (independent finding verifier; reused from v1.1)
+- `agents/security-audit/security-authority-investigator/AGENT.md`
+- `agents/security-audit/security-trust-path-investigator/AGENT.md`
+- `agents/security-audit/security-coverage-critic/AGENT.md`
+- `agents/security-audit/security-auditor/AGENT.md` (independent finding verifier; reused from v1.1)
 
 If the harness cannot spawn independent contexts: parent may do a limited passive inspection, but **must not** claim the workflow completed. Record `orchestration.mode=unavailable`, `run_status=incomplete`, `report_outcome=INSUFFICIENT_EVIDENCE`, and the precise blocker. Do not fabricate subagent IDs.
 
@@ -112,7 +112,7 @@ It returns gap IDs ranked by consequence, exact source anchors, and proposed che
 
 ## 6. Independent finding verification
 
-Give `agents/security-auditor` a **fresh** context, baseline revision, original source/evidence, suspected invariant and smallest reproducible claim. Do **not** hand the investigator's preferred severity, expected verdict or persuasive narrative as ground truth.
+Give `agents/security-audit/security-auditor/AGENT.md` a **fresh** context, baseline revision, original source/evidence, suspected invariant and smallest reproducible claim. Do **not** hand the investigator's preferred severity, expected verdict or persuasive narrative as ground truth.
 
 Verifier must:
 1. reconstruct entry → effect and reverse resource access paths as relevant

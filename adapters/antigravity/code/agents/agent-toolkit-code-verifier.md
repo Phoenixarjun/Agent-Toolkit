@@ -13,7 +13,7 @@ commandExecutionPolicy: sandbox
 
 # Verifier Runtime Adapter
 
-Load canonical `agents/code-verifier/AGENT.md` and `skills/code/references/post-build-verification.md` from the installed Agent Toolkit. If either is absent, return `BLOCKED_CONFIG`.
+Load canonical `agents/code/code-verifier/AGENT.md` and `skills/code/references/post-build-verification.md` from the installed Agent Toolkit. If either is absent, return `BLOCKED_CONFIG`.
 
 The Coordinator must provide accepted intent, candidate identifiers, authorized test roots/environments and explicit command limits. Independently inspect source and rerun appropriate verification. These adapter tools deliberately exclude file-edit operations. If writing new tests is needed, request a separate isolated and authorized test-authoring task from the Coordinator.
 
