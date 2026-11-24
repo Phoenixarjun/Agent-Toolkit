@@ -219,3 +219,17 @@ The `.github/workflows/release.yml` workflow provides controlled release buildin
 - **Artifact Upload**: Uploads verified release bundles and `release-index.json` for maintainer review via `actions/upload-artifact@v4`.
 - **Publication Guard**: Automatic publishing to GitHub Releases or tag creation is disabled until explicit maintainer authorization.
 
+---
+
+## 8. npm Distribution Architecture (`@agent-toolkit-core/cli`)
+
+The npm package `@agent-toolkit-core/cli` is built using **Option B: Build-Time Canonical Resolution + Pure Node.js Installer Runtime**.
+
+### Architectural Foundation
+1. **Compilation (`scripts/compile_distribution.py`)**:
+   Compiles authoritative catalog entries, capability dependency graphs, adapter transformations, and companion apps into machine-readable static installation contracts and resources under `dist/npm/cli/resources/`.
+2. **Pure Node.js Runtime**:
+   The CLI (`packages/cli/`) has zero external npm dependencies, requires zero Python on consumer machines, and executes entirely offline once downloaded.
+3. **Parity & Verification**:
+   Every capability-adapter combination (168 base combinations) is verified for 100% parity against canonical Python plans via `tests/test_npm_parity.py`.
+

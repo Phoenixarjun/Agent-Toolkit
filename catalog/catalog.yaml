@@ -227,6 +227,9 @@ skills:
       - software-engineering
     maturity: experimental
     version: "0.3.0"
+    dependencies:
+      apps:
+        - visualize-viewer
     optional_dependencies:
       workflows:
         - visualize
@@ -258,6 +261,8 @@ skills:
       - career-transition
       rules:
       - career-integrity
+      apps:
+      - career-viewer
       agents:
       - career-company-investigator
       - career-content-editor
@@ -1187,3 +1192,17 @@ templates:
     category: design
     maturity: experimental
     version: "0.1.0"
+
+apps:
+  - id: career-viewer
+    path: web-app/career
+    owner: career
+    entrypoint: index.html
+    maturity: stable
+    version: "1.0.1"
+  - id: visualize-viewer
+    path: web-app/visualize
+    owner: visualize
+    entrypoint: index.html
+    maturity: stable
+    version: "1.0.0"

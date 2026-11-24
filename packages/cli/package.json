@@ -1,0 +1,36 @@
+{
+  "name": "@agent-toolkit-core/cli",
+  "version": "0.1.0",
+  "description": "Agent Toolkit CLI — Reusable engineering capabilities, procedures, and companion applications for AI coding assistants",
+  "type": "module",
+  "bin": {
+    "agent-toolkit": "./bin/agent-toolkit.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "resources",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Phoenixarjun/Agent-Toolkit.git"
+  },
+  "keywords": [
+    "ai",
+    "coding-agents",
+    "skills",
+    "workflows",
+    "claude-code",
+    "codex",
+    "cursor",
+    "copilot",
+    "gemini"
+  ],
+  "author": "Phoenixarjun",
+  "license": "MIT"
+}

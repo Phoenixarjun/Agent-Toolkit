@@ -25,3 +25,5 @@ secrets/
 scratch/
 .agent-toolkit/
 .agents/
+dist/
+node_modules/
